@@ -1,0 +1,54 @@
+---
+import Html from "../layouts/HtmlLayout.astro";
+import logo from "../images/Logo-Sigue-Adelante-Header-1-1-scaled.jpg";
+import { Image } from "astro:assets";
+import {
+  Reproductor,
+  MainMenu,
+  CarouselNews,
+  CarouselPartners,
+  EventsComponent,
+} from "../components/base";
+---
+
+<Html title="Sigue adelante radio">
+  <div class="lg:h-screen bg-background">
+    <div class="lg:columns-3 h-full gap-0">
+      <div class="h-full">
+        <div class="border-1 border-primary h-1/2 items-center flex">
+          <MainMenu client:visible />
+        </div>
+        <div class="border-1 border-primary h-1/2">
+          <CarouselNews client:visible />
+        </div>
+      </div>
+
+      <div class="h-full">
+        <div class="border-1 border-primary p-10">
+          <Reproductor />
+        </div>
+        <div
+          class="border-1 border-primary content-center justify-center grid bg-primary"
+        >
+          <Image
+            src={logo}
+            title="Sigue adelante radio"
+            alt="main logo"
+            height="500"
+            width="500"
+          />
+        </div>
+        <div class="border-1 border-primary"></div>
+      </div>
+
+      <div class="h-full">
+        <div class="border-1 border-primary h-1/2">
+          <CarouselPartners client:visible />
+        </div>
+        <div class="border-1 border-primary h-1/2 overflow-y-scroll">
+          <EventsComponent client:visible />
+        </div>
+      </div>
+    </div>
+  </div>
+</Html>
