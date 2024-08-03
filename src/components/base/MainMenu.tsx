@@ -7,7 +7,7 @@ import {
   PiPersonBold,
 } from "react-icons/pi";
 import { IconText } from "../atomics";
-export const MainMenu = () => {
+const MainMenu = () => {
   return (
     <div className="m-10 border-2 w-full rounded-lg bg-yellow-background p-10">
       <Listbox
@@ -52,3 +52,5 @@ export const MainMenu = () => {
     </div>
   );
 };
+
+export default MainMenu;
