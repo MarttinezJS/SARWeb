@@ -7,6 +7,7 @@ import {
   Divider,
   Spacer,
 } from "@nextui-org/react";
+import { AttentionSeeker, Bounce } from "react-awesome-reveal";
 import { FaWhatsapp } from "react-icons/fa";
 
 export const InformationComponent = () => {
@@ -40,18 +41,20 @@ export const InformationComponent = () => {
         </Card>
       </div>
       <Divider className="my-5" />
-      <Button
-        endContent={<FaWhatsapp />}
-        variant="shadow"
-        size="lg"
-        className="bg-whatsapp-color text-white"
-        onPress={() =>
-          (window.location.href =
-            "https://api.whatsapp.com/send?phone=3138715190&text=Me%20gustaría%20que%20oraran%20por:%20")
-        }
-      >
-        Envíanos tu petición
-      </Button>
+      <Bounce triggerOnce>
+        <Button
+          endContent={<FaWhatsapp />}
+          variant="shadow"
+          size="lg"
+          className="bg-whatsapp-color text-white"
+          onPress={() =>
+            (window.location.href =
+              "https://api.whatsapp.com/send?phone=3138715190&text=Me%20gustaría%20que%20oraran%20por:%20")
+          }
+        >
+          Envíanos tu petición
+        </Button>
+      </Bounce>
       <div className="flex">
         <p className="text-center">
           Si quieres apoyarnos con una siembra/donación, por favor contáctenos
