@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem } from "@nextui-org/react";
+import { Accordion, AccordionItem, Card, CardHeader } from "@nextui-org/react";
 import { EmptyElement } from "../atomics";
 
 interface EventAppoint {
@@ -29,23 +29,23 @@ const events: EventAppoint[] = [
 ];
 
 const EventsComponent = () => {
-  return (
-    <div className="">
-      <div className="text-center font-bold text-secondary text-2xl my-5">
-        Eventos
-      </div>
-      {events.length > 0 ? (
-        <Accordion>
-          {events.map((e) => (
-            <AccordionItem title={e.title} subtitle={e.scheduledDate}>
-              {e.description}
-            </AccordionItem>
-          ))}
-        </Accordion>
-      ) : (
-        <EmptyElement />
-      )}
-    </div>
+  return events.length > 0 ? (
+    <Card className="m-5 bg-yellow-background" shadow="none">
+      <CardHeader>
+        <p className="text-center font-bold text-secondary text-2xl my-5">
+          Eventos
+        </p>
+      </CardHeader>
+      <Accordion>
+        {events.map((e) => (
+          <AccordionItem title={e.title} subtitle={e.scheduledDate}>
+            {e.description}
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </Card>
+  ) : (
+    <EmptyElement />
   );
 };
 

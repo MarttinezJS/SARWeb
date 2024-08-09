@@ -9,10 +9,10 @@ export default {
     extend: {
       colors: {
         primary: "#FFBE25",
-        "primary-black": "",
         secondary: "#826754",
         "yellow-background": "#F1E5BF",
         background: "#FFF1D7",
+        "whatsapp-color": "#25d366",
       },
     },
   },
