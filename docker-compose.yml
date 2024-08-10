@@ -1,0 +1,17 @@
+version: '3.1'
+
+services:
+  frontend-web:
+    container_name: sigue-adelante-radio
+    image: sigue-adelante-radio:1.0.0
+    build: .
+    restart: 'on-failure'
+    ports:
+      - 2000:80
+    networks:
+      - sigue-adelante-radio
+    
+
+networks:
+  sigue-adelante-radio:
+    external: true
