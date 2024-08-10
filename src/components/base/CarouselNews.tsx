@@ -1,5 +1,6 @@
 import { Carousel } from "react-responsive-carousel";
 import { CardNews } from "./CardNews";
+import { EmptyElement } from "../atomics";
 
 interface New {
   title: string;
@@ -7,25 +8,25 @@ interface New {
   text: string;
 }
 const news: New[] = [
-  {
-    title: "Titulo 1",
-    image: "https://nextui.org/images/hero-card-complete.jpeg",
-    text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, vero. Quasi quisquam corporis officia. Accusantium omnis alias quam vero, porro eveniet laborum quibusdam nam perspiciatis voluptatem. Quam, eveniet. Quae, vel.",
-  },
-  {
-    title: "Titulo 2",
-    image: "https://nextui.org/images/hero-card-complete.jpeg",
-    text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, vero. Quasi quisquam corporis officia. Accusantium omnis alias quam vero, porro eveniet laborum quibusdam nam perspiciatis voluptatem. Quam, eveniet. Quae, vel.",
-  },
-  {
-    title: "Titulo 3",
-    image: "https://nextui.org/images/hero-card-complete.jpeg",
-    text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, vero. Quasi quisquam corporis officia. Accusantium omnis alias quam vero, porro eveniet laborum quibusdam nam perspiciatis voluptatem. Quam, eveniet. Quae, vel.",
-  },
+  // {
+  //   title: "Titulo 1",
+  //   image: "https://nextui.org/images/hero-card-complete.jpeg",
+  //   text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, vero. Quasi quisquam corporis officia. Accusantium omnis alias quam vero, porro eveniet laborum quibusdam nam perspiciatis voluptatem. Quam, eveniet. Quae, vel.",
+  // },
+  // {
+  //   title: "Titulo 2",
+  //   image: "https://nextui.org/images/hero-card-complete.jpeg",
+  //   text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, vero. Quasi quisquam corporis officia. Accusantium omnis alias quam vero, porro eveniet laborum quibusdam nam perspiciatis voluptatem. Quam, eveniet. Quae, vel.",
+  // },
+  // {
+  //   title: "Titulo 3",
+  //   image: "https://nextui.org/images/hero-card-complete.jpeg",
+  //   text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, vero. Quasi quisquam corporis officia. Accusantium omnis alias quam vero, porro eveniet laborum quibusdam nam perspiciatis voluptatem. Quam, eveniet. Quae, vel.",
+  // },
 ];
 
-export const CarouselNews = () => {
-  return (
+const CarouselNews = () => {
+  return news.length > 0 ? (
     <Carousel
       infiniteLoop
       autoPlay
@@ -39,5 +40,9 @@ export const CarouselNews = () => {
         </div>
       ))}
     </Carousel>
+  ) : (
+    <EmptyElement />
   );
 };
+
+export default CarouselNews;
