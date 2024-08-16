@@ -1,4 +1,4 @@
-import { Listbox, ListboxItem } from "@nextui-org/react";
+import { Listbox, ListboxItem, useDisclosure } from "@nextui-org/react";
 import {
   PiCalendar,
   PiHouseBold,
@@ -7,13 +7,22 @@ import {
   PiPersonBold,
 } from "react-icons/pi";
 import { IconText } from "../atomics";
+import { FaCircleArrowRight } from "react-icons/fa6";
+import { LoginModal } from "../modals";
 const MainMenu = () => {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
     <div className="m-10 border-2 w-full rounded-lg bg-yellow-background p-10">
+      <LoginModal isOpen={isOpen} onOpenChange={onOpenChange} />
       <Listbox
         selectedKeys={"home"}
         aria-label="Listbox Variants"
         color="primary"
+        onAction={(key) => {
+          if (key == "login") {
+            onOpen();
+          }
+        }}
         variant="solid"
       >
         <ListboxItem key="home">
@@ -46,6 +55,12 @@ const MainMenu = () => {
           <IconText
             icon={<PiCalendar className="text-secondary" size="20px" />}
             text="Nuestros eventos"
+          />
+        </ListboxItem>
+        <ListboxItem key="login">
+          <IconText
+            icon={<FaCircleArrowRight className="text-secondary" size="20px" />}
+            text="Iniciar sesión"
           />
         </ListboxItem>
       </Listbox>

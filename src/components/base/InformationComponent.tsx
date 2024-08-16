@@ -60,14 +60,14 @@ export const InformationComponent = () => {
           Envíanos tu petición
         </Button>
       </Bounce>
-      <div className="flex">
+      {/* <div className="flex">
         <p className="text-center">
           Si quieres apoyarnos con una siembra/donación, por favor contáctenos
           al
         </p>
         <Spacer />
         <p className="font-bold text-secondary">+57 (313) 871 5190</p>
-      </div>
+      </div> */}
     </div>
   );
 };
