@@ -10,6 +10,7 @@ export default {
       colors: {
         primary: "#FFBE25",
         secondary: "#826754",
+        error: "#ED4337",
         "yellow-background": "#F1E5BF",
         background: "#FFF1D7",
         "whatsapp-color": "#25d366",

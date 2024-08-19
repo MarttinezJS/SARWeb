@@ -3,6 +3,7 @@ import Html from "../layouts/HtmlLayout.astro";
 import logo from "../images/Logo-Sigue-Adelante-Header-1-1-scaled.jpg";
 import { Image } from "astro:assets";
 import { InformationComponent } from "../components/base";
+import { ResponseModal } from "../components/modals";
 import Reproductor from "../components/base/Reproductor";
 import MainMenu from "../components/base/MainMenu";
 import CarouselNews from "../components/base/CarouselNews";
@@ -52,4 +53,5 @@ import EventsComponent from "../components/base/EventsComponent";
       </div>
     </div>
   </div>
+  <ResponseModal client:only />
 </Html>

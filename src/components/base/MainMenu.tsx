@@ -9,8 +9,18 @@ import {
 import { IconText } from "../atomics";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import { LoginModal } from "../modals";
+import { useEffect, useState } from "react";
+import { useReloadMenuStore } from "../../hooks";
+import { IoSettingsOutline } from "react-icons/io5";
 const MainMenu = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const dependency = useReloadMenuStore((s) => s.dependency);
+  const [isLogged, setIsLogged] = useState(false);
+  useEffect(() => {
+    const token = localStorage.getItem("access_token");
+    setIsLogged(token != null);
+  }, [dependency]);
+
   return (
     <div className="m-10 border-2 w-full rounded-lg bg-yellow-background p-10">
       <LoginModal isOpen={isOpen} onOpenChange={onOpenChange} />
@@ -57,11 +67,19 @@ const MainMenu = () => {
             text="Nuestros eventos"
           />
         </ListboxItem>
-        <ListboxItem key="login">
-          <IconText
-            icon={<FaCircleArrowRight className="text-secondary" size="20px" />}
-            text="Iniciar sesión"
-          />
+        <ListboxItem key={isLogged ? "config" : "login"}>
+          {
+            <IconText
+              icon={
+                isLogged ? (
+                  <IoSettingsOutline />
+                ) : (
+                  <FaCircleArrowRight className="text-secondary" size="20px" />
+                )
+              }
+              text={isLogged ? "Configuración" : "Iniciar sesión"}
+            />
+          }
         </ListboxItem>
       </Listbox>
     </div>

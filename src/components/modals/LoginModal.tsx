@@ -1,12 +1,17 @@
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 import { CustomForm, InputForm } from "../../common";
-import type { LoginFields } from "../../models";
+import type { LoginFields, Response } from "../../models";
+import { Endpoints, httpClient } from "../../config";
+import { useReloadMenuStore, useResponseModalStore } from "../../hooks";
+import { save } from "../../common/services/save";
 interface LoginModalProps {
   isOpen: boolean;
   onOpenChange: () => void;
 }
 
 export const LoginModal = ({ isOpen, onOpenChange }: LoginModalProps) => {
+  const reloadMenu = useReloadMenuStore((s) => s.reload);
+  const showResp = useResponseModalStore((s) => s.showModal);
   return (
     <Modal
       placement="top-center"
@@ -23,8 +28,23 @@ export const LoginModal = ({ isOpen, onOpenChange }: LoginModalProps) => {
             </ModalHeader>
             <ModalBody>
               <CustomForm<LoginFields>
-                onSubmit={async (data) => {
-                  console.log(data);
+                onSubmit={async (formData) => {
+                  const resp = await save<{ access_token: string }>(
+                    Endpoints.LOGIN,
+                    formData
+                  );
+                  console.log(resp);
+
+                  if (resp.body && !resp.error) {
+                    localStorage.setItem(
+                      "access_token",
+                      resp.body.access_token
+                    );
+                    reloadMenu();
+                    onClose();
+                  } else {
+                    showResp(resp);
+                  }
                 }}
               >
                 {(register) => (

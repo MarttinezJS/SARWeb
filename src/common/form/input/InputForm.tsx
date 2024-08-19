@@ -5,7 +5,6 @@ import {
   useFormContext,
   type FieldValues,
   type Path,
-  type RegisterOptions,
   type UseFormRegisterReturn,
 } from "react-hook-form";
 import { BsEye, BsEyeFill, BsEyeSlash } from "react-icons/bs";
