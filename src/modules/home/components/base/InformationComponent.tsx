@@ -5,7 +5,6 @@ import {
   CardFooter,
   CardHeader,
   Divider,
-  Spacer,
   useDisclosure,
 } from "@nextui-org/react";
 import { FaWhatsapp } from "react-icons/fa";

@@ -11,7 +11,7 @@ export const DevotionalModal = ({
 }: DevotionalModalProps) => {
   return (
     <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-      <ModalContent>{(onClose) => <>a</>}</ModalContent>
+      <ModalContent>{() => <>a</>}</ModalContent>
     </Modal>
   );
 };

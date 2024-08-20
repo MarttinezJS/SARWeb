@@ -1,5 +1,5 @@
 import { Button, type ButtonProps } from "@nextui-org/react";
-import React, { useEffect, type ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import { FaRegSave } from "react-icons/fa";
 
@@ -15,7 +15,7 @@ export const SubmitButton = ({
   icon,
 }: SubmitButtonProps) => {
   const {
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting },
   } = useFormContext();
   useEffect(() => {}, [isSubmitting]);
   return (

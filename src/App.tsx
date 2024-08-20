@@ -1,8 +1,8 @@
-import { authProvider } from "./core";
+// import { authProvider } from "./core";
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  redirect,
+  Navigate,
   Route,
   RouterProvider,
 } from "react-router-dom";
@@ -11,10 +11,10 @@ import { Suspense } from "react";
 import { About, Events, Schedule } from "./pages";
 import { Home } from "./modules/home";
 
-const protectLoader = async () =>
-  !authProvider.isAuthenticated && (await authProvider.sessionValid())
-    ? redirect("/home")
-    : null;
+// const protectLoader = async () =>
+//   !authProvider.isAuthenticated && (await authProvider.sessionValid())
+//     ? redirect("/")
+//     : null;
 
 export const App = () => {
   return (
@@ -53,7 +53,7 @@ export const App = () => {
               />
             </Route>,
             <Route
-              path="/home"
+              path="/"
               key={1}
               element={
                 <Suspense>
@@ -63,6 +63,7 @@ export const App = () => {
               index={true}
               // loader={protectLoader}
             />,
+            <Route path="/*" key={2} element={<Navigate to="/" />} />,
           ])
         )}
       />
