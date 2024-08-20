@@ -50,10 +50,13 @@ export const authProvider: AuthProvider = {
     try {
       const resp = await get<UserData>(`${Endpoints.USERS}/token`);
       const isError = resp.error;
-      if (isError) {
+
+      if (isError == null || isError) {
         return false;
       }
       const token = localStorage.getItem("access_token");
+      console.log(token);
+
       if (token != null) {
         const data = decodeJwt<any>(token);
         authProvider.userData = { ...data };

@@ -1,20 +1,21 @@
-// import { authProvider } from "./core";
+import { authProvider } from "./core";
 import {
   createBrowserRouter,
   createRoutesFromElements,
   Navigate,
+  redirect,
   Route,
   RouterProvider,
 } from "react-router-dom";
 import { Layout, ResponseModal } from "./components";
 import { Suspense } from "react";
 import { About, Events, Schedule } from "./pages";
-import { Home } from "./modules/home";
+import { Home, User } from "./modules";
 
-// const protectLoader = async () =>
-//   !authProvider.isAuthenticated && (await authProvider.sessionValid())
-//     ? redirect("/")
-//     : null;
+const protectLoader = async () =>
+  !authProvider.isAuthenticated && !(await authProvider.sessionValid())
+    ? redirect("/")
+    : null;
 
 export const App = () => {
   return (
@@ -26,7 +27,7 @@ export const App = () => {
             <Route element={<Layout />}>
               <Route
                 path="/events"
-                key={4}
+                key={3}
                 element={
                   <Suspense>
                     <Events />
@@ -35,7 +36,7 @@ export const App = () => {
               />
               <Route
                 path="/schedule"
-                key={5}
+                key={4}
                 element={
                   <Suspense>
                     <Schedule />
@@ -44,12 +45,22 @@ export const App = () => {
               />
               <Route
                 path="/about"
-                key={6}
+                key={5}
                 element={
                   <Suspense>
                     <About />
                   </Suspense>
                 }
+              />
+              <Route
+                path="/user"
+                key={6}
+                element={
+                  <Suspense>
+                    <User />
+                  </Suspense>
+                }
+                loader={protectLoader}
               />
             </Route>,
             <Route
@@ -61,7 +72,6 @@ export const App = () => {
                 </Suspense>
               }
               index={true}
-              // loader={protectLoader}
             />,
             <Route path="/*" key={2} element={<Navigate to="/" />} />,
           ])

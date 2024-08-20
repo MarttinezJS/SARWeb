@@ -3,6 +3,7 @@ import { authProvider } from "../../../../core";
 import { useResponseModalStore } from "../../../../hooks";
 import { CustomForm, InputForm } from "../../../../common";
 import { LoginFields } from "../../models";
+import { useNavigate } from "react-router-dom";
 interface LoginModalProps {
   isOpen: boolean;
   onOpenChange: () => void;
@@ -10,6 +11,7 @@ interface LoginModalProps {
 
 export const LoginModal = ({ isOpen, onOpenChange }: LoginModalProps) => {
   const showResp = useResponseModalStore((s) => s.showModal);
+  const navigate = useNavigate();
   return (
     <Modal
       placement="top-center"
@@ -35,6 +37,7 @@ export const LoginModal = ({ isOpen, onOpenChange }: LoginModalProps) => {
                     showResp(resp);
                   } else {
                     onClose;
+                    navigate("/user");
                   }
                 }}
               >
