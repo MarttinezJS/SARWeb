@@ -8,7 +8,8 @@ import {
 } from "react-router-dom";
 import { Layout, ResponseModal } from "./components";
 import { Suspense } from "react";
-import { About, Events, Home, Schedule } from "./pages";
+import { About, Events, Schedule } from "./pages";
+import { Home } from "./modules/home";
 
 const protectLoader = async () =>
   !authProvider.isAuthenticated && (await authProvider.sessionValid())
