@@ -1,4 +1,4 @@
-import { Listbox, ListboxItem, useDisclosure } from "@nextui-org/react";
+import { Listbox, ListboxItem } from "@nextui-org/react";
 import {
   PiCalendar,
   PiHouseBold,
@@ -7,28 +7,15 @@ import {
 } from "react-icons/pi";
 import { IconText } from "../atomics";
 import { FaCircleArrowRight } from "react-icons/fa6";
-import { LoginModal } from "../modals";
 import { IoSettingsOutline } from "react-icons/io5";
 import { authProvider } from "../../../../core";
 export const MainMenu = () => {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
   return (
     <div className="m-10 border-2 w-full rounded-lg bg-yellow-background p-10">
-      <LoginModal isOpen={isOpen} onOpenChange={onOpenChange} />
       <Listbox
         selectedKeys={"/"}
         aria-label="Listbox Variants"
         color="primary"
-        onAction={(key) => {
-          if (key == "login") {
-            onOpen();
-            return;
-          }
-          window.location.replace(key.toString());
-
-          return;
-        }}
         variant="solid"
       >
         <ListboxItem key="/">

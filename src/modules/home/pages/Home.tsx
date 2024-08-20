@@ -4,17 +4,15 @@ import {
   CarouselPartners,
   EventsComponent,
   InformationComponent,
-  MainMenu,
-  Reproductor,
 } from "../components";
 
 export const Home = () => {
   return (
-    <div className="lg:h-screen bg-background">
+    <div className="lg:h-full bg-background">
       <div className="lg:columns-3 h-full gap-0">
         <div className="h-full">
           <div className="border-1 border-primary h-1/2 items-center flex">
-            <MainMenu />
+            {/* <MainMenu /> */}
           </div>
           <div className="border-1 border-primary h-1/2">
             <CarouselNews />
@@ -22,21 +20,19 @@ export const Home = () => {
         </div>
 
         <div className="h-full">
-          <div className="border-1 border-primary p-10">
-            <Reproductor />
+          <div className="border-1 border-primary h-1/4 items-center flex justify-center">
+            {/* <Reproductor /> */}
+            <InformationComponent />
           </div>
-          <div className="border-1 border-primary content-center justify-center grid bg-primary">
+          <div className="border-1 border-primary h-1/2 content-center justify-center grid bg-primary">
             <Image
               src="/logo.svg"
               title="Sigue adelante radio"
               alt="main logo"
-              height="500"
-              width="500"
+              width="300"
             />
           </div>
-          <div className="border-1 border-primary h-1/3">
-            <InformationComponent />
-          </div>
+          <div className="border-1 border-primary h-1/4"></div>
         </div>
 
         <div className="h-full">

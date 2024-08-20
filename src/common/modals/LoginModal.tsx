@@ -1,9 +1,14 @@
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
-import { authProvider } from "../../../../core";
-import { useResponseModalStore } from "../../../../hooks";
-import { CustomForm, InputForm } from "../../../../common";
-import { LoginFields } from "../../models";
 import { useNavigate } from "react-router-dom";
+import { useResponseModalStore } from "../../hooks";
+import { CustomForm, InputForm } from "../form";
+import { authProvider } from "../../core";
+
+interface LoginFields {
+  username: string;
+  password: string;
+}
+
 interface LoginModalProps {
   isOpen: boolean;
   onOpenChange: () => void;
@@ -36,7 +41,7 @@ export const LoginModal = ({ isOpen, onOpenChange }: LoginModalProps) => {
                   if (!pass) {
                     showResp(resp);
                   } else {
-                    onClose;
+                    onClose();
                     navigate("/user");
                   }
                 }}

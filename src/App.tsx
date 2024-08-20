@@ -7,10 +7,10 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { Layout, ResponseModal } from "./components";
+import { Layout } from "./common/components";
 import { Suspense } from "react";
-import { About, Events, Schedule } from "./pages";
-import { Home, User } from "./modules";
+import { About, Events, Home, Schedule, User } from "./modules";
+import { ResponseModal } from "./common";
 
 const protectLoader = async () =>
   !authProvider.isAuthenticated && !(await authProvider.sessionValid())
@@ -62,17 +62,18 @@ export const App = () => {
                 }
                 loader={protectLoader}
               />
+              <Route
+                path="/"
+                key={1}
+                element={
+                  <Suspense>
+                    <Home />
+                  </Suspense>
+                }
+                index={true}
+              />
+              ,
             </Route>,
-            <Route
-              path="/"
-              key={1}
-              element={
-                <Suspense>
-                  <Home />
-                </Suspense>
-              }
-              index={true}
-            />,
             <Route path="/*" key={2} element={<Navigate to="/" />} />,
           ])
         )}

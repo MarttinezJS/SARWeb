@@ -13,15 +13,13 @@ export const Reproductor = () => {
   //   ></iframe>
   // );
   return (
-    <div className="py-10 ">
-      <ReactAudioPlayer
-        src="https://server2.ejeserver.com:8826/stream"
-        autoPlay
-        controls
-        style={{
-          width: "100%",
-        }}
-      />
-    </div>
+    <ReactAudioPlayer
+      src="https://server2.ejeserver.com:8826/stream"
+      autoPlay
+      controls
+      style={{
+        width: "100%",
+      }}
+    />
   );
 };
