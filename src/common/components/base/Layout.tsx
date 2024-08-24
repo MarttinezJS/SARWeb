@@ -40,13 +40,18 @@ const menuOptions: MenuOptions[] = [
     title: "Nosotros",
     key: "/about",
   },
+  {
+    title: "Usuario",
+    key: "/user",
+  },
 ];
 
 export const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState("/");
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const navigator = useNavigate();
+  const redirectTo = useNavigate();
+
   return (
     <div className="lg:h-screen">
       <LoginModal isOpen={isOpen} onOpenChange={onOpenChange} />
@@ -63,23 +68,28 @@ export const Layout = () => {
         </NavbarContent>
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          {menuOptions.map((option) => (
-            <NavbarItem
-              isActive={currentPath == option.key}
-              key={Math.random() * 100}
-            >
-              <Link
-                className="cursor-pointer"
-                color={currentPath != option.key ? "foreground" : undefined}
-                onPress={() => {
-                  setCurrentPath(option.key);
-                  navigator(option.key);
-                }}
+          {menuOptions.map((option) => {
+            if (option.key == "/user" && !authProvider.isAuthenticated) {
+              return <div key={option.key}></div>;
+            }
+            return (
+              <NavbarItem
+                isActive={currentPath == option.key}
+                key={Math.random() * 100}
               >
-                {option.title}
-              </Link>
-            </NavbarItem>
-          ))}
+                <Link
+                  className="cursor-pointer"
+                  color={currentPath != option.key ? "foreground" : undefined}
+                  onPress={() => {
+                    setCurrentPath(option.key);
+                    redirectTo(option.key);
+                  }}
+                >
+                  {option.title}
+                </Link>
+              </NavbarItem>
+            );
+          })}
         </NavbarContent>
 
         <NavbarContent justify="end">
@@ -88,7 +98,14 @@ export const Layout = () => {
           </NavbarItem>
           {authProvider.isAuthenticated ? (
             <NavbarItem>
-              <Button color="danger" variant="light">
+              <Button
+                color="danger"
+                variant="light"
+                onPress={() => {
+                  authProvider.logout();
+                  redirectTo("/");
+                }}
+              >
                 <p>Cerrar sesión</p>
                 <IoMdExit size={25} />
               </Button>

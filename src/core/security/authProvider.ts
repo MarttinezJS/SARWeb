@@ -55,7 +55,6 @@ export const authProvider: AuthProvider = {
         return false;
       }
       const token = localStorage.getItem("access_token");
-      console.log(token);
 
       if (token != null) {
         const data = decodeJwt<any>(token);

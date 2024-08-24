@@ -24,7 +24,10 @@ export const App = () => {
       <RouterProvider
         router={createBrowserRouter(
           createRoutesFromElements([
-            <Route element={<Layout />}>
+            <Route
+              element={<Layout />}
+              action={() => authProvider.sessionValid()}
+            >
               <Route
                 path="/events"
                 key={3}
