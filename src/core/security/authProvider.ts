@@ -7,7 +7,12 @@ interface UserData {
   role: string;
   name: string;
 }
-
+interface JwkResponse {
+  data: UserData;
+  iat: number;
+  jti: string;
+  exp: number;
+}
 interface AuthProvider {
   isAuthenticated: boolean;
   userData: UserData | null;
@@ -32,8 +37,8 @@ export const authProvider: AuthProvider = {
       const token = resp.body?.access_token;
       if (token) {
         localStorage.setItem("access_token", token);
-        const data = decodeJwt<any>(token);
-        authProvider.userData = { ...data };
+        const decode = decodeJwt<JwkResponse>(token);
+        authProvider.userData = { ...decode.data };
         authProvider.isAuthenticated = true;
         return {
           pass: true,
@@ -56,11 +61,13 @@ export const authProvider: AuthProvider = {
       }
       const token = localStorage.getItem("access_token");
 
-      if (token != null) {
-        const data = decodeJwt<any>(token);
-        authProvider.userData = { ...data };
+      if (!token) {
+        return false;
       }
+      const decode = decodeJwt<any>(token);
+      authProvider.userData = { ...decode.data };
       authProvider.isAuthenticated = true;
+
       return true;
     } catch (error) {
       return false;

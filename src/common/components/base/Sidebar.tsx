@@ -42,7 +42,7 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
   };
 
   useEffect(() => {
-    getUser();
+    authProvider.userData?.id && getUser();
   }, []);
 
   return (
@@ -87,13 +87,13 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
         onMouseLeave={() => handleHoverExpand(false)}
         className={`relative h-screen overflow-hidden`}
       >
-        <SimpleBar style={{ height: "100%" }} autoHide>
+        <SimpleBar style={{ height: "100%", paddingTop: "50px" }} autoHide>
           <div className="text-slate-500">
             <div className="my-8 flex flex-col items-center h-48 overflow-x-hidden">
               <Link
-                to={`/user/${user?.id}`}
+                to={`/user/config`}
                 onClick={() => {
-                  setActiveName("User");
+                  setActiveName("config");
                 }}
                 className={`text-center flex flex-col items-center justify-center`}
               >
@@ -107,9 +107,9 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
                   }`}
                 >
                   <Avatar
-                    name={`${user?.firstName.charAt(0)}${user?.lastName.charAt(
+                    name={`${user?.firstName?.charAt(
                       0
-                    )}`}
+                    )}${user?.lastName?.charAt(0)}`}
                     isBordered
                     color={activeName == "User" ? "primary" : "default"}
                     className="w-full h-full text-large"
@@ -164,7 +164,7 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
                 }`}
                 onPress={() => {
                   authProvider.logout();
-                  navigate("/home");
+                  navigate("/");
                 }}
               >
                 Cerrar sesión

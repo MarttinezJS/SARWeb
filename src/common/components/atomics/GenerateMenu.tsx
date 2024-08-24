@@ -23,7 +23,7 @@ export const GenerateMenu = ({
   recursive = 0,
 }: GenerateMenuProps) => {
   const activeLink = window.location.pathname;
-  const classesActive = activeName === item.name ? "active" : "";
+  const classesActive = activeName === item.id ? "active" : "";
   const [openedMenu, setOpenedMenu] = useState<Record<string, any>>({});
   const listRef = useRef<Record<string, HTMLUListElement | null>>({});
   const handleNavigate = (path: string) => setActiveName(path);
@@ -65,7 +65,7 @@ export const GenerateMenu = ({
   };
   useEffect(() => {
     if (activeName === "" && activeLink.includes(item.link)) {
-      setActiveName(item.name);
+      setActiveName(item.id);
     }
   }, []);
 
@@ -79,25 +79,25 @@ export const GenerateMenu = ({
           id={item.id}
           onClick={() => {
             if ("child" in item) {
-              handleToggle(item.name);
+              handleToggle(item.id);
             } else if ("link" in item) {
-              handleNavigate(item.name);
+              handleNavigate(item.id);
             }
           }}
           onKeyDown={(event) => {
             const { code } = event;
             if (code === "Space") {
               if ("child" in item) {
-                handleToggle(item.name);
+                handleToggle(item.id);
               } else if ("link" in item) {
-                handleNavigate(item.name);
+                handleNavigate(item.id);
               }
             }
           }}
           className={[
             "group m-0 flex cursor-pointer rounded-lg items-center justify-between h-12 py-0 pr-3 mb-1 focus:outline-none",
             recursive === 0 ? "pl-4" : recursive === 1 ? "pl-11" : "pl-16",
-            activeName === item.name || activeName.split(".")[0] === item.name
+            activeName === item.id || activeName.split(".")[0] === item.id
               ? `text-blue-600 font-semibold ${
                   item.parent ? "bg-blue-200/20 " : "bg-transparent"
                 }`
@@ -141,13 +141,13 @@ export const GenerateMenu = ({
         </Link>
         {"child" in item ? (
           <ul
-            ref={(el) => (listRef.current[item.name] = el)}
+            ref={(el) => (listRef.current[item.id] = el)}
             className={[
               "overflow-hidden duration-300 ease-in-out",
               isExpand ? "" : isExpandOnHover ? "" : "h-0",
             ].join(" ")}
-            style={{ maxHeight: `${openedMenu[item.name]?.height || "0px"}` }}
-            key={item.name}
+            style={{ maxHeight: `${openedMenu[item.id]?.height || "0px"}` }}
+            key={item.id}
           >
             {item.child?.map((value: any, idx: number) => (
               <GenerateMenu

@@ -3,12 +3,13 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
   Navigate,
+  Outlet,
   redirect,
   Route,
   RouterProvider,
 } from "react-router-dom";
-import { Layout } from "./common/components";
-import { Suspense } from "react";
+import { Layout, Sidebar } from "./common/components";
+import { Suspense, useEffect, useState } from "react";
 import { About, Events, Home, Schedule, User } from "./modules";
 import { ResponseModal } from "./common";
 
@@ -18,18 +19,20 @@ const protectLoader = async () =>
     : null;
 
 export const App = () => {
+  const [sideMenuIsExpand, setSideMenuIsExpand] = useState(true);
+  useEffect(() => {
+    authProvider.sessionValid();
+  }, []);
+
   return (
     <>
       <ResponseModal />
       <RouterProvider
         router={createBrowserRouter(
           createRoutesFromElements([
-            <Route
-              element={<Layout />}
-              action={() => authProvider.sessionValid()}
-            >
+            <Route element={<Layout />}>
               <Route
-                path="/events"
+                path="events"
                 key={3}
                 element={
                   <Suspense>
@@ -38,7 +41,7 @@ export const App = () => {
                 }
               />
               <Route
-                path="/schedule"
+                path="schedule"
                 key={4}
                 element={
                   <Suspense>
@@ -47,7 +50,7 @@ export const App = () => {
                 }
               />
               <Route
-                path="/about"
+                path="about"
                 key={5}
                 element={
                   <Suspense>
@@ -56,15 +59,29 @@ export const App = () => {
                 }
               />
               <Route
-                path="/user"
+                path="user"
                 key={6}
                 element={
-                  <Suspense>
-                    <User />
-                  </Suspense>
+                  <>
+                    <Sidebar setExpand={setSideMenuIsExpand} />
+                    <div
+                      className={`flex-1 min-h-full mx-0transition-all duration-300 ease-in-out  ${
+                        sideMenuIsExpand ? "md:ml-72" : "md:ml-20"
+                      }`}
+                    >
+                      <Outlet />
+                    </div>
+                  </>
                 }
                 loader={protectLoader}
-              />
+              >
+                <Route
+                  path="config"
+                  key={7}
+                  element={<User />}
+                  loader={protectLoader}
+                />
+              </Route>
               <Route
                 path="/"
                 key={1}
