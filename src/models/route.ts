@@ -7,6 +7,6 @@ export interface Route {
   parent?: boolean;
   roles?: "ADMIN";
   icon: ReactNode;
-  link: string;
+  // link: string;
   child?: Route[];
 }

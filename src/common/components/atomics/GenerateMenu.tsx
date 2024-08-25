@@ -64,7 +64,7 @@ export const GenerateMenu = ({
     }
   };
   useEffect(() => {
-    if (activeName === "" && activeLink.includes(item.link)) {
+    if (activeName === "" && activeLink.includes(item.id)) {
       setActiveName(item.id);
     }
   }, []);
@@ -73,7 +73,7 @@ export const GenerateMenu = ({
     (item.roles != "ADMIN" || authProvider.userData?.role == "ADMIN") && (
       <li key={index}>
         <Link
-          to={item.link}
+          to={`./${item.id}`}
           role="button"
           tabIndex={0}
           id={item.id}
@@ -98,7 +98,7 @@ export const GenerateMenu = ({
             "group m-0 flex cursor-pointer rounded-lg items-center justify-between h-12 py-0 pr-3 mb-1 focus:outline-none",
             recursive === 0 ? "pl-4" : recursive === 1 ? "pl-11" : "pl-16",
             activeName === item.id || activeName.split(".")[0] === item.id
-              ? `text-blue-600 font-semibold ${
+              ? `text-secondary font-semibold ${
                   item.parent ? "bg-blue-200/20 " : "bg-transparent"
                 }`
               : `text-slate-500 ${item.parent && ""}`,

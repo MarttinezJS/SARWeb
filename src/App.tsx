@@ -12,6 +12,11 @@ import { Layout, Sidebar } from "./common/components";
 import { Suspense, useEffect, useState } from "react";
 import { About, Events, Home, Schedule, User } from "./modules";
 import { ResponseModal } from "./common";
+import { Devotional } from "./modules/devotional";
+import { News } from "./modules/news";
+import { Patterns } from "./modules/partterns";
+import { ScheduleConfig } from "./modules/schedule";
+import { EventsConfig } from "./modules/events";
 
 const protectLoader = async () =>
   !authProvider.isAuthenticated && !(await authProvider.sessionValid())
@@ -79,6 +84,36 @@ export const App = () => {
                   path="config"
                   key={7}
                   element={<User />}
+                  loader={protectLoader}
+                />
+                <Route
+                  path="news"
+                  key={7}
+                  element={<News />}
+                  loader={protectLoader}
+                />
+                <Route
+                  path="devotional"
+                  key={7}
+                  element={<Devotional />}
+                  loader={protectLoader}
+                />
+                <Route
+                  path="patterns"
+                  key={7}
+                  element={<Patterns />}
+                  loader={protectLoader}
+                />
+                <Route
+                  path="schedules"
+                  key={7}
+                  element={<ScheduleConfig />}
+                  loader={protectLoader}
+                />
+                <Route
+                  path="events"
+                  key={7}
+                  element={<EventsConfig />}
                   loader={protectLoader}
                 />
               </Route>

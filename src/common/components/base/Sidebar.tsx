@@ -85,7 +85,7 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
       <div
         onMouseEnter={() => handleHoverExpand(true)}
         onMouseLeave={() => handleHoverExpand(false)}
-        className={`relative h-screen overflow-hidden`}
+        className={`relative h-screen overflow-hidden bg-background`}
       >
         <SimpleBar style={{ height: "100%", paddingTop: "50px" }} autoHide>
           <div className="text-slate-500">
@@ -111,26 +111,26 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
                       0
                     )}${user?.lastName?.charAt(0)}`}
                     isBordered
-                    color={activeName == "User" ? "primary" : "default"}
-                    className="w-full h-full text-large"
+                    color={activeName == "config" ? "primary" : "default"}
+                    className="w-full h-full text-large text-secondary"
                   />
                 </div>
                 <div
-                  className={`text-base font-semibold text-slate-700 mt-3 truncate duration-300 ${
+                  className={`text-base font-semibold text-secondary mt-3 truncate duration-300 ${
                     isExpand ? "" : isExpandOnHover ? "" : "w-0 h-0 opacity-0"
                   }`}
                 >
                   {`${user?.firstName} ${user?.lastName}`}
                 </div>
                 <div
-                  className={`duration-300 text-sm text-slate-500 truncate ${
+                  className={`duration-300 text-sm text-secondary truncate ${
                     isExpand ? "" : isExpandOnHover ? "" : "w-0 h-0 opacity-0"
                   }`}
                 >
                   {user?.email}
                 </div>
                 <div
-                  className={`duration-300 text-sm text-slate-300 truncate ${
+                  className={`duration-300 text-sm text-secondary truncate ${
                     isExpand ? "" : isExpandOnHover ? "" : "w-0 h-0 opacity-0"
                   }`}
                 >
