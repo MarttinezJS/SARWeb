@@ -15,6 +15,9 @@ export default {
         background: "#FFF1D7",
         "whatsapp-color": "#25d366",
       },
+      height: {
+        "screen-with-navbar": "calc(100vh - 65px)",
+      },
     },
   },
   darkMode: "class",

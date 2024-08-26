@@ -53,7 +53,7 @@ export const Layout = () => {
   const redirectTo = useNavigate();
 
   return (
-    <div className="lg:h-screen">
+    <div className="lg:h-screen-with-navbar">
       <LoginModal isOpen={isOpen} onOpenChange={onOpenChange} />
       <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full">
         <NavbarContent>
