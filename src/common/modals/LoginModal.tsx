@@ -19,7 +19,7 @@ export const LoginModal = ({ isOpen, onOpenChange }: LoginModalProps) => {
   const navigate = useNavigate();
   return (
     <Modal
-      placement="top-center"
+      placement="center"
       size="sm"
       backdrop="blur"
       isOpen={isOpen}

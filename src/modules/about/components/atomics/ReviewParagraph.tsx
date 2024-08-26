@@ -33,7 +33,6 @@ const paragraphs: string[] = [
 export const ReviewParagraph = () => {
   return (
     <div>
-      <p>Reseña Histórica</p>
       {paragraphs.map((value) => (
         <p key={Math.random() * 100} className="my-2">
           {value}

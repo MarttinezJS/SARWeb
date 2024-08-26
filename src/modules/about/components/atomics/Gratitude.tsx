@@ -6,17 +6,17 @@ export const Gratitude = () => {
       <div className="flex flex-grow gap-2 items-center">
         <Image
           alt="Breathing app icon"
-          className="rounded-full w-10 h-11 bg-black"
+          className="rounded-full w-11 h-11 bg-black"
           src="/favicon.png"
         />
         <div className="flex flex-col">
-          <p className="text-tiny text-white/60">Agradecimientos</p>
-          <p className="text-tiny text-white/60">
+          <p className=" text-white/60">Agradecimientos</p>
+          <p className=" text-white/60">
             A la Empresa Cerrejon antes Intercor, por facilitar los estudios de
             Radio Cerrejon, para cumplir con la misión del evangelio del Señor
             Jesucristo durante 21 años.
           </p>
-          <p className="text-tiny text-white/60">
+          <p className=" text-white/60">
             Dios bendiga al equipo ministerial, por su apoyo incondicional, en
             la conducción de cada programa.{" "}
           </p>

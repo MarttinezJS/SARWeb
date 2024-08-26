@@ -126,9 +126,23 @@ export const Layout = () => {
 
         <NavbarMenu>
           <NavbarMenuItem>
-            <Link color={"primary"} className="w-full" size="lg">
-              Cosa 1
-            </Link>
+            {menuOptions.map((option) => {
+              if (option.key == "/user" && !authProvider.isAuthenticated) {
+                return <div key={option.key}></div>;
+              }
+              <Link
+                key={Math.random() * 10}
+                onPress={() => {
+                  redirectTo(option.key);
+                  setCurrentPath(option.key);
+                }}
+                color="secondary"
+                className="w-full"
+                size="lg"
+              >
+                {option.title}
+              </Link>;
+            })}
           </NavbarMenuItem>
         </NavbarMenu>
       </Navbar>

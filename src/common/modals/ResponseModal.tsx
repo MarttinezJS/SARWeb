@@ -6,7 +6,12 @@ import { VscError } from "react-icons/vsc";
 export const ResponseModal = () => {
   const { visible, resp, closeModal } = useResponseModalStore();
   return resp ? (
-    <Modal backdrop="blur" onClose={closeModal} isOpen={visible}>
+    <Modal
+      backdrop="blur"
+      onClose={closeModal}
+      placement="center"
+      isOpen={visible}
+    >
       <ModalContent>
         {() => (
           <>
