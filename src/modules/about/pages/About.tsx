@@ -10,12 +10,13 @@ import { Gratitude, ReviewParagraph } from "../components";
 
 export const About = () => {
   return (
-    <div className="py-2 flex justify-center bg-gradient-to-t from-secondary to-background">
+    <div className="py-2 flex sm:h-screen-with-navbar sm:min-h-min min-h-screen bg-[url('/Atardecer.jpeg')] justify-center sm:bg-gradient-to-t from-secondary to-background">
       <Card
         isFooterBlurred
-        className="lg:min-w-min sm:min-h-max  col-span-12 sm:col-span-7"
+        shadow="none"
+        className="lg:min-w-min  bg-transparent col-span-12 sm:col-span-7"
       >
-        <CardHeader className="absolute z-10 top-1 flex-col items-start">
+        <CardHeader className="lg:absolute z-10 top-1 flex-col items-start">
           <p className="text-tiny text-white/60 uppercase font-bold">
             Atardecer desde la cabina de sigue adelante radio.
           </p>
@@ -23,11 +24,12 @@ export const About = () => {
             Sigue Adelante Radio
           </h4>
         </CardHeader>
-        <div className="flex justify-center py-20 absolute w-full z-10">
-          <div className="flex gap-1 py-2 w-10/12">
+        <div className="flex justify-center lg:py-20  lg:absolute w-full z-10">
+          <div className="flex gap-1 py-2 w-full p-2  sm:w-10/12">
             <Accordion
               className="backdrop-blur-xl bg-black/40 text-white"
               isCompact
+              fullWidth
               variant="shadow"
               motionProps={{
                 variants: {
@@ -103,7 +105,7 @@ export const About = () => {
         <Image
           isBlurred
           src={atardecer}
-          className="z-0 w-full lg:h-screen-with-navbar absolute lg:relative object-cover"
+          className="z-0 w-full h-screen-with-navbar hidden sm:flex absolute lg:relative object-cover"
           alt="Atardece en la cabina de sigue adelante radio"
         />
         <Gratitude />

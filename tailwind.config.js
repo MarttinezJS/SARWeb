@@ -16,7 +16,7 @@ export default {
         "whatsapp-color": "#25d366",
       },
       height: {
-        "screen-with-navbar": "calc(100vh - 65px)",
+        "screen-with-navbar": "calc(100vh - 64px)",
       },
     },
   },

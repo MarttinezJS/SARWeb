@@ -2,11 +2,11 @@ import { CardFooter, Image } from "@nextui-org/react";
 
 export const Gratitude = () => {
   return (
-    <CardFooter className="absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
+    <CardFooter className="lg:absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
       <div className="flex flex-grow gap-2 items-center">
         <Image
           alt="Breathing app icon"
-          className="rounded-full w-11 h-11 bg-black"
+          className="rounded-full w-11 h-11 hidden sm:flex bg-black"
           src="/favicon.png"
         />
         <div className="flex flex-col">
