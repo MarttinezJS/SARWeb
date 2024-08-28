@@ -1,1 +1,1 @@
-export * from "./Devotional";
+export * from "./Devotionals";

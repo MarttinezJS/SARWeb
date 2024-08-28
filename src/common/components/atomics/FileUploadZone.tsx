@@ -9,15 +9,18 @@ interface Config {
   others?: string[];
 }
 interface FileUploadZoneProps {
-  setFile: (file: File) => void;
   config?: Config;
+  onChangeFile: (file: File) => void;
 }
 
-export const FileUploadZone = ({ setFile, config }: FileUploadZoneProps) => {
+export const FileUploadZone = ({
+  onChangeFile,
+  config,
+}: FileUploadZoneProps) => {
   const { showModal: showResponse } = useResponseModalStore();
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     multiple: false,
-    onDropAccepted: (e) => setFile(e[0]),
+    onDropAccepted: (e) => onChangeFile(e[0]),
     onDropRejected: (errors) => {
       const resp: Response<string[]> = {
         error: true,
@@ -35,7 +38,7 @@ export const FileUploadZone = ({ setFile, config }: FileUploadZoneProps) => {
     },
   });
   useEffect(() => {
-    setFile(acceptedFiles[0]);
+    onChangeFile(acceptedFiles[0]);
   }, [acceptedFiles]);
 
   return (
@@ -49,7 +52,7 @@ export const FileUploadZone = ({ setFile, config }: FileUploadZoneProps) => {
         })}
       />
       <p className="text-2xl text-gray-300">
-        Arrastra un archivo o has click para subir.
+        Arrastra la imagen o has click para subir.
       </p>
     </div>
   );

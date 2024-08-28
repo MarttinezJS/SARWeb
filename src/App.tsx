@@ -12,7 +12,7 @@ import { Layout, Sidebar } from "./common/components";
 import { Suspense, useEffect, useState } from "react";
 import { About, Events, Home, Schedule, User } from "./modules";
 import { ResponseModal } from "./common";
-import { Devotional } from "./modules/devotional";
+import { Devotionals } from "./modules/devotional";
 import { News } from "./modules/news";
 import { Patterns } from "./modules/partterns";
 import { ScheduleConfig } from "./modules/schedule";
@@ -96,7 +96,7 @@ export const App = () => {
                 <Route
                   path="devotional"
                   key={7}
-                  element={<Devotional />}
+                  element={<Devotionals />}
                   loader={protectLoader}
                 />
                 <Route

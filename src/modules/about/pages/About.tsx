@@ -73,7 +73,7 @@ export const About = () => {
                 aria-label="Misión"
                 title={<p className="text-white">Misión</p>}
               >
-                <p>
+                <p className="text-justify">
                   <strong>Sigue Adelante Radio</strong>, en el tiempo será la
                   opción preferida por el pluralismo humano, al contar con
                   Principios y valores de alta definición, en el contexto,
@@ -85,7 +85,7 @@ export const About = () => {
                 aria-label="Visión"
                 title={<p className="text-white">Visión</p>}
               >
-                <p>
+                <p className="text-justify">
                   <strong>Sigue Adelante Radio</strong>, en el tiempo será la
                   opción preferida por el pluralismo humano, al contar con
                   Principios y valores de alta definición, en el contexto,

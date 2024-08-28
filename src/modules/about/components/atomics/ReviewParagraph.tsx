@@ -34,7 +34,7 @@ export const ReviewParagraph = () => {
   return (
     <div>
       {paragraphs.map((value) => (
-        <p key={Math.random() * 100} className="my-2">
+        <p key={Math.random() * 100} className="my-2 text-justify">
           {value}
         </p>
       ))}

@@ -51,7 +51,7 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
     <nav
       role="navigation"
       className={[
-        "bg-slate-50 border-r border-slate-100 shadow-sm absolute inset-y-0 left-0",
+        "bg-slate-50 border-r border-slate-100 shadow-sm absolute inset-y-0 left-0 hidden sm:block",
         "duration-300 ease-in-out md:fixed md:translate-x-0",
         `${
           isExpand
