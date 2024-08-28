@@ -11,7 +11,7 @@ import {
   Image,
   useDisclosure,
 } from "@nextui-org/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { Reproductor } from "./Reproductor";
 import { IoMdExit } from "react-icons/io";
@@ -48,9 +48,13 @@ const menuOptions: MenuOptions[] = [
 
 export const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentPath, setCurrentPath] = useState("/");
+  const [currentPath, setCurrentPath] = useState(location.pathname);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const redirectTo = useNavigate();
+  useEffect(() => {
+    const routesNames = location.pathname.split("/");
+    setCurrentPath(`/${routesNames[1]}`);
+  }, []);
 
   return (
     <div className="lg:h-screen-with-navbar">

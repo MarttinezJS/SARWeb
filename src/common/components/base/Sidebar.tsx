@@ -43,6 +43,8 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
 
   useEffect(() => {
     authProvider.userData?.id && getUser();
+    const routesNames = location.pathname.split("/");
+    setActiveName(routesNames[routesNames.length - 1]);
   }, []);
 
   return (
@@ -91,7 +93,7 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
           <div className="text-slate-500">
             <div className="my-8 flex flex-col items-center h-48 overflow-x-hidden">
               <Link
-                to={`/user/config`}
+                to={`config`}
                 onClick={() => {
                   setActiveName("config");
                 }}

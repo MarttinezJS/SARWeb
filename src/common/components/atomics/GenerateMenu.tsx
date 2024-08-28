@@ -27,7 +27,6 @@ export const GenerateMenu = ({
   const [openedMenu, setOpenedMenu] = useState<Record<string, any>>({});
   const listRef = useRef<Record<string, HTMLUListElement | null>>({});
   const handleNavigate = (path: string) => setActiveName(path);
-
   const handleToggle = (name: string) => {
     const rootEl = name.split(".")[0];
 
@@ -80,7 +79,7 @@ export const GenerateMenu = ({
           onClick={() => {
             if ("child" in item) {
               handleToggle(item.id);
-            } else if ("link" in item) {
+            } else if ("id" in item) {
               handleNavigate(item.id);
             }
           }}
@@ -89,7 +88,7 @@ export const GenerateMenu = ({
             if (code === "Space") {
               if ("child" in item) {
                 handleToggle(item.id);
-              } else if ("link" in item) {
+              } else if ("id" in item) {
                 handleNavigate(item.id);
               }
             }

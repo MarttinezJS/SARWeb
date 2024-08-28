@@ -1,20 +1,37 @@
 import {
   Button,
   Card,
-  CardBody,
   CardFooter,
   CardHeader,
-  Divider,
+  CircularProgress,
   useDisclosure,
 } from "@nextui-org/react";
 import { FaWhatsapp } from "react-icons/fa";
 import { DevotionalModal } from "../modals";
+import { useEffect, useState } from "react";
+import { Devotional } from "../../models";
+import { formatDate, get } from "../../../../common";
+import { Endpoints } from "../../config/endpoints";
 
 export const InformationComponent = () => {
   const { isOpen, onOpenChange, onOpen } = useDisclosure();
+  const [isLoading, setIsLoading] = useState(false);
+  const [devotional, setDevotional] = useState<Devotional>();
+  useEffect(() => {
+    setIsLoading(true);
+    get<Devotional>(Endpoints.LAST_DEVOTIONAL).then((resp) => {
+      setDevotional(resp.body);
+      setIsLoading(false);
+    });
+  }, []);
+
   return (
     <div className="grid justify-items-center pt-2">
-      <DevotionalModal isOpen={isOpen} onOpenChange={onOpenChange} />
+      <DevotionalModal
+        imageUrl={devotional?.imageUrl}
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      />
       <div className="p-5 w-full">
         <Card
           isFooterBlurred
@@ -23,13 +40,18 @@ export const InformationComponent = () => {
         >
           <CardHeader>
             <p className="font-bold text-2xl text-secondary">
-              Devocional despertando con el maestro
+              Despertando con el maestro
             </p>
           </CardHeader>
-          <CardBody>s</CardBody>
-          <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
+          <CardFooter className="bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">
             <div>
-              <p className="text-black text-tiny">01/08/2024</p>
+              {!isLoading ? (
+                <p className="text-black text-tiny">
+                  {formatDate(devotional?.createdDate)}
+                </p>
+              ) : (
+                <CircularProgress />
+              )}
             </div>
             <Button
               className="text-tiny"
@@ -43,11 +65,11 @@ export const InformationComponent = () => {
           </CardFooter>
         </Card>
       </div>
-      <Divider className="my-5" />
       <Button
         endContent={<FaWhatsapp />}
         variant="shadow"
         size="lg"
+        isDisabled={isLoading}
         className="bg-whatsapp-color text-white animate-bounce "
         onPress={() =>
           (window.location.href =

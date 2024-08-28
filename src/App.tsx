@@ -80,6 +80,7 @@ export const App = () => {
                 }
                 loader={protectLoader}
               >
+                <Route path="" element={<Navigate to="config" />} />
                 <Route
                   path="config"
                   key={7}

@@ -1,3 +1,11 @@
+import { useState } from "react";
+import { FileUploadZone } from "../../../common";
+
 export const Devotional = () => {
-  return <div>Devotional</div>;
+  const [file, setFile] = useState<File>();
+  return (
+    <div>
+      <FileUploadZone setFile={setFile} config={{ image: "*" }} />
+    </div>
+  );
 };
