@@ -1,4 +1,4 @@
-import { Button, type ButtonProps } from "@nextui-org/react";
+import type { ButtonProps } from "@nextui-org/react";
 import type { ReactNode } from "react";
 import {
   FormProvider,
@@ -7,23 +7,13 @@ import {
   type Path,
   type RegisterOptions,
   type SubmitHandler,
-  type UseFormGetValues,
   type UseFormRegisterReturn,
 } from "react-hook-form";
 import { SubmitButton } from "../buttons";
-import { InputForm } from "../input";
 
 interface CustomButtonProps {
   label: string;
   submitIcon?: ReactNode;
-}
-
-interface FormField<T extends FieldValues> {
-  field: Path<T>;
-  label: string;
-  validations?: RegisterOptions<T, Path<T>>;
-  visibleIf?: (fields: UseFormGetValues<T>) => void;
-  variant: "input";
 }
 
 interface CustomFormProps<REQ extends FieldValues> {

@@ -2,7 +2,8 @@
 const { nextui } = require("@nextui-org/react");
 export default {
   content: [
-    "./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}",
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
@@ -13,6 +14,9 @@ export default {
         "yellow-background": "#F1E5BF",
         background: "#FFF1D7",
         "whatsapp-color": "#25d366",
+      },
+      height: {
+        "screen-with-navbar": "calc(100vh - 64px)",
       },
     },
   },
