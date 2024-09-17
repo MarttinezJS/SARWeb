@@ -4,6 +4,7 @@ import {
   CarouselPartners,
   EventsComponent,
   InformationComponent,
+  SongHistory,
 } from "../components";
 
 export const Home = () => {
@@ -12,7 +13,7 @@ export const Home = () => {
       <div className="lg:columns-3 h-full gap-0">
         <div className="h-full">
           <div className="border-1 border-primary h-1/2 items-center flex">
-            {/* <MainMenu /> */}
+            <SongHistory />
           </div>
           <div className="border-1 border-primary h-1/2">
             <CarouselNews />

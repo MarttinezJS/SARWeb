@@ -1,4 +1,5 @@
 import { Image, Modal, ModalBody, ModalContent } from "@nextui-org/react";
+import { Environment } from "../../../../config/environment";
 
 interface DevotionalModalProps {
   isOpen: boolean;
@@ -18,9 +19,7 @@ export const DevotionalModal = ({
           <ModalBody>
             {imageUrl && (
               <Image
-                src={`https://res.cloudinary.com/${
-                  import.meta.env.VITE_CLOUD_NAME
-                }/image/upload/v1724733305/${imageUrl}`}
+                src={`https://res.cloudinary.com/${Environment.VITE_CLOUD_NAME}/image/upload/v1724733305/${imageUrl}`}
               />
             )}
           </ModalBody>

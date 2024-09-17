@@ -1,4 +1,4 @@
-export * from "./MainMenu";
+export * from "./SongHistory";
 export * from "./CarouselNews";
 export * from "./InformationComponent";
 export * from "./CarouselPartners";
