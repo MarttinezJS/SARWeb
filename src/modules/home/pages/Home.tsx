@@ -2,6 +2,7 @@ import { Image } from "@nextui-org/react";
 import {
   CarouselNews,
   CarouselPartners,
+  DevotionalComponent,
   EventsComponent,
   InformationComponent,
   SongHistory,
@@ -22,8 +23,7 @@ export const Home = () => {
 
         <div className="h-full">
           <div className="border-1 border-primary h-1/4 items-center flex justify-center">
-            {/* <Reproductor /> */}
-            <InformationComponent />
+            <DevotionalComponent />
           </div>
           <div className="border-1 border-primary h-1/2 content-center justify-center grid bg-primary">
             <Image
@@ -33,7 +33,9 @@ export const Home = () => {
               width="300"
             />
           </div>
-          <div className="border-1 border-primary h-1/4"></div>
+          <div className="border-1 border-primary h-1/4">
+            <InformationComponent />
+          </div>
         </div>
 
         <div className="h-full">

@@ -13,7 +13,7 @@ export const SongHistory = () => {
   const getHistory = async () => {
     setIsLoading(true);
     const endDate = parseDatePHP(new Date(Date.now()));
-    const startDate = parseDatePHP(new Date(Date.now() - 1_800_000));
+    const startDate = parseDatePHP(new Date(Date.now() - 3_600_000));
 
     try {
       const { data } = await httpClient.get(
