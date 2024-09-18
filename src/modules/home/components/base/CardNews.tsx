@@ -6,12 +6,14 @@ import {
   Image,
 } from "@nextui-org/react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { getClodinaryUrl } from "../../../../common";
+import { New } from "../../models";
 interface CardNewsProps {
-  title: string;
-  imageUrl: string;
-  text: string;
+  new: New;
 }
-export const CardNews = ({ imageUrl, text, title }: CardNewsProps) => {
+export const CardNews = ({
+  new: { imageUrl, abstract, title },
+}: CardNewsProps) => {
   return (
     <Card className="max-w-[400px] justify-center flex xl:my-10 bg-yellow-background">
       <CardHeader className="justify-center">
@@ -22,13 +24,13 @@ export const CardNews = ({ imageUrl, text, title }: CardNewsProps) => {
         <Image
           alt="Card background"
           className="object-cover rounded-xl max-xl:size-32"
-          src={imageUrl}
+          src={getClodinaryUrl(imageUrl)}
           width={270}
         />
       </div>
       <Divider />
       <CardFooter>
-        <div className="max-xl:text-small">{text}</div>
+        <div className="max-xl:text-small">{abstract}</div>
       </CardFooter>
     </Card>
   );
