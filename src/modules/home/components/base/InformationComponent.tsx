@@ -29,7 +29,7 @@ export const InformationComponent = () => {
           {() => (
             <ModalBody>
               <iframe
-                src="https://stream.sigueadelanteradio.com/public/milanesa/embed-requests"
+                src="https://stream.sigueadelanteradio.com/public/sigue_adelante_radio/embed-requests"
                 id="request-songs"
                 title="Solicitud de canciones"
                 allow="fullscreen"
