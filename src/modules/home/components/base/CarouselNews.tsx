@@ -1,32 +1,36 @@
 import { Carousel } from "react-responsive-carousel";
 import { CardNews } from "./CardNews";
 import { EmptyElement } from "../atomics";
-
-interface New {
-  title: string;
-  image: string;
-  text: string;
-}
-const news: New[] = [
-  // {
-  //   title: "Titulo 1",
-  //   image: "https://nextui.org/images/hero-card-complete.jpeg",
-  //   text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, vero. Quasi quisquam corporis officia. Accusantium omnis alias quam vero, porro eveniet laborum quibusdam nam perspiciatis voluptatem. Quam, eveniet. Quae, vel.",
-  // },
-  // {
-  //   title: "Titulo 2",
-  //   image: "https://nextui.org/images/hero-card-complete.jpeg",
-  //   text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, vero. Quasi quisquam corporis officia. Accusantium omnis alias quam vero, porro eveniet laborum quibusdam nam perspiciatis voluptatem. Quam, eveniet. Quae, vel.",
-  // },
-  // {
-  //   title: "Titulo 3",
-  //   image: "https://nextui.org/images/hero-card-complete.jpeg",
-  //   text: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum, vero. Quasi quisquam corporis officia. Accusantium omnis alias quam vero, porro eveniet laborum quibusdam nam perspiciatis voluptatem. Quam, eveniet. Quae, vel.",
-  // },
-];
+import { useEffect, useState } from "react";
+import { get } from "../../../../common";
+import { Endpoints } from "../../config/endpoints";
+import { useResponseModalStore } from "../../../../hooks";
+import { New } from "../../models";
+import { Pagination } from "../../../../models";
+import { CircularProgress } from "@nextui-org/react";
 
 export const CarouselNews = () => {
-  return news.length > 0 ? (
+  const [isLoading, setIsLoading] = useState(true);
+  const [news, setNews] = useState<New[]>([]);
+  const showResp = useResponseModalStore((s) => s.showModal);
+  useEffect(() => {
+    setIsLoading(true);
+    get<Pagination<New>>(Endpoints.NEWS).then((resp) => {
+      const list = resp.body?.results;
+      if (resp.error || !list) {
+        showResp(resp);
+        return;
+      }
+      setNews(list);
+      setIsLoading(false);
+    });
+  }, []);
+
+  return isLoading ? (
+    <div className="flex justify-center items-center h-full">
+      <CircularProgress />
+    </div>
+  ) : news.length > 0 ? (
     <Carousel
       infiniteLoop
       autoPlay
@@ -36,7 +40,7 @@ export const CarouselNews = () => {
     >
       {news.map((value, i) => (
         <div className="flex justify-center" key={i}>
-          <CardNews {...value} imageUrl={value.image} />
+          <CardNews new={value} />
         </div>
       ))}
     </Carousel>

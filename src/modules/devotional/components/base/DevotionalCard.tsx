@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
 import { MdDelete } from "react-icons/md";
-import { Environment } from "../../../../config/environment";
+import { getClodinaryUrl } from "../../../../common";
 
 interface DevotionalCardProps {
   imageUrl: string;
@@ -17,7 +17,7 @@ export const DevotionalCard = ({
           //   width={300}
           className="max-w-72"
           aria-label="Imagen del devocional"
-          src={`https://res.cloudinary.com/${Environment.VITE_CLOUD_NAME}/image/upload/v1724733305/${imageUrl}`}
+          src={getClodinaryUrl(imageUrl)}
         />
       </CardBody>
       <CardFooter>

@@ -8,6 +8,13 @@ services:
       - 5000:80
     networks:
       - sigue-adelante-radio
+    environment:
+      VITE_API_URL: $VITE_API_URL
+      VITE_WS_URL: $VITE_WS_URL
+      VITE_CLOUD_NAME: $VITE_CLOUD_NAME
+      VITE_AZURA_API_KEY: $VITE_AZURA_API_KEY
+      VITE_AZURA_API_URL: $VITE_AZURA_API_URL
+      VITE_STATION_ID: $VITE_STATION_ID
     
 
 networks:

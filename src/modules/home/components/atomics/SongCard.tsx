@@ -34,7 +34,7 @@ export const SongCard = ({ song, duration }: SongCardProps) => {
                 <p>{song.title}</p>
               </ModalHeader>
               <ModalBody>
-                <pre className="font-sans">{song.lyrics}</pre>
+                <pre className="font-sans text-center">{song.lyrics}</pre>
               </ModalBody>
             </>
           )}
