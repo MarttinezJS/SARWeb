@@ -15,15 +15,16 @@ export const CarouselNews = () => {
   const showResp = useResponseModalStore((s) => s.showModal);
   useEffect(() => {
     setIsLoading(true);
-    get<Pagination<New>>(Endpoints.NEWS).then((resp) => {
-      const list = resp.body?.results;
-      if (resp.error || !list) {
-        showResp(resp);
-        return;
-      }
-      setNews(list);
-      setIsLoading(false);
-    });
+    get<Pagination<New>>(`${Endpoints.NEWS}?page=0&size=10`)
+      .then((resp) => {
+        const list = resp.body?.results;
+        if (resp.error || !list) {
+          showResp(resp);
+          return;
+        }
+        setNews(list);
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   return isLoading ? (

@@ -12,15 +12,16 @@ export const CarouselPartners = () => {
   const [isLoading, setIsLoading] = useState(true);
   const showResp = useResponseModalStore((s) => s.showModal);
   useEffect(() => {
-    get<Partner[]>(Endpoints.PARTNERS).then((resp) => {
-      const list = resp.body;
-      if (resp.error || !list) {
-        showResp(resp);
-        return;
-      }
-      setPartners(list);
-      setIsLoading(false);
-    });
+    get<Partner[]>(Endpoints.PARTNERS)
+      .then((resp) => {
+        const list = resp.body;
+        if (resp.error || !list) {
+          showResp(resp);
+          return;
+        }
+        setPartners(list);
+      })
+      .finally(() => setIsLoading(false));
   }, []);
 
   return isLoading ? (
