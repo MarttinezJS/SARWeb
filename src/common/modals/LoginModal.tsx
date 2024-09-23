@@ -44,6 +44,7 @@ export const LoginModal = ({ isOpen, onOpenChange }: LoginModalProps) => {
                     onClose();
                     navigate("/user");
                   }
+                  return resp;
                 }}
               >
                 {(register) => (
