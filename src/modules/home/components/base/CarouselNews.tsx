@@ -4,7 +4,6 @@ import { EmptyElement } from "../atomics";
 import { useEffect, useState } from "react";
 import { get } from "../../../../common";
 import { Endpoints } from "../../config/endpoints";
-import { useResponseModalStore } from "../../../../hooks";
 import { New } from "../../models";
 import { Pagination } from "../../../../models";
 import { CircularProgress } from "@nextui-org/react";
@@ -12,14 +11,12 @@ import { CircularProgress } from "@nextui-org/react";
 export const CarouselNews = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [news, setNews] = useState<New[]>([]);
-  const showResp = useResponseModalStore((s) => s.showModal);
   useEffect(() => {
     setIsLoading(true);
     get<Pagination<New>>(`${Endpoints.NEWS}?page=0&size=10`)
       .then((resp) => {
         const list = resp.body?.results;
         if (resp.error || !list) {
-          showResp(resp);
           return;
         }
         setNews(list);

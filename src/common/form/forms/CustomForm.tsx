@@ -6,10 +6,10 @@ import {
   type FieldValues,
   type Path,
   type RegisterOptions,
-  type SubmitHandler,
   type UseFormRegisterReturn,
 } from "react-hook-form";
 import { SubmitButton } from "../buttons";
+import { Response } from "../../../models";
 
 interface CustomButtonProps {
   label: string;
@@ -17,7 +17,10 @@ interface CustomButtonProps {
 }
 
 interface CustomFormProps<REQ extends FieldValues> {
-  onSubmit: SubmitHandler<REQ>;
+  onSubmit: (
+    data: REQ,
+    event?: React.BaseSyntheticEvent
+  ) => Promise<Response<unknown>> | undefined;
   submitButtonProps?: ButtonProps & CustomButtonProps;
   children: (
     register: (
@@ -39,7 +42,17 @@ export const CustomForm = <REQ extends FieldValues>({
 
   return (
     <FormProvider {...customForm}>
-      <form onSubmit={customForm.handleSubmit(onSubmit)}>
+      <form
+        onSubmit={customForm.handleSubmit(async (data, e) => {
+          const resp = await onSubmit(data, e);
+          if (resp && resp.error == false) {
+            console.log("Reset");
+
+            customForm.reset();
+          }
+        })}
+        className="w-full"
+      >
         {children(customForm.register)}
         <div className="flex justify-end mt-5">
           <SubmitButton

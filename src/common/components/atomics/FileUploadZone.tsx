@@ -1,7 +1,8 @@
 import { useDropzone } from "react-dropzone";
 import { useResponseModalStore } from "../../../hooks";
 import { Response } from "../../../models";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Image } from "@nextui-org/react";
 interface Config {
   audio?: string | "*";
   image?: string | "*";
@@ -11,16 +12,23 @@ interface Config {
 interface FileUploadZoneProps {
   config?: Config;
   onChangeFile: (file: File) => void;
+  text?: string;
 }
 
 export const FileUploadZone = ({
   onChangeFile,
   config,
+  text,
 }: FileUploadZoneProps) => {
   const { showModal: showResponse } = useResponseModalStore();
+  const [imageSelected, setImageSelected] = useState<File>();
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     multiple: false,
-    onDropAccepted: (e) => onChangeFile(e[0]),
+    onDropAccepted: (e) => {
+      const file = e[0];
+      setImageSelected(file);
+      onChangeFile(file);
+    },
     onDropRejected: (errors) => {
       const resp: Response<string[]> = {
         error: true,
@@ -51,9 +59,13 @@ export const FileUploadZone = ({
           accept: config ? parseAcceptData(config) : undefined,
         })}
       />
-      <p className="text-2xl text-gray-300">
-        Arrastra la imagen o has click para subir.
-      </p>
+      {!imageSelected ? (
+        <p className="text-2xl text-gray-300">
+          {text ?? "Arrastra la imagen o has click para subir."}
+        </p>
+      ) : (
+        <Image src={URL.createObjectURL(imageSelected)} />
+      )}
     </div>
   );
 };
