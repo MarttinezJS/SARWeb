@@ -14,6 +14,7 @@ interface InputFormProps<T extends FieldValues> {
   type?: "email" | "text" | "number" | "password";
   icon?: ReactNode;
   registerReturn: UseFormRegisterReturn<Path<T>>;
+  fullWidth?: boolean;
 }
 
 export const InputForm = <T extends FieldValues>({
@@ -21,6 +22,7 @@ export const InputForm = <T extends FieldValues>({
   type = "text",
   icon,
   registerReturn,
+  fullWidth = true,
 }: InputFormProps<T>) => {
   const [isVisible, setIsVisible] = useState(false);
   const { setValue } = useFormContext();
@@ -35,6 +37,9 @@ export const InputForm = <T extends FieldValues>({
             startContent={icon}
             variant="bordered"
             size="sm"
+            // value={watch()[registerReturn.name]}
+            ref={registerReturn.ref}
+            fullWidth={fullWidth}
             labelPlacement="inside"
             endContent={
               type == "password" && (
