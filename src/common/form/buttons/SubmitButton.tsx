@@ -1,4 +1,4 @@
-import { Button, type ButtonProps } from "@nextui-org/react";
+import { Button, CircularProgress, type ButtonProps } from "@nextui-org/react";
 import { useEffect, type ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import { FaRegSave } from "react-icons/fa";
@@ -22,7 +22,7 @@ export const SubmitButton = ({
     <Button
       type="submit"
       color="primary"
-      startContent={icon ?? <FaRegSave />}
+      startContent={isSubmitting ? <CircularProgress /> : icon ?? <FaRegSave />}
       {...submitButtonProps}
       isDisabled={submitButtonProps?.disabled == true || isSubmitting}
       isLoading={isSubmitting}

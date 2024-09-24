@@ -11,11 +11,3 @@ export interface Partner {
   email: string;
   contactNumber: string;
 }
-
-export interface RegisterPartnerFields {
-  companyName: string;
-  contact: string;
-  nit: string;
-  email: string;
-  contactNumber: string;
-}
