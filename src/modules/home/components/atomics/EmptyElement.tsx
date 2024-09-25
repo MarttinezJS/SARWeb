@@ -1,20 +1,19 @@
-import { Card, CardHeader, Divider, CardBody } from "@nextui-org/react";
-import { PiListBulletsFill } from "react-icons/pi";
+import { FcOvertime } from "react-icons/fc";
 
 export const EmptyElement = () => {
   return (
-    <div className="p-5 flex items-center h-full justify-center">
-      <Card>
-        <CardHeader>
-          <div className=" text-primary">
-            <PiListBulletsFill size={200} />
-          </div>
-        </CardHeader>
-        <Divider />
-        <CardBody>
-          <p>Sin elementos agregados.</p>
-        </CardBody>
-      </Card>
+    <div className="grid grid-cols-1 items-center justify-items-center h-full justify-center ">
+      <div className="border-primary border-1 drop-shadow-xl bg-yellow-background rounded-2xl h-min p-5">
+        <p className="text-3xl text-secondary font-serif font-bold">
+          Quédate pendiente!!!
+        </p>
+        <p className="font-thin text-secondary">
+          Muy pronto subiremos contenido
+        </p>
+        <div className="w-full justify-center flex">
+          <FcOvertime className="text-8xl" />
+        </div>
+      </div>
     </div>
   );
 };
