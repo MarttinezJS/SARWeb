@@ -13,12 +13,14 @@ interface FileUploadZoneProps {
   config?: Config;
   onChangeFile: (file: File) => void;
   text?: string;
+  defaultImageUrl?: string;
 }
 
 export const FileUploadZone = ({
   onChangeFile,
   config,
   text,
+  defaultImageUrl,
 }: FileUploadZoneProps) => {
   const { showModal: showResponse } = useResponseModalStore();
   const [imageSelected, setImageSelected] = useState<File>();
@@ -59,12 +61,16 @@ export const FileUploadZone = ({
           accept: config ? parseAcceptData(config) : undefined,
         })}
       />
-      {!imageSelected ? (
+      {!imageSelected && !defaultImageUrl ? (
         <p className="text-2xl text-gray-300">
           {text ?? "Arrastra la imagen o has click para subir."}
         </p>
       ) : (
-        <Image src={URL.createObjectURL(imageSelected)} />
+        <Image
+          src={
+            imageSelected ? URL.createObjectURL(imageSelected) : defaultImageUrl
+          }
+        />
       )}
     </div>
   );

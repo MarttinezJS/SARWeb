@@ -9,7 +9,7 @@ import {
   type UseFormRegisterReturn,
 } from "react-hook-form";
 import { SubmitButton } from "../buttons";
-import { Response } from "../../../models";
+import { Response } from "../../../../models";
 
 interface CustomButtonProps {
   label: string;
@@ -21,23 +21,26 @@ interface CustomFormProps<REQ extends FieldValues> {
     data: REQ,
     event?: React.BaseSyntheticEvent
   ) => Promise<Response<unknown>> | undefined;
-  submitButtonProps?: ButtonProps & CustomButtonProps;
   children: (
     register: (
       name: Path<REQ>,
       options?: RegisterOptions<REQ, Path<REQ>> | undefined
     ) => UseFormRegisterReturn<Path<REQ>>
   ) => ReactNode;
+  submitButtonProps?: ButtonProps & CustomButtonProps;
+  defaultValues?: REQ;
 }
 
 export const CustomForm = <REQ extends FieldValues>({
   onSubmit,
   submitButtonProps,
   children,
+  defaultValues,
 }: CustomFormProps<REQ>) => {
   const customForm = useForm<REQ>({
     reValidateMode: "onChange",
     mode: "all",
+    values: defaultValues,
   });
 
   return (

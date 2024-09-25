@@ -3,8 +3,8 @@ export interface Partner {
   imageUrl: string;
   active: boolean;
   amount: number;
-  subscriptionDate: Date;
-  expirationDate: Date;
+  subscriptionDate: string;
+  expirationDate: string;
   companyName: string;
   contact: string;
   nit: string;

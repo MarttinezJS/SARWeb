@@ -1,5 +1,5 @@
 import { Modal, ModalContent, ModalHeader } from "@nextui-org/react";
-import { useResponseModalStore } from "../../hooks";
+import { useResponseModalStore } from "../../../hooks";
 import { CiWarning } from "react-icons/ci";
 import { VscError } from "react-icons/vsc";
 

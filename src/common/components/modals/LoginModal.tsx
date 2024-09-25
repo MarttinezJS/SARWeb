@@ -1,8 +1,8 @@
 import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
-import { useResponseModalStore } from "../../hooks";
+import { useResponseModalStore } from "../../../hooks";
 import { CustomForm, InputForm } from "../form";
-import { authProvider } from "../../core";
+import { authProvider } from "../../../core";
 
 interface LoginFields {
   username: string;
