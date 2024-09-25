@@ -7,6 +7,7 @@ import {
   InformationComponent,
   SongHistory,
 } from "../components";
+import { NewsModal } from "../components/modals";
 
 export const Home = () => {
   return (
@@ -47,6 +48,7 @@ export const Home = () => {
           </div>
         </div>
       </div>
+      <NewsModal />
     </div>
   );
 };

@@ -1,11 +1,24 @@
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress, Image } from "@nextui-org/react";
 import { Carousel } from "react-responsive-carousel";
 import { useEffect, useState } from "react";
-import { get } from "../../../../common";
+import { get, getClodinaryUrl } from "../../../../common";
 import { Endpoints } from "../../config/endpoints";
 import { Partner } from "../../models";
-import { PartnerCard } from "../atomics";
 import { SubsBanner } from "./SubsBanner";
+
+const banner = {
+  active: false,
+  id: "sar",
+  imageUrl: "",
+  amount: 0,
+  subscriptionDate: new Date(),
+  expirationDate: new Date(),
+  companyName: "",
+  contact: "",
+  nit: "",
+  email: "",
+  contactNumber: "",
+};
 
 export const CarouselPartners = () => {
   const [partners, setPartners] = useState<Partner[]>([]);
@@ -17,7 +30,7 @@ export const CarouselPartners = () => {
         if (resp.error || !list) {
           return;
         }
-        setPartners(list);
+        setPartners([banner, ...list]);
       })
       .finally(() => setIsLoading(false));
   }, []);
@@ -41,8 +54,15 @@ export const CarouselPartners = () => {
           showThumbs={false}
           className="flex items-center h-full"
         >
-          <SubsBanner />
-          <PartnerCard partners={partners} />
+          {partners.map((partner, i) => {
+            return partner.id == "sar" ? (
+              <SubsBanner key={partner.id} />
+            ) : (
+              <div key={i} className="flex justify-center">
+                <Image src={getClodinaryUrl(partner.imageUrl)} height={300} />
+              </div>
+            );
+          })}
         </Carousel>
       )}
     </div>

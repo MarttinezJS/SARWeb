@@ -8,7 +8,6 @@ import { ActivePartnerModal, ImageModal } from "../components";
 import { useActivePartnerModalStore, useImageModalStore } from "../hooks";
 
 export const Patterns = () => {
-  // const { isOpen: isOpenImage, onOpenChange: onChangeImage } = useDisclosure();
   const showImageModal = useImageModalStore((s) => s.showModal);
   const showActivePartnerModal = useActivePartnerModalStore((s) => s.showModal);
   return (
