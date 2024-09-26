@@ -7,7 +7,7 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 export const ImageModal = () => {
   const [image, setImage] = useState<File>();
   const { closeModal, partner, visible } = useImageModalStore();
-  const uploadImage = () => {};
+  // const uploadImage = () => {};
 
   return (
     <Modal onClose={closeModal} isOpen={visible}>
