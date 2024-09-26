@@ -1,4 +1,4 @@
-import { Input } from "@nextui-org/react";
+import { Input, InputProps } from "@nextui-org/react";
 import { useState, type ReactNode } from "react";
 import {
   Controller,
@@ -9,7 +9,7 @@ import {
 } from "react-hook-form";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 
-interface InputFormProps<T extends FieldValues> {
+interface InputFormProps<T extends FieldValues> extends InputProps {
   label: string;
   type?: "email" | "text" | "number" | "password";
   icon?: ReactNode;
@@ -23,6 +23,7 @@ export const InputForm = <T extends FieldValues>({
   icon,
   registerReturn,
   fullWidth = true,
+  ...props
 }: InputFormProps<T>) => {
   const [isVisible, setIsVisible] = useState(false);
   const { setValue } = useFormContext();
@@ -33,14 +34,14 @@ export const InputForm = <T extends FieldValues>({
       render={({ fieldState, ...state }) => {
         return (
           <Input
+            {...props}
             radius="lg"
             startContent={icon}
             variant="bordered"
             size="sm"
-            // value={watch()[registerReturn.name]}
             ref={registerReturn.ref}
             fullWidth={fullWidth}
-            labelPlacement="inside"
+            labelPlacement="outside"
             endContent={
               type == "password" && (
                 <button
