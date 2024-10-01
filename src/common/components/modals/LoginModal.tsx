@@ -17,6 +17,7 @@ interface LoginModalProps {
 export const LoginModal = ({ isOpen, onOpenChange }: LoginModalProps) => {
   const showResp = useResponseModalStore((s) => s.showModal);
   const navigate = useNavigate();
+  const login = authProvider((s) => s.login);
   return (
     <Modal
       placement="center"
@@ -34,14 +35,12 @@ export const LoginModal = ({ isOpen, onOpenChange }: LoginModalProps) => {
             <ModalBody>
               <CustomForm<LoginFields>
                 onSubmit={async ({ username, password }) => {
-                  const { pass, resp } = await authProvider.login(
-                    username,
-                    password
-                  );
+                  const { pass, resp } = await login(username, password);
                   if (!pass) {
                     showResp(resp);
                   } else {
                     onClose();
+
                     navigate("/user");
                   }
                   return resp;

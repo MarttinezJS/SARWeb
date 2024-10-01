@@ -18,15 +18,14 @@ import { Patterns } from "./modules/partterns";
 import { ScheduleConfig } from "./modules/schedule";
 import { EventsConfig } from "./modules/events";
 
-const protectLoader = async () =>
-  !authProvider.isAuthenticated && !(await authProvider.sessionValid())
-    ? redirect("/")
-    : null;
-
 export const App = () => {
   const [sideMenuIsExpand, setSideMenuIsExpand] = useState(true);
+  const { isAuthenticated, sessionValid } = authProvider();
+  const protectLoader = async () =>
+    !isAuthenticated && !(await sessionValid()) ? redirect("/") : null;
   useEffect(() => {
-    authProvider.sessionValid();
+    sessionValid();
+    console.log(isAuthenticated);
   }, []);
 
   return (

@@ -21,12 +21,10 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
   const [isExpandOnHover, setIsExpandOnHover] = useState(false);
   const [isExpand, setIsExpand] = useState(true);
   const [activeName, setActiveName] = useState("");
-
+  const { userData, logout } = authProvider();
   const getUser = async () => {
     try {
-      const resp = await httpClient.get(
-        `${Endpoints.USERS}/${authProvider.userData?.id}`
-      );
+      const resp = await httpClient.get(`${Endpoints.USERS}/${userData?.id}`);
       const body = resp.data.body;
       if (body == null) {
         showResponse(resp.data);
@@ -42,7 +40,7 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
   };
 
   useEffect(() => {
-    authProvider.userData?.id && getUser();
+    userData?.id && getUser();
     const routesNames = location.pathname.split("/");
     setActiveName(routesNames[routesNames.length - 1]);
   }, []);
@@ -165,7 +163,7 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
                   isExpand ? "" : isExpandOnHover ? "" : "w-0 h-0 opacity-0"
                 }`}
                 onPress={() => {
-                  authProvider.logout();
+                  logout();
                   navigate("/");
                 }}
               >
