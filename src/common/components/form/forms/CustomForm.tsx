@@ -10,6 +10,7 @@ import {
 } from "react-hook-form";
 import { SubmitButton } from "../buttons";
 import { Response } from "../../../../models";
+import { useResetFieldExternalStore } from "../../../../hooks";
 
 interface CustomButtonProps {
   label: string;
@@ -37,6 +38,7 @@ export const CustomForm = <REQ extends FieldValues>({
   children,
   defaultValues,
 }: CustomFormProps<REQ>) => {
+  const resetExternal = useResetFieldExternalStore((s) => s.reset);
   const customForm = useForm<REQ>({
     reValidateMode: "onChange",
     mode: "all",
@@ -49,9 +51,8 @@ export const CustomForm = <REQ extends FieldValues>({
         onSubmit={customForm.handleSubmit(async (data, e) => {
           const resp = await onSubmit(data, e);
           if (resp && resp.error == false) {
-            console.log("Reset");
-
             customForm.reset();
+            resetExternal();
           }
         })}
         className="w-full"

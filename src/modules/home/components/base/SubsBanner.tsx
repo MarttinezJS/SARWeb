@@ -98,6 +98,10 @@ export const SubsBanner = () => {
                         })}
                         label="Correo del representante"
                       />
+                      <InputForm
+                        registerReturn={register("webSite")}
+                        label="Sitio web"
+                      />
                     </div>
                   )}
                 </CustomForm>

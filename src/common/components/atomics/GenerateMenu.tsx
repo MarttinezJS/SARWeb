@@ -27,6 +27,7 @@ export const GenerateMenu = ({
   const [openedMenu, setOpenedMenu] = useState<Record<string, any>>({});
   const listRef = useRef<Record<string, HTMLUListElement | null>>({});
   const handleNavigate = (path: string) => setActiveName(path);
+  const userData = authProvider((s) => s.userData);
   const handleToggle = (name: string) => {
     const rootEl = name.split(".")[0];
 
@@ -69,7 +70,7 @@ export const GenerateMenu = ({
   }, []);
 
   return (
-    (item.roles != "ADMIN" || authProvider.userData?.role == "ADMIN") && (
+    (item.roles != "ADMIN" || userData?.role == "ADMIN") && (
       <li key={index}>
         <Link
           to={`./${item.id}`}

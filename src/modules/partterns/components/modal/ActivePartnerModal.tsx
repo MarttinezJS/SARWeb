@@ -84,6 +84,10 @@ export const ActivePartnerModal = () => {
                       })}
                     />
                     <InputForm
+                      label="Sitio web"
+                      registerReturn={register("webSite", {})}
+                    />
+                    <InputForm
                       label="Donación"
                       type="number"
                       icon={<HiCurrencyDollar className="text-secondary" />}

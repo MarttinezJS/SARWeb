@@ -50,11 +50,12 @@ export const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [currentPath, setCurrentPath] = useState(location.pathname);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isAuthenticated, logout } = authProvider();
   const redirectTo = useNavigate();
   useEffect(() => {
     const routesNames = location.pathname.split("/");
     setCurrentPath(`/${routesNames[1]}`);
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <div className="lg:h-screen-with-navbar">
@@ -73,7 +74,7 @@ export const Layout = () => {
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           {menuOptions.map((option) => {
-            if (option.key == "/user" && !authProvider.isAuthenticated) {
+            if (option.key == "/user" && !isAuthenticated) {
               return <div key={option.key}></div>;
             }
             return (
@@ -100,13 +101,13 @@ export const Layout = () => {
           <NavbarItem>
             <Reproductor />
           </NavbarItem>
-          {authProvider.isAuthenticated ? (
+          {isAuthenticated ? (
             <NavbarItem>
               <Button
                 color="danger"
                 variant="light"
                 onPress={() => {
-                  authProvider.logout();
+                  logout();
                   redirectTo("/");
                 }}
               >
@@ -131,7 +132,7 @@ export const Layout = () => {
         <NavbarMenu>
           <NavbarMenuItem>
             {menuOptions.map((option) =>
-              option.key == "/user" && !authProvider.isAuthenticated ? (
+              option.key == "/user" && !isAuthenticated ? (
                 <div key={option.key}></div>
               ) : (
                 <Link

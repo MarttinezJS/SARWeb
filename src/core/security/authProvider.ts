@@ -1,3 +1,4 @@
+import { create } from "zustand";
 import { decodeJwt } from "jose";
 import { Endpoints, get, save } from "../../common";
 import { Response, UserFields } from "../../models";
@@ -13,7 +14,8 @@ interface JwkResponse {
   jti: string;
   exp: number;
 }
-interface AuthProvider {
+
+interface authProviderProps {
   isAuthenticated: boolean;
   userData: UserData | null;
   logout(): void;
@@ -25,7 +27,7 @@ interface AuthProvider {
   signup(formData: UserFields): Promise<{ pass: boolean; resp: Response<any> }>;
 }
 
-export const authProvider: AuthProvider = {
+export const authProvider = create<authProviderProps>((set) => ({
   isAuthenticated: false,
   userData: null,
   async login(username, password) {
@@ -38,8 +40,7 @@ export const authProvider: AuthProvider = {
       if (token) {
         localStorage.setItem("access_token", token);
         const decode = decodeJwt<JwkResponse>(token);
-        authProvider.userData = { ...decode.data };
-        authProvider.isAuthenticated = true;
+        set({ userData: { ...decode.data }, isAuthenticated: true });
         return {
           pass: true,
           resp,
@@ -65,9 +66,7 @@ export const authProvider: AuthProvider = {
         return false;
       }
       const decode = decodeJwt<any>(token);
-      authProvider.userData = { ...decode.data };
-      authProvider.isAuthenticated = true;
-
+      set({ userData: { ...decode.data }, isAuthenticated: true });
       return true;
     } catch (error) {
       return false;
@@ -75,8 +74,7 @@ export const authProvider: AuthProvider = {
   },
   logout() {
     localStorage.clear();
-    authProvider.isAuthenticated = false;
-    authProvider.userData = null;
+    set({ userData: null, isAuthenticated: false });
   },
   async signup(formData: UserFields) {
     const resp = await save<{ access_token: string }>(
@@ -93,11 +91,10 @@ export const authProvider: AuthProvider = {
     const token = body.access_token;
     localStorage.setItem("access_token", token);
     const userData = decodeJwt<any>(token);
-    authProvider.userData = { ...userData };
-    authProvider.isAuthenticated = true;
+    set({ userData: { ...userData }, isAuthenticated: true });
     return {
       pass: true,
       resp: resp,
     };
   },
-};
+}));

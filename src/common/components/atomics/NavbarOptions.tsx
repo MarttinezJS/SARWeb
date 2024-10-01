@@ -33,11 +33,12 @@ const menuOptions: MenuOptions[] = [
 
 export const NavbarOptions = () => {
   const [currentPath, setCurrentPath] = useState("/");
+  const isAuthenticated = authProvider((s) => s.isAuthenticated);
   const redirectTo = useNavigate();
   return (
     <div>
       {menuOptions.map((option) => {
-        if (option.key == "/user" && !authProvider.isAuthenticated) {
+        if (option.key == "/user" && !isAuthenticated) {
           return <div key={option.key}></div>;
         }
         return (
