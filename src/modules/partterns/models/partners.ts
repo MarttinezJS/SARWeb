@@ -9,5 +9,6 @@ export interface Partner {
   contact: string;
   nit: string;
   email: string;
+  webSite: string;
   contactNumber: string;
 }

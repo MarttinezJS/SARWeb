@@ -1,5 +1,8 @@
 import { useDropzone } from "react-dropzone";
-import { useResponseModalStore } from "../../../hooks";
+import {
+  useResetFieldExternalStore,
+  useResponseModalStore,
+} from "../../../hooks";
 import { Response } from "../../../models";
 import { useEffect, useState } from "react";
 import { Image } from "@nextui-org/react";
@@ -23,6 +26,7 @@ export const FileUploadZone = ({
   defaultImageUrl,
 }: FileUploadZoneProps) => {
   const { showModal: showResponse } = useResponseModalStore();
+  const addDependency = useResetFieldExternalStore((s) => s.addDependency);
   const [imageSelected, setImageSelected] = useState<File>();
   const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
     multiple: false,
@@ -49,6 +53,9 @@ export const FileUploadZone = ({
   });
   useEffect(() => {
     onChangeFile(acceptedFiles[0]);
+    addDependency(() => {
+      setImageSelected(undefined);
+    });
   }, [acceptedFiles]);
 
   return (

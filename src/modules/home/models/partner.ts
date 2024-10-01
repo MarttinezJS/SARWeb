@@ -18,4 +18,5 @@ export interface RegisterPartnerFields {
   nit: string;
   email: string;
   contactNumber: string;
+  webSite: string;
 }
