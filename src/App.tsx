@@ -25,7 +25,6 @@ export const App = () => {
     !isAuthenticated && !(await sessionValid()) ? redirect("/") : null;
   useEffect(() => {
     sessionValid();
-    console.log(isAuthenticated);
   }, []);
 
   return (
