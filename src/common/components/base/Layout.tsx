@@ -13,7 +13,6 @@ import {
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
-import { Reproductor } from "./Reproductor";
 import { IoMdExit } from "react-icons/io";
 import { authProvider } from "../../../core";
 import { LoginModal } from "../modals";
@@ -98,9 +97,9 @@ export const Layout = () => {
         </NavbarContent>
 
         <NavbarContent justify="end">
-          <NavbarItem>
+          {/* <NavbarItem>
             <Reproductor />
-          </NavbarItem>
+          </NavbarItem> */}
           {isAuthenticated ? (
             <NavbarItem>
               <Button
