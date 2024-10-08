@@ -40,7 +40,7 @@ export const CarouselPartners = () => {
       <CircularProgress />
     </div>
   ) : (
-    <div className="p-10 h-full  ">
+    <div className=" h-full  ">
       <div className="text-2xl font-bold text-center text-secondary w-full text-wrap">
         Banner de nuestros anunciadores
       </div>
@@ -59,7 +59,11 @@ export const CarouselPartners = () => {
               <SubsBanner key={partner.id} />
             ) : (
               <div key={i} className="flex justify-center">
-                <Image src={getClodinaryUrl(partner.imageUrl)} height={300} />
+                <Image
+                  src={getClodinaryUrl(partner.imageUrl)}
+                  width={620}
+                  height={360}
+                />
               </div>
             );
           })}

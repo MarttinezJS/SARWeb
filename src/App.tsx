@@ -17,6 +17,7 @@ import { News } from "./modules/news";
 import { Patterns } from "./modules/partterns";
 import { ScheduleConfig } from "./modules/schedule";
 import { EventsConfig } from "./modules/events";
+import { Reproductor } from "./common/components/base/Reproductor";
 
 export const App = () => {
   const [sideMenuIsExpand, setSideMenuIsExpand] = useState(true);
@@ -30,6 +31,7 @@ export const App = () => {
   return (
     <>
       <ResponseModal />
+      <Reproductor />
       <RouterProvider
         router={createBrowserRouter(
           createRoutesFromElements([
