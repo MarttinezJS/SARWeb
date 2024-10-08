@@ -1,28 +1,16 @@
-import { Button, Card, CardBody, Image, Slider } from "@nextui-org/react";
-import { useEffect, useRef, useState } from "react";
+import { Button, Card, CardBody, Image } from "@nextui-org/react";
+import { useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import { FaMusic } from "react-icons/fa";
-import { FaPause, FaPlay, FaRepeat, FaShuffle } from "react-icons/fa6";
-import { GiNextButton, GiPreviousButton } from "react-icons/gi";
-import { RiArrowRightSLine } from "react-icons/ri";
-import { SlArrowLeft, SlArrowRight } from "react-icons/sl";
+import { FaPause, FaPlay } from "react-icons/fa6";
+import { SlArrowRight } from "react-icons/sl";
 import { PlayerProgress } from "../atomics";
 
 export const Reproductor = () => {
   const player = useRef<ReactAudioPlayer>(null);
   const [playing, setPlaying] = useState(false);
   const [expanded, setExpanded] = useState(true);
-  // return (
-  //   <iframe
-  //     src="http://192.168.1.81:3000/public/milanesa/embed"
-  //     allowTransparency={false}
-  //     allow="autoplay"
-  //     style={{
-  //       width: "100%",
-  //       border: "0",
-  //     }}
-  //   ></iframe>
-  // );
+
   return (
     <div
       className={`fixed z-20 bottom-2  ${
