@@ -1,12 +1,4 @@
-export interface AzuraWebhook {
-  now_playing: AzuraSong;
-  playing_next: AzuraSong;
-  song_history: AzuraSong[];
-  is_online: boolean;
-  cache: string;
-}
-
-export interface AzuraSong {
+export interface MetaSong {
   sh_id: number;
   played_at: number;
   duration: number;
@@ -18,7 +10,7 @@ export interface AzuraSong {
   remaining: number;
 }
 
-export interface Song {
+interface Song {
   id: string;
   art: string;
   custom_fields: [];
