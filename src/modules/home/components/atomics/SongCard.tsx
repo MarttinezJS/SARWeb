@@ -10,8 +10,8 @@ import {
   Tooltip,
   useDisclosure,
 } from "@nextui-org/react";
-import { Song } from "../../models";
 import { IoMdListBox } from "react-icons/io";
+import { Song } from "../../../../models";
 
 interface SongCardProps {
   song: Song;
