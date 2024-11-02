@@ -10,7 +10,7 @@ export interface MetaSong {
   remaining: number;
 }
 
-interface Song {
+export interface Song {
   id: string;
   art: string;
   custom_fields: [];
