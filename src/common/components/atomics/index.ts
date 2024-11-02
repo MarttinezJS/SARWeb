@@ -4,3 +4,4 @@ export * from "./FileUploadZone";
 export * from "./LoadingSnackbar";
 export * from "./PlayerProgress";
 export * from "./SongData";
+export * from "./ProgressComponent";
