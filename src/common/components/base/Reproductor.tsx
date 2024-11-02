@@ -1,15 +1,40 @@
-import { Button, Card, CardBody, Image, Spacer } from "@nextui-org/react";
-import { useRef, useState } from "react";
+import { Button, Card, CardBody } from "@nextui-org/react";
+import { useEffect, useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import { FaMusic, FaPlayCircle } from "react-icons/fa";
 import { FaCirclePause } from "react-icons/fa6";
 import { SlArrowRight } from "react-icons/sl";
-import { PlayerProgress } from "../atomics";
+import { PlayerProgress, SongData } from "../atomics";
+import { httpClient } from "../../../core";
+import { Environment } from "../../../config/environment";
+import { AzuraResp } from "../../../models";
+import { useAzuraStore } from "../../../hooks";
 
 export const Reproductor = () => {
   const player = useRef<ReactAudioPlayer>(null);
-  const [playing, setPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [expanded, setExpanded] = useState(true);
+  const { data, setData } = useAzuraStore();
+  const getNowPlaying = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await httpClient.get<AzuraResp>(
+        `nowplaying/${Environment.VITE_STATION_ID}`,
+        {
+          baseURL: Environment.VITE_AZURA_API_URL,
+          headers: {
+            "X-API-Key": Environment.VITE_AZURA_API_KEY,
+          },
+        }
+      );
+      setData(data);
+    } catch (error) {}
+    setIsLoading(false);
+  };
+  useEffect(() => {
+    getNowPlaying();
+  }, []);
 
   return (
     <div
@@ -47,8 +72,8 @@ export const Reproductor = () => {
                 color="primary"
                 className="w-max h-max"
                 onPress={() => {
-                  setPlaying(!playing);
-                  if (playing) {
+                  setIsPlaying(!isPlaying);
+                  if (isPlaying) {
                     player.current?.audioEl.current?.pause();
                   } else {
                     player.current?.audioEl.current?.play();
@@ -57,33 +82,17 @@ export const Reproductor = () => {
                 }}
               >
                 <div className="text-7xl m-5 flex justify-center items-center">
-                  {playing ? <FaCirclePause /> : <FaPlayCircle />}
+                  {isPlaying ? <FaCirclePause /> : <FaPlayCircle />}
                 </div>
               </Button>
             </div>
 
             <div className="flex flex-col col-span-6 md:col-span-8">
-              <div className="flex">
-                <Image
-                  alt="Album cover"
-                  className="object-cover"
-                  height={100}
-                  shadow="md"
-                  src={"/logo.svg"}
-                />
-                <Spacer />
-                <div className="flex justify-between items-end">
-                  <div className="flex flex-col gap-0">
-                    {/* <h3 className="font-semibold text-foreground/90">
-                      Daily Mix
-                    </h3>
-                    <p className="text-small text-foreground/80">12 Tracks</p> */}
-                    <h1 className="text-large font-medium mt-2 w-max">
-                      Sigue adelante radio
-                    </h1>
-                  </div>
-                </div>
-              </div>
+              <SongData
+                streamer={data?.live}
+                playing={data?.now_playing}
+                isLoading={isLoading}
+              />
               <PlayerProgress player={player.current?.audioEl.current} />
               <ReactAudioPlayer
                 src="https://server2.ejeserver.com:8826/stream"

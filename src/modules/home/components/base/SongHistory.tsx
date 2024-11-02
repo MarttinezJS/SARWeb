@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
-import { AzuraSong, AzuraWebhook } from "../../models";
 import { CircularProgress } from "@nextui-org/react";
 import { httpClient } from "../../../../core";
 import { Environment } from "../../../../config/environment";
 import { convertSecondsToMinutes, parseDatePHP } from "../../services";
 import { SongCard } from "../atomics";
+import { MetaSong } from "../../../../models";
+import { useAzuraStore } from "../../../../hooks";
 
-let songCache: AzuraSong[] = [];
 export const SongHistory = () => {
-  const [songHistory, setSongHistory] = useState<AzuraSong[]>([]);
+  const [songHistory, setSongHistory] = useState<MetaSong[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const data = useAzuraStore((s) => s.data);
+
   const getHistory = async () => {
     setIsLoading(true);
     const endDate = parseDatePHP(new Date(Date.now()));
     const startDate = parseDatePHP(new Date(Date.now() - 3_600_000));
-
     try {
       const { data } = await httpClient.get(
         `station/${Environment.VITE_STATION_ID}/history?start=${startDate}&end=${endDate}`,
@@ -26,29 +27,18 @@ export const SongHistory = () => {
         }
       );
       setSongHistory(data);
-      songCache = data;
       setIsLoading(false);
     } catch (error) {}
   };
 
   useEffect(() => {
-    getHistory();
-    const socket = new WebSocket(Environment.VITE_WS_URL);
-    socket.onopen = () => {
-      console.log("Websocket connected");
-    };
-    socket.onmessage = (event: MessageEvent<string>) => {
-      const data = JSON.parse(event.data) as AzuraWebhook;
-      setSongHistory([data.now_playing, ...songCache]);
-      songCache.unshift(data.now_playing);
-    };
-    socket.onclose = () => {
-      console.log("Websocket disconnected");
-    };
+    if (data && !data.live.is_live) {
+      setSongHistory([data.now_playing, ...songHistory]);
+    }
+  }, [data]);
 
-    return () => {
-      socket.close();
-    };
+  useEffect(() => {
+    getHistory();
   }, []);
 
   return isLoading ? (
