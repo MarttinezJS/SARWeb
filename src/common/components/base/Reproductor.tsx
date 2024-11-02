@@ -4,7 +4,7 @@ import ReactAudioPlayer from "react-audio-player";
 import { FaMusic, FaPlayCircle } from "react-icons/fa";
 import { FaCirclePause } from "react-icons/fa6";
 import { SlArrowRight } from "react-icons/sl";
-import { PlayerProgress, SongData } from "../atomics";
+import { ProgressComponent, SongData } from "../atomics";
 import { httpClient } from "../../../core";
 import { Environment } from "../../../config/environment";
 import { AzuraResp } from "../../../models";
@@ -93,11 +93,7 @@ export const Reproductor = () => {
                 playing={data?.now_playing}
                 isLoading={isLoading}
               />
-              <PlayerProgress player={player.current?.audioEl.current} />
-              <ReactAudioPlayer
-                src="https://server2.ejeserver.com:8826/stream"
-                ref={player}
-              />
+              <ProgressComponent player={player} />
               <div className="flex w-full items-center justify-center"></div>
             </div>
           </div>
