@@ -5,16 +5,17 @@ import { Environment } from "../../../../config/environment";
 import { convertSecondsToMinutes, parseDatePHP } from "../../services";
 import { SongCard } from "../atomics";
 import { MetaSong } from "../../../../models";
+import { useAzuraStore } from "../../../../hooks";
 
-let songCache: MetaSong[] = [];
 export const SongHistory = () => {
   const [songHistory, setSongHistory] = useState<MetaSong[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const data = useAzuraStore((s) => s.data);
+
   const getHistory = async () => {
     setIsLoading(true);
     const endDate = parseDatePHP(new Date(Date.now()));
     const startDate = parseDatePHP(new Date(Date.now() - 3_600_000));
-
     try {
       const { data } = await httpClient.get(
         `station/${Environment.VITE_STATION_ID}/history?start=${startDate}&end=${endDate}`,
@@ -26,10 +27,15 @@ export const SongHistory = () => {
         }
       );
       setSongHistory(data);
-      songCache = data;
       setIsLoading(false);
     } catch (error) {}
   };
+
+  useEffect(() => {
+    if (data && !data.live.is_live) {
+      setSongHistory([data.now_playing, ...songHistory]);
+    }
+  }, [data]);
 
   useEffect(() => {
     getHistory();

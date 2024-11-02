@@ -1,31 +1,21 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  Chip,
-  Image,
-  Skeleton,
-  Spacer,
-} from "@nextui-org/react";
+import { Button, Card, CardBody } from "@nextui-org/react";
 import { useEffect, useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import { FaMusic, FaPlayCircle } from "react-icons/fa";
 import { FaCirclePause } from "react-icons/fa6";
 import { SlArrowRight } from "react-icons/sl";
-import { PlayerProgress } from "../atomics";
+import { PlayerProgress, SongData } from "../atomics";
 import { httpClient } from "../../../core";
 import { Environment } from "../../../config/environment";
 import { AzuraResp } from "../../../models";
-import { useSongsStore, useStreamerStore } from "../../../hooks";
-import { RiSignalTowerFill } from "react-icons/ri";
+import { useAzuraStore } from "../../../hooks";
 
 export const Reproductor = () => {
   const player = useRef<ReactAudioPlayer>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [expanded, setExpanded] = useState(true);
-  const { isLive, playing, setData } = useSongsStore();
-  const { data: streamer, setData: setStreamer } = useStreamerStore();
+  const { data, setData } = useAzuraStore();
   const getNowPlaying = async () => {
     setIsLoading(true);
     try {
@@ -38,14 +28,7 @@ export const Reproductor = () => {
           },
         }
       );
-      if (data.live.is_live) {
-        setStreamer(data.live);
-      }
-      setData({
-        isLive: data.live.is_live,
-        next: data.playing_next,
-        playing: data.now_playing,
-      });
+      setData(data);
     } catch (error) {}
     setIsLoading(false);
   };
@@ -105,68 +88,11 @@ export const Reproductor = () => {
             </div>
 
             <div className="flex flex-col col-span-6 md:col-span-8">
-              <div className="flex">
-                {isLoading ? (
-                  <Skeleton className="flex rounded-3xl w-24 h-24" />
-                ) : (
-                  <Image
-                    alt="Album cover"
-                    className="object-cover"
-                    height={100}
-                    shadow="md"
-                    src={
-                      isLive ? streamer?.art ?? "/logo.svg" : playing?.song.art
-                    }
-                  />
-                )}
-                <Spacer />
-                <div className="flex justify-between items-end">
-                  <div className="flex flex-col gap-0">
-                    <h3 className="font-semibold text-foreground/90">
-                      {isLoading ? (
-                        <Skeleton className="flex rounded-lg w-15 h-6" />
-                      ) : (
-                        `${
-                          isLive
-                            ? streamer?.streamer_name
-                            : playing?.song.artist
-                        }`
-                      )}
-                    </h3>
-                    {isLoading ? (
-                      <Skeleton className="flex rounded-lg w-15 h-6" />
-                    ) : (
-                      <p className="text-small text-foreground/80">
-                        {isLive
-                          ? `Desde las ${new Date(
-                              streamer?.broadcast_start ?? Date.now()
-                            ).toLocaleTimeString()}`
-                          : playing?.song.album}
-                      </p>
-                    )}
-                    <h1
-                      className={`text-large ${
-                        isLive && "text-red-500"
-                      } font-medium mt-2 w-max`}
-                    >
-                      {isLoading ? (
-                        <Skeleton className="flex rounded-lg w-52 h-6" />
-                      ) : isLive ? (
-                        <div className="flex">
-                          <Chip
-                            startContent={<RiSignalTowerFill />}
-                            color="danger"
-                          >
-                            EN VIVO
-                          </Chip>
-                        </div>
-                      ) : (
-                        `${playing?.song.title}`
-                      )}
-                    </h1>
-                  </div>
-                </div>
-              </div>
+              <SongData
+                streamer={data?.live}
+                playing={data?.now_playing}
+                isLoading={isLoading}
+              />
               <PlayerProgress player={player.current?.audioEl.current} />
               <ReactAudioPlayer
                 src="https://server2.ejeserver.com:8826/stream"
