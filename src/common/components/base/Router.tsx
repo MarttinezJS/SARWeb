@@ -8,7 +8,7 @@ import {
   Navigate,
   redirect,
 } from "react-router-dom";
-import { Events, Schedule, About, Home, User } from "../../../modules";
+import { Events, Schedule, About, Home, User, Policy } from "../../../modules";
 import { Devotionals } from "../../../modules/devotional";
 import { EventsConfig } from "../../../modules/events";
 import { News } from "../../../modules/news";
@@ -60,6 +60,15 @@ export const Router = () => {
               }
             />
             <Route
+              path="policy"
+              key={13}
+              element={
+                <Suspense>
+                  <Policy />
+                </Suspense>
+              }
+            />
+            <Route
               path="user"
               key={6}
               element={
@@ -85,31 +94,31 @@ export const Router = () => {
               />
               <Route
                 path="news"
-                key={7}
+                key={8}
                 element={<News />}
                 loader={protectLoader}
               />
               <Route
                 path="devotional"
-                key={7}
+                key={9}
                 element={<Devotionals />}
                 loader={protectLoader}
               />
               <Route
                 path="patterns"
-                key={7}
+                key={10}
                 element={<Patterns />}
                 loader={protectLoader}
               />
               <Route
                 path="schedules"
-                key={7}
+                key={11}
                 element={<ScheduleConfig />}
                 loader={protectLoader}
               />
               <Route
                 path="events"
-                key={7}
+                key={12}
                 element={<EventsConfig />}
                 loader={protectLoader}
               />

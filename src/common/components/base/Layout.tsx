@@ -43,6 +43,10 @@ const menuOptions: MenuOptions[] = [
     title: "Usuario",
     key: "/user",
   },
+  {
+    title: "Política de datos",
+    key: "/policy",
+  },
 ];
 
 export const Layout = () => {
