@@ -7,9 +7,16 @@ import {
   InformationComponent,
   SongHistory,
 } from "../components";
-import { NewsModal } from "../components/modals";
+import { NewsModal, VINModal } from "../components/modals";
+import { useEffect } from "react";
+import { useVINModalStore } from "../hooks";
 
 export const Home = () => {
+  const showVINModal = useVINModalStore((s) => s.showModal);
+  useEffect(() => {
+    showVINModal();
+  }, []);
+
   return (
     <div className="lg:h-full bg-background">
       <div className="lg:columns-3 h-full gap-0">
@@ -49,6 +56,7 @@ export const Home = () => {
         </div>
       </div>
       <NewsModal />
+      <VINModal />
     </div>
   );
 };
