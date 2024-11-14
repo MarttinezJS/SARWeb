@@ -16,7 +16,7 @@ export const SongData = ({ isLoading, playing, streamer }: SongDataProps) => {
       ) : (
         <Image
           alt="Album cover"
-          className="object-cover"
+          className="object-cover hidden sm:flex"
           height={100}
           shadow="md"
           src={
