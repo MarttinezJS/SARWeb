@@ -1,5 +1,6 @@
-import { Modal, ModalBody, ModalContent } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent } from "@nextui-org/react";
 import { useVINModalStore } from "../../hooks";
+import { FaTimes } from "react-icons/fa";
 export const VINModal = () => {
   const { visible, closeModal } = useVINModalStore();
   return (
@@ -10,17 +11,23 @@ export const VINModal = () => {
       placement="center"
       aria-labelledby="modal-title"
       isOpen={visible}
-      classNames={{
-        base: "bg-transparent",
-      }}
       onClose={closeModal}
+      hideCloseButton
     >
       <ModalContent>
         {() => (
           <ModalBody className="p-0">
+            <Button
+              className="absolute m-2"
+              color="danger"
+              onPress={closeModal}
+              isIconOnly
+            >
+              <FaTimes />
+            </Button>
             <iframe
               src="https://widget.taggbox.com/2140074"
-              className="h-[700px] sm:h-screen"
+              className="h-[700px] sm:h-screen "
               loading="lazy"
             />
           </ModalBody>
