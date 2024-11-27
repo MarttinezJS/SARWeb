@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { CircularProgress } from "@nextui-org/react";
 import { httpClient } from "../../../../core";
 import { Environment } from "../../../../config/environment";
-import { convertSecondsToMinutes, parseDatePHP } from "../../services";
+import { convertSecondsToMinutes } from "../../services";
 import { SongCard } from "../atomics";
 import { MetaSong } from "../../../../models";
 import { useAzuraStore } from "../../../../hooks";
@@ -14,8 +14,8 @@ export const SongHistory = () => {
 
   const getHistory = async () => {
     setIsLoading(true);
-    const endDate = parseDatePHP(new Date(Date.now()));
-    const startDate = parseDatePHP(new Date(Date.now() - 3_600_000));
+    const endDate = new Date(Date.now()).toISOString();
+    const startDate = new Date(Date.now() - 3_600_000).toISOString();
     try {
       const { data } = await httpClient.get(
         `station/${Environment.VITE_STATION_ID}/history?start=${startDate}&end=${endDate}`,

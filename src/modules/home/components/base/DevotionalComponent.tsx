@@ -40,7 +40,7 @@ export const DevotionalComponent = () => {
         >
           <CardHeader>
             <p className="font-bold text-2xl text-secondary">
-              Despertando con el maestro
+              Adelante familia de la fe
             </p>
           </CardHeader>
           <CardFooter className="bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 justify-between">

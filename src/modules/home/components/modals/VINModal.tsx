@@ -1,20 +1,20 @@
-import { Image, Modal, ModalContent } from "@nextui-org/react";
+import { Modal, ModalBody, ModalContent } from "@nextui-org/react";
 import { useVINModalStore } from "../../hooks";
-
+import { EmbedPost } from "../atomics";
 export const VINModal = () => {
   const { visible, closeModal } = useVINModalStore();
   return (
     <Modal
       closeButton
       backdrop="blur"
-      size="3xl"
       placement="center"
       aria-labelledby="modal-title"
       isOpen={visible}
+      hideCloseButton
       onClose={closeModal}
     >
       <ModalContent>
-        {() => <Image src="/Invitacion AC.jpeg" width={800} />}
+        <EmbedPost close={closeModal} />
       </ModalContent>
     </Modal>
   );

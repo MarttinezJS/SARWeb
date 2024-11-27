@@ -18,7 +18,7 @@ export const get = async <T extends unknown>(
         : error.response.data
       : {
           error: true,
-          message: "Error de la aplicación",
+          message: "Error de la aplicación: " + error.toString(),
           status: 0,
         };
   }
