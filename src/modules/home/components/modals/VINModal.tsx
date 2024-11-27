@@ -1,4 +1,4 @@
-import { Modal, ModalBody, ModalContent } from "@nextui-org/react";
+import { Modal, ModalContent } from "@nextui-org/react";
 import { useVINModalStore } from "../../hooks";
 import { EmbedPost } from "../atomics";
 export const VINModal = () => {
