@@ -8,14 +8,12 @@ import {
   SongHistory,
 } from "../components";
 import { NewsModal, VINModal } from "../components/modals";
-import { useEffect } from "react";
-import { useVINModalStore } from "../hooks";
 
 export const Home = () => {
-  const showVINModal = useVINModalStore((s) => s.showModal);
-  useEffect(() => {
-    showVINModal();
-  }, []);
+  // const showVINModal = useVINModalStore((s) => s.showModal);
+  // useEffect(() => {
+  //   showVINModal();
+  // }, []);
 
   return (
     <div className="lg:h-full bg-background">
