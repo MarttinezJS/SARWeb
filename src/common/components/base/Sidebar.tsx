@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { User } from "../../../models";
 import { authProvider, httpClient } from "../../../core";
 import { Endpoints } from "../../endpoints";
+// @ts-ignore
 import SimpleBar from "simplebar-react";
 import { Avatar, Button } from "@heroui/react";
 import { routes } from "../../../config/routes";

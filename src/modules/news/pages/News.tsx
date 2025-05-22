@@ -11,7 +11,7 @@ export const News = () => {
           color="primary"
           classNames={{ tabContent: "text-secondary font-bold" }}
           aria-label="Creación de noticias."
-          onSelectionChange={setTabSelected}
+          onSelectionChange={(key) => setTabSelected(key ?? "create")}
           radius="full"
         >
           <Tab key="create" title="Crear noticia" />
