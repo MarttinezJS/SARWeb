@@ -6,7 +6,7 @@ import {
   ModalHeader,
   ModalBody,
   Image,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { FaHandPointer } from "react-icons/fa";
 import { save, CustomForm, InputForm } from "../../../../common";
 import { Endpoints } from "../../config/endpoints";

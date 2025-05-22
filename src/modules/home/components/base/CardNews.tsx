@@ -5,7 +5,7 @@ import {
   Divider,
   Image,
   Tooltip,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { getClodinaryUrl } from "../../../../common";
 import { New } from "../../models";

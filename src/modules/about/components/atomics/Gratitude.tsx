@@ -1,4 +1,4 @@
-import { CardFooter, Image } from "@nextui-org/react";
+import { CardFooter, Image } from "@heroui/react";
 
 export const Gratitude = () => {
   return (

@@ -5,7 +5,7 @@ import { User } from "../../../models";
 import { authProvider, httpClient } from "../../../core";
 import { Endpoints } from "../../endpoints";
 import SimpleBar from "simplebar-react";
-import { Avatar, Button } from "@nextui-org/react";
+import { Avatar, Button } from "@heroui/react";
 import { routes } from "../../../config/routes";
 import { GenerateMenu } from "../atomics";
 import { FaArrowCircleLeft } from "react-icons/fa";

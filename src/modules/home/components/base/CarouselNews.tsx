@@ -6,7 +6,7 @@ import { get } from "../../../../common";
 import { Endpoints } from "../../config/endpoints";
 import { New } from "../../models";
 import { Pagination } from "../../../../models";
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from "@heroui/react";
 
 export const CarouselNews = () => {
   const [isLoading, setIsLoading] = useState(true);

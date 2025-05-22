@@ -4,7 +4,7 @@ import {
   Card,
   CardHeader,
   Image,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import atardecer from "../../../assets/Atardecer.jpeg";
 import { Gratitude, ReviewParagraph } from "../components";
 

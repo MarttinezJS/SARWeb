@@ -12,7 +12,7 @@ import {
   ModalHeader,
   Spacer,
   useDisclosure,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { closeSnackbar, useSnackbar } from "notistack";
 
 export const Devotionals = () => {

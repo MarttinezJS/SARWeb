@@ -1,4 +1,4 @@
-import { Button, Card, CardBody, CardFooter, Image } from "@nextui-org/react";
+import { Button, Card, CardBody, CardFooter, Image } from "@heroui/react";
 import { MdDelete } from "react-icons/md";
 import { getClodinaryUrl } from "../../../../common";
 

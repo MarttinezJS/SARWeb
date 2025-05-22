@@ -1,4 +1,4 @@
-import { Button, Card, CardBody } from "@nextui-org/react";
+import { Button, Card, CardBody } from "@heroui/react";
 import { useEffect, useRef, useState } from "react";
 import ReactAudioPlayer from "react-audio-player";
 import { FaMusic, FaPlayCircle } from "react-icons/fa";

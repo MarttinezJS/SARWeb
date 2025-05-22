@@ -1,4 +1,4 @@
-import { Button, CircularProgress, type ButtonProps } from "@nextui-org/react";
+import { Button, CircularProgress, type ButtonProps } from "@heroui/react";
 import { useEffect, type ReactNode } from "react";
 import { useFormContext } from "react-hook-form";
 import { FaRegSave } from "react-icons/fa";

@@ -1,4 +1,4 @@
-import { Chip } from "@nextui-org/react";
+import { Chip } from "@heroui/react";
 import { formatDate, Column } from "../../../common";
 import { Partner } from "../models";
 

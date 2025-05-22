@@ -1,4 +1,4 @@
-import { Card, CardBody, CircularProgress } from "@nextui-org/react";
+import { Card, CardBody, CircularProgress } from "@heroui/react";
 import { CustomContentProps, SnackbarContent } from "notistack";
 import { forwardRef } from "react";
 

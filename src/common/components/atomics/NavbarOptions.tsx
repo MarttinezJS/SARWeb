@@ -1,4 +1,4 @@
-import { Link, NavbarItem } from "@nextui-org/react";
+import { Link, NavbarItem } from "@heroui/react";
 import { authProvider } from "../../../core";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";

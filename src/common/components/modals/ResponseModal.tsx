@@ -1,7 +1,7 @@
-import { Modal, ModalContent, ModalHeader } from "@nextui-org/react";
+import { Modal, ModalContent, ModalHeader } from "@heroui/react";
 import { useResponseModalStore } from "../../../hooks";
-import { CiWarning } from "react-icons/ci";
 import { VscError } from "react-icons/vsc";
+import { FaCheck } from "react-icons/fa6";
 
 export const ResponseModal = () => {
   const { visible, resp, closeModal } = useResponseModalStore();
@@ -17,9 +17,9 @@ export const ResponseModal = () => {
           <>
             <ModalHeader className="pb-0 justify-center">
               <div
-                className={`text-6xl text-${resp.error ? "error" : "warning"}`}
+                className={`text-6xl text-${resp.error ? "error" : "success"}`}
               >
-                {resp.error ? <VscError /> : <CiWarning />}
+                {resp.error ? <VscError /> : <FaCheck />}
               </div>
             </ModalHeader>
             <ModalHeader className="pt-0 justify-center">

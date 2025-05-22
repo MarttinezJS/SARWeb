@@ -1,4 +1,4 @@
-import { Accordion, AccordionItem, Card, CardHeader } from "@nextui-org/react";
+import { Accordion, AccordionItem, Card, CardHeader } from "@heroui/react";
 import { EmptyElement } from "../atomics";
 
 interface EventAppoint {

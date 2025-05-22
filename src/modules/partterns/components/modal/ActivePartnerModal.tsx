@@ -5,7 +5,7 @@ import {
   modify,
 } from "../../../../common";
 import { useActivePartnerModalStore } from "../../hooks";
-import { Modal, ModalBody, ModalContent, ModalHeader } from "@nextui-org/react";
+import { Modal, ModalBody, ModalContent, ModalHeader } from "@heroui/react";
 import { Partner } from "../../models";
 import { HiCurrencyDollar } from "react-icons/hi";
 import { useState } from "react";

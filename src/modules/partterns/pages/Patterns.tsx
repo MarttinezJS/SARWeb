@@ -10,13 +10,14 @@ import {
 import { Endpoints } from "../config/endpoints";
 import { FaImage } from "react-icons/fa6";
 import { columns } from "../config/PartnerColumns";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaTimesCircle } from "react-icons/fa";
 import { ActivePartnerModal, ImageModal } from "../components";
 import { useActivePartnerModalStore, useImageModalStore } from "../hooks";
 import { useReloadTable, useResponseModalStore } from "../../../hooks";
 import { useState } from "react";
 import { HiCurrencyDollar } from "react-icons/hi";
-import { Spacer } from "@nextui-org/react";
+import { Spacer } from "@heroui/react";
+import { httpClient } from "../../../core";
 
 export const Patterns = () => {
   const showImageModal = useImageModalStore((s) => s.showModal);
@@ -24,6 +25,13 @@ export const Patterns = () => {
   const showActivePartnerModal = useActivePartnerModalStore((s) => s.showModal);
   const showResp = useResponseModalStore((s) => s.showModal);
   const reloadTable = useReloadTable((s) => s.reload);
+  const cancelSub = async (partner: Partner) => {
+    const { data } = await httpClient.delete(
+      `${Endpoints.PARTNERS}/${partner.id}/sub`
+    );
+    reloadTable();
+    showResp(data);
+  };
   const onSubmit = async (data: any) => {
     const formData = new FormData();
     const keys = Object.keys(data);
@@ -120,6 +128,13 @@ export const Patterns = () => {
             visibleIf: (partner) => partner.active,
             icon: <FaImage />,
             action: showImageModal,
+          },
+          {
+            label: "Cancelar",
+            visibleIf: (partner) => partner.active,
+            icon: <FaTimesCircle />,
+            action: cancelSub,
+            color: "danger",
           },
           {
             label: "Anunciar",

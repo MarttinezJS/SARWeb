@@ -1,4 +1,4 @@
-import { Skeleton, Spacer, Chip, Image } from "@nextui-org/react";
+import { Skeleton, Spacer, Chip, Image } from "@heroui/react";
 import { RiSignalTowerFill } from "react-icons/ri";
 import { Live, MetaSong } from "../../../models";
 

@@ -4,7 +4,7 @@ import {
   ModalBody,
   ModalContent,
   useDisclosure,
-} from "@nextui-org/react";
+} from "@heroui/react";
 
 export const InformationComponent = () => {
   const { isOpen, onOpenChange, onOpen } = useDisclosure();

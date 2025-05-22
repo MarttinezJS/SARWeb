@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalContent } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent } from "@heroui/react";
 import { useVINModalStore } from "../../hooks";
 import { FaTimes } from "react-icons/fa";
 export const VINModal = () => {

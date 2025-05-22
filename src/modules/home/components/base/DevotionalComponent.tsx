@@ -5,7 +5,7 @@ import {
   CardHeader,
   CircularProgress,
   useDisclosure,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { FaWhatsapp } from "react-icons/fa";
 import { DevotionalModal } from "../modals";
 import { useEffect, useState } from "react";

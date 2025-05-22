@@ -10,7 +10,7 @@ import {
   Link,
   Image,
   useDisclosure,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router-dom";
 import { IoMdExit } from "react-icons/io";

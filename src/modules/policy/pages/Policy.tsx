@@ -1,4 +1,4 @@
-import { Card, CardBody, Spacer } from "@nextui-org/react";
+import { Card, CardBody, Spacer } from "@heroui/react";
 
 export const Policy = () => {
   return (

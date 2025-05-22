@@ -1,7 +1,6 @@
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { get } from "../../services";
 import {
-  Button,
   getKeyValue,
   Table,
   TableBody,
@@ -9,26 +8,13 @@ import {
   TableColumn,
   TableHeader,
   TableRow,
-  Tooltip,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { Pagination } from "../../../models";
 import { PaginationWithSize } from "./atomics/PaginationWithSize";
 import { Column } from "./models/column";
 import { useReloadTable } from "../../../hooks";
-
-interface Action<T> {
-  icon: ReactNode;
-  label: string;
-  action: (item: T) => void;
-  visibleIf?: (item: T) => boolean;
-  color?:
-    | "secondary"
-    | "default"
-    | "primary"
-    | "success"
-    | "warning"
-    | "danger";
-}
+import { Action } from "./models";
+import { ActionButton } from "./atomics";
 
 interface PaginatedTableProps<T> {
   endpoint: string;
@@ -104,19 +90,12 @@ export const PaginatedTable = <T extends BasicObject>({
                           (action) =>
                             !action.visibleIf ||
                             (action.visibleIf(item) && (
-                              <Tooltip
-                                key={Math.random() * 100}
-                                content={<p>{action.label}</p>}
-                              >
-                                <Button
-                                  isIconOnly
-                                  color={action.color ?? "primary"}
-                                  variant="light"
-                                  onPress={() => action.action(item)}
-                                >
-                                  {action.icon}
-                                </Button>
-                              </Tooltip>
+                              <ActionButton
+                                action={async () => await action.action(item)}
+                                color={action.color ?? "primary"}
+                                icon={action.icon}
+                                label={action.label}
+                              />
                             ))
                         )}
                       </div>

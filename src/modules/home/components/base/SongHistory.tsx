@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CircularProgress } from "@nextui-org/react";
+import { CircularProgress } from "@heroui/react";
 import { httpClient } from "../../../../core";
 import { Environment } from "../../../../config/environment";
 import { convertSecondsToMinutes } from "../../services";

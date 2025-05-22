@@ -1,4 +1,4 @@
-import { Pagination, Select, SelectItem } from "@nextui-org/react";
+import { Pagination, Select, SelectItem } from "@heroui/react";
 interface PaginationWithSizeProps {
   count: number;
   size: number;

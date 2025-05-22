@@ -1,4 +1,4 @@
-import { CircularProgress, Image } from "@nextui-org/react";
+import { CircularProgress, Image } from "@heroui/react";
 import { Carousel } from "react-responsive-carousel";
 import { useEffect, useState } from "react";
 import { get, getClodinaryUrl } from "../../../../common";

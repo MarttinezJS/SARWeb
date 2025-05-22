@@ -5,7 +5,7 @@ import {
 } from "../../../hooks";
 import { Response } from "../../../models";
 import { useEffect, useState } from "react";
-import { Image } from "@nextui-org/react";
+import { Image } from "@heroui/react";
 interface Config {
   audio?: string | "*";
   image?: string | "*";

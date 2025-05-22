@@ -5,7 +5,7 @@ import { get } from "../../services";
 import { Endpoints } from "../../endpoints";
 import { Points } from "../../../models";
 import { useResponseModalStore } from "../../../hooks";
-import { CircularProgress, Select, SelectItem } from "@nextui-org/react";
+import { CircularProgress, Select, SelectItem } from "@heroui/react";
 
 interface ProgressComponentProps {
   player: RefObject<ReactAudioPlayer>;

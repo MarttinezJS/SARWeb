@@ -9,7 +9,7 @@ import {
   Spacer,
   Tooltip,
   useDisclosure,
-} from "@nextui-org/react";
+} from "@heroui/react";
 import { IoMdListBox } from "react-icons/io";
 import { Song } from "../../../../models";
 

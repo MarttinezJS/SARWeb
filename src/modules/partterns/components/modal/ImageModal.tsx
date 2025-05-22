@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalContent } from "@nextui-org/react";
+import { Button, Modal, ModalBody, ModalContent } from "@heroui/react";
 import { useImageModalStore } from "../../hooks/useImageModalStore";
 import { FileUploadZone, getClodinaryUrl } from "../../../../common";
 import { useState } from "react";
