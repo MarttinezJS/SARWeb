@@ -156,7 +156,12 @@ export const Layout = () => {
   // );
   return (
     <div className="lg:h-screen-with-navbar">
-      <Navbar>
+      <LoginModal isOpen={isOpen} onOpenChange={onOpenChange} />
+      <Navbar
+        onMenuOpenChange={setIsMenuOpen}
+        maxWidth="full"
+        className="bg-transparent"
+      >
         <NavbarContent>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
