@@ -1,4 +1,4 @@
-import { Button, Modal, ModalBody, ModalContent } from "@heroui/react";
+import { Button, Image, Modal, ModalBody, ModalContent } from "@heroui/react";
 import { useVINModalStore } from "../../hooks";
 import { FaTimes } from "react-icons/fa";
 export const VINModal = () => {
@@ -25,11 +25,7 @@ export const VINModal = () => {
             >
               <FaTimes />
             </Button>
-            <iframe
-              src="https://widget.taggbox.com/2140074"
-              className="h-[700px] sm:h-screen "
-              loading="lazy"
-            />
+            <Image src="/Invitacion_AC.jpeg" />
           </ModalBody>
         )}
       </ModalContent>

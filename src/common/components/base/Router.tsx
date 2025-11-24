@@ -25,8 +25,7 @@ export const Router = () => {
     !isAuthenticated && !(await sessionValid()) ? redirect("/") : null;
   useEffect(() => {
     sessionValid();
-  }, []);
-
+  }, [sessionValid]);
   return (
     <RouterProvider
       router={createBrowserRouter(
