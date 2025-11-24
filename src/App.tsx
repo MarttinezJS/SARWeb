@@ -22,7 +22,7 @@ export const App = () => {
     return () => {
       socket.close();
     };
-  }, []);
+  }, [setAzuraResp]);
 
   return (
     <>

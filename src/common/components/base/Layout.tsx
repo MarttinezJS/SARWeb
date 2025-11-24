@@ -27,21 +27,21 @@ const menuOptions: MenuOptions[] = [
     title: "Inicio",
     key: "/",
   },
+  // {
+  //   title: "Eventos",
+  //   key: "/events",
+  // },
+  // {
+  //   title: "Programación",
+  //   key: "/schedule",
+  // },
   {
-    title: "Eventos",
-    key: "/events",
-  },
-  {
-    title: "Programación",
-    key: "/schedule",
+    title: "Usuario",
+    key: "/user",
   },
   {
     title: "Nosotros",
     key: "/about",
-  },
-  {
-    title: "Usuario",
-    key: "/user",
   },
   {
     title: "Política de datos",
@@ -59,11 +59,104 @@ export const Layout = () => {
     const routesNames = location.pathname.split("/");
     setCurrentPath(`/${routesNames[1]}`);
   }, [isAuthenticated]);
+  // return (
+  //   <div>
+  //     <LoginModal isOpen={isOpen} onOpenChange={onOpenChange} />
+  //     <Navbar
+  //       onMenuOpenChange={setIsMenuOpen}
+  //       maxWidth="full"
+  //       className="bg-transparent"
+  //     >
+  //       <NavbarContent justify="end">
+  //         <NavbarMenuToggle
+  //           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+  //           className="sm:hidden"
+  //         />
+  //         <NavbarBrand>
+  //           <Image src="/logo.svg" width={50} alt="Logo sigue adelante radio" />
+  //         </NavbarBrand>
+  //       </NavbarContent>
+  //       <NavbarContent className="hidden sm:flex gap-4" justify="start">
+  //         {menuOptions.map((option) => {
+  //           if (option.key == "/user" && !isAuthenticated) {
+  //             return <div key={option.key}></div>;
+  //           }
+  //           return (
+  //             <NavbarItem
+  //               isActive={currentPath == option.key}
+  //               key={Math.random() * 100}
+  //             >
+  //               <Link
+  //                 className="cursor-pointer"
+  //                 color={currentPath != option.key ? "foreground" : undefined}
+  //                 onPress={() => {
+  //                   setCurrentPath(option.key);
+  //                   redirectTo(option.key);
+  //                 }}
+  //               >
+  //                 {option.title}
+  //               </Link>
+  //             </NavbarItem>
+  //           );
+  //         })}
+  //       </NavbarContent>
+  //       <NavbarContent justify="end">
+  //         {isAuthenticated ? (
+  //           <NavbarItem>
+  //             <Button
+  //               color="danger"
+  //               variant="light"
+  //               onPress={() => {
+  //                 logout();
+  //                 redirectTo("/");
+  //               }}
+  //             >
+  //               <p>Cerrar sesión</p>
+  //               <IoMdExit size={25} />
+  //             </Button>
+  //           </NavbarItem>
+  //         ) : (
+  //           <NavbarItem>
+  //             <Button
+  //               className=" text-secondary"
+  //               color="primary"
+  //               variant="flat"
+  //               onPress={() => onOpen()}
+  //             >
+  //               Login
+  //             </Button>
+  //           </NavbarItem>
+  //         )}
+  //       </NavbarContent>
 
+  //       <NavbarMenu>
+  //         <NavbarMenuItem>
+  //           {menuOptions.map((option) =>
+  //             option.key == "/user" && !isAuthenticated ? (
+  //               <div key={option.key}></div>
+  //             ) : (
+  //               <Link
+  //                 key={Math.random() * 10}
+  //                 onPress={() => {
+  //                   redirectTo(option.key);
+  //                   setCurrentPath(option.key);
+  //                 }}
+  //                 color="secondary"
+  //                 className="w-full"
+  //                 size="lg"
+  //               >
+  //                 {option.title}
+  //               </Link>
+  //             )
+  //           )}
+  //         </NavbarMenuItem>
+  //       </NavbarMenu>
+  //     </Navbar>
+  //   </div>
+  // );
   return (
     <div className="lg:h-screen-with-navbar">
-      <LoginModal isOpen={isOpen} onOpenChange={onOpenChange} />
-      <Navbar onMenuOpenChange={setIsMenuOpen} maxWidth="full">
+      <Navbar>
         <NavbarContent>
           <NavbarMenuToggle
             aria-label={isMenuOpen ? "Close menu" : "Open menu"}
