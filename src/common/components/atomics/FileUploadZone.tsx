@@ -5,7 +5,7 @@ import {
 } from "../../../hooks";
 import { Response } from "../../../models";
 import { useEffect, useState } from "react";
-import { Image } from "@heroui/react";
+
 interface Config {
   audio?: string | "*";
   image?: string | "*";
@@ -73,11 +73,12 @@ export const FileUploadZone = ({
           {text ?? "Arrastra la imagen o has click para subir."}
         </p>
       ) : (
-        <Image
-          src={
-            imageSelected ? URL.createObjectURL(imageSelected) : defaultImageUrl
-          }
-        />
+        <></>
+        // <Image
+        //   src={
+        //     imageSelected ? URL.createObjectURL(imageSelected) : defaultImageUrl
+        //   }
+        // />
       )}
     </div>
   );
@@ -85,7 +86,6 @@ export const FileUploadZone = ({
 
 const parseAcceptData = (config: Config): string => {
   const mimeTypes = Object.keys(config).map((key) =>
-    // @ts-ignore
     key != "others" ? `${key}/${config[key]}` : config.others?.join(", ")
   );
   return mimeTypes.join(", ");

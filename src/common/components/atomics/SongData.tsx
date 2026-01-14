@@ -1,71 +1,74 @@
-import { Skeleton, Spacer, Chip, Image } from "@heroui/react";
-import { RiSignalTowerFill } from "react-icons/ri";
+import { addToast } from "@heroui/toast";
+import { useCallback, useEffect, useState } from "react";
 import { Live, MetaSong } from "../../../models";
-
+import { get } from "../../services";
+import { useAzuraStore } from "../../../hooks";
+import { Skeleton } from "@heroui/skeleton";
 interface SongDataProps {
-  streamer: Live | undefined;
-  playing: MetaSong | undefined;
-  isLoading: boolean;
+  isPlaying?: boolean;
 }
 
-export const SongData = ({ isLoading, playing, streamer }: SongDataProps) => {
+export const SongData = ({ isPlaying = false }: SongDataProps) => {
+  const { data, setData } = useAzuraStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const getNowPlaying = useCallback(async () => {
+    try {
+      const resp = await get<{ live: Live; now_playing: MetaSong }>(
+        `/azura/now-playing`
+      );
+      if (resp.error) {
+        addToast({
+          title: resp.message,
+          color: "danger",
+        });
+        return;
+      }
+      setData(resp.body!);
+    } catch (error: unknown) {
+      addToast({
+        title: "Error",
+        description: (error as { message: string }).message,
+      });
+    }
+  }, [setData]);
+  useEffect(() => {
+    getNowPlaying().then(() => {
+      setIsLoading(false);
+    });
+  }, [getNowPlaying]);
   return (
-    <div className="flex">
-      {isLoading ? (
-        <Skeleton className="flex rounded-3xl w-24 h-24" />
-      ) : (
-        <Image
-          alt="Album cover"
-          className="object-cover hidden sm:flex"
-          height={100}
-          shadow="md"
-          src={
-            streamer?.is_live ? streamer?.art ?? "/logo.svg" : playing?.song.art
-          }
+    <div className="flex items-center gap-4 px-2 min-w-0">
+      <div
+        className={`relative w-12 h-12 rounded-full overflow-hidden shadow-lg ${
+          isPlaying ? "rotating-disk" : ""
+        }`}
+      >
+        <img
+          src={data?.live.is_live ? data.live.art : data?.now_playing?.song.art}
+          alt="img"
+          className="w-full h-full object-cover"
         />
-      )}
-      <Spacer />
-      <div className="flex justify-between items-end">
-        <div className="flex flex-col gap-0">
-          <h3 className="font-semibold text-foreground/90">
-            {isLoading ? (
-              <Skeleton className="flex rounded-lg w-15 h-6" />
-            ) : (
-              `${
-                streamer?.is_live
-                  ? streamer?.streamer_name
-                  : playing?.song.artist
-              }`
-            )}
-          </h3>
-          {isLoading ? (
-            <Skeleton className="flex rounded-lg w-15 h-6" />
-          ) : (
-            <p className="text-small text-foreground/80">
-              {streamer?.is_live
-                ? `Desde las ${new Date(
-                    streamer?.broadcast_start ?? Date.now()
-                  ).toLocaleTimeString()}`
-                : playing?.song.album}
-            </p>
+        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+          <div className="w-2 h-2 bg-white rounded-full"></div>
+        </div>
+      </div>
+      <div className="min-w-20">
+        {isLoading && <Skeleton className="h-3 w-full rounded-lg" />}
+        <h4 className="text-sm font-bold truncate">
+          {data?.live.is_live
+            ? data.live.streamer_name
+            : data?.now_playing.song.title}
+        </h4>
+        <div className="flex items-center gap-2">
+          {isLoading && <Skeleton className="h-3 w-1/2 rounded-lg mt-2" />}
+          {data?.live?.is_live && (
+            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
           )}
-          <h1
-            className={`text-large ${
-              streamer?.is_live && "text-red-500"
-            } font-medium mt-2 w-max`}
-          >
-            {isLoading ? (
-              <Skeleton className="flex rounded-lg w-52 h-6" />
-            ) : streamer?.is_live ? (
-              <div className="flex">
-                <Chip startContent={<RiSignalTowerFill />} color="danger">
-                  EN VIVO
-                </Chip>
-              </div>
-            ) : (
-              `${playing?.song.title}`
-            )}
-          </h1>
+          <p className="text-xs text-brand-gold font-medium">
+            {data?.live?.is_live
+              ? "En Vivo Ahora"
+              : data?.now_playing.song.artist}
+          </p>
         </div>
       </div>
     </div>

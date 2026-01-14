@@ -1,14 +1,5 @@
 import { useEffect, useState } from "react";
 import { get } from "../../services";
-import {
-  getKeyValue,
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableHeader,
-  TableRow,
-} from "@heroui/react";
 import { Pagination } from "../../../models";
 import { PaginationWithSize } from "./atomics/PaginationWithSize";
 import { Column } from "./models/column";
@@ -59,7 +50,7 @@ export const PaginatedTable = <T extends BasicObject>({
 
   return (
     <div>
-      <Table>
+      {/* <Table>
         <TableHeader>
           {columns.map((column) => (
             <TableColumn key={column.id}>{column.name}</TableColumn>
@@ -110,7 +101,7 @@ export const PaginatedTable = <T extends BasicObject>({
             </TableRow>
           )}
         </TableBody>
-      </Table>
+      </Table> */}
       <PaginationWithSize
         count={count}
         page={page}

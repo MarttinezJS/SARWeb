@@ -1,9 +1,7 @@
-import { Card, CardBody, Spacer } from "@heroui/react";
-
 export const Policy = () => {
   return (
     <div className="flex justify-center p-5">
-      <Card className="w-2/3">
+      {/* <Card className="w-2/3">
         <CardBody>
           <p className="text-2xl">
             Políticas de privacidad de "SIGUE ADELANTE RADIO"
@@ -68,7 +66,7 @@ export const Policy = () => {
             contacto proporcionados en nuestra página web.
           </p>
         </CardBody>
-      </Card>
+      </Card> */}
     </div>
   );
 };

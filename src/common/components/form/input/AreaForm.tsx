@@ -1,4 +1,3 @@
-import { Textarea } from "@heroui/react";
 import { ReactNode } from "react";
 import {
   Controller,
@@ -28,25 +27,26 @@ export const AreaForm = <T extends FieldValues>({
       disabled={registerReturn.disabled}
       render={({ fieldState, ...state }) => {
         return (
-          <Textarea
-            radius="lg"
-            disableAutosize
-            startContent={icon}
-            isMultiline
-            variant="bordered"
-            size="sm"
-            classNames={{
-              input: "resize-y min-h-[400px]",
-            }}
-            fullWidth={fullWidth}
-            labelPlacement="inside"
-            isInvalid={fieldState.invalid}
-            errorMessage={fieldState.error?.message}
-            onValueChange={(value) => setValue(state.field.name, value as any)}
-            label={label}
-            color="secondary"
-            className="w-full my-2 "
-          />
+          <></>
+          // <Textarea
+          //   radius="lg"
+          //   disableAutosize
+          //   startContent={icon}
+          //   isMultiline
+          //   variant="bordered"
+          //   size="sm"
+          //   classNames={{
+          //     input: "resize-y min-h-[400px]",
+          //   }}
+          //   fullWidth={fullWidth}
+          //   labelPlacement="inside"
+          //   isInvalid={fieldState.invalid}
+          //   errorMessage={fieldState.error?.message}
+          //   onValueChange={(value) => setValue(state.field.name, value as any)}
+          //   label={label}
+          //   color="secondary"
+          //   className="w-full my-2 "
+          // />
         );
       }}
     />

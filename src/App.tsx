@@ -1,8 +1,7 @@
 import { useEffect } from "react";
-import { ResponseModal, Router } from "./common";
-import { Reproductor } from "./common/components/base/Reproductor";
 import { Environment } from "./config/environment";
 import { useAzuraStore } from "./hooks";
+import { Routes } from "./Routes";
 
 export const App = () => {
   const setAzuraResp = useAzuraStore((s) => s.setData);
@@ -24,11 +23,5 @@ export const App = () => {
     };
   }, [setAzuraResp]);
 
-  return (
-    <>
-      <ResponseModal />
-      <Reproductor />
-      <Router />
-    </>
-  );
+  return <Routes />;
 };

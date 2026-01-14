@@ -1,4 +1,3 @@
-import { Checkbox } from "@heroui/react";
 import {
   Controller,
   FieldValues,
@@ -23,7 +22,7 @@ export const SwitchForm = <T extends FieldValues>({
       disabled={registerReturn.disabled}
       render={({ field }) => (
         <div className="flex items-center mb-2 mt-5 px-2 border-gray-200 border-2 rounded-full">
-          <Checkbox
+          {/* <Checkbox
             className=""
             classNames={{
               label: "text-secondary ",
@@ -33,7 +32,7 @@ export const SwitchForm = <T extends FieldValues>({
             }
           >
             {label}
-          </Checkbox>
+          </Checkbox> */}
         </div>
       )}
     />

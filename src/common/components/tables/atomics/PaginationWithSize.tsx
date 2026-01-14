@@ -1,4 +1,3 @@
-import { Pagination, Select, SelectItem } from "@heroui/react";
 interface PaginationWithSizeProps {
   count: number;
   size: number;
@@ -16,7 +15,7 @@ export const PaginationWithSize = ({
 }: PaginationWithSizeProps) => {
   return (
     <div className="flex w-full p-2 justify-center items-center">
-      <Pagination
+      {/* <Pagination
         isCompact
         showShadow
         showControls
@@ -43,7 +42,7 @@ export const PaginationWithSize = ({
             </SelectItem>
           ))}
         </Select>
-      </div>
+      </div> */}
     </div>
   );
 };

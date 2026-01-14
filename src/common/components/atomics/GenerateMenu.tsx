@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Route } from "../../../models";
 import { authProvider } from "../../../core";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 interface GenerateMenuProps {
   isExpand: boolean;
