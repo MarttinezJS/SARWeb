@@ -3,3 +3,4 @@ export * from "./get";
 export * from "./getClodinaryUrl";
 export * from "./formatDate";
 export * from "./modify";
+export * from "./formatDuration";

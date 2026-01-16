@@ -99,6 +99,9 @@ layer(base);
   }
 }
 
+.title {
+  @apply font-tinos;
+}
 .rotating-disk {
   animation: spin 8s linear infinite;
 }

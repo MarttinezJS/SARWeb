@@ -1,3 +1,5 @@
+import { NewsFeed, SongHistory } from "../components";
+
 export const RECENT_TRACKS = [
   { time: "10:30", title: "Canción 3", artist: "Artista C" },
   { time: "10:15", title: "Canción 2", artist: "Artista B" },
@@ -48,22 +50,15 @@ const NEWS = [
   },
 ];
 const featured = NEWS.find((n) => n.isFeatured);
-const otherNews = NEWS.filter((n) => !n.isFeatured);
 export const HomePage = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 animate-in fade-in duration-700">
+      <header className="flex items-end justify-between pb-2">
+        <h2 className="text-4xl font-extrabold title ">Últimas Noticias</h2>
+      </header>
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Main Content: News Feed */}
         <div className="lg:col-span-8 space-y-10">
-          <header className="flex items-end justify-between">
-            <h2 className="text-4xl font-extrabold text-white">
-              Últimas Noticias
-            </h2>
-            <button className="text-brand-gold hover:underline text-sm font-semibold">
-              Ver todas
-            </button>
-          </header>
-
           {/* Featured Post */}
           {featured && (
             <div className="relative group cursor-pointer rounded-3xl overflow-hidden aspect-video shadow-2xl">
@@ -91,99 +86,13 @@ export const HomePage = () => {
               </div>
             </div>
           )}
-
-          {/* Secondary Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {otherNews.map((news) => (
-              <article key={news.id} className="group cursor-pointer">
-                <div className="rounded-2xl overflow-hidden aspect-4/3 mb-5 shadow-lg relative">
-                  <img
-                    src={news.image}
-                    alt={news.title}
-                    className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
-                </div>
-                <span className="text-brand-gold text-xs font-black uppercase tracking-wider">
-                  {news.category}
-                </span>
-                <h4 className="text-xl font-bold text-white mt-2 group-hover:text-brand-gold transition-colors leading-tight">
-                  {news.title}
-                </h4>
-                <p className="text-slate-400 text-sm mt-3 line-clamp-3">
-                  {news.excerpt}
-                </p>
-              </article>
-            ))}
-          </div>
-
-          {/* Headlines List */}
-          <div className="glass-panel p-8">
-            <h3 className="text-xl font-bold mb-6 flex items-center gap-3">
-              <span className="w-2 h-8 bg-brand-gold rounded-full" />
-              Más Titulares
-            </h3>
-            <div className="space-y-8">
-              {[1, 2].map((i) => (
-                <div
-                  key={i}
-                  className="flex gap-6 group cursor-pointer items-start"
-                >
-                  <div className="w-28 h-28 rounded-xl overflow-hidden shrink-0 shadow-md">
-                    <img
-                      src={`https://picsum.photos/seed/news${i}/300/300`}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform"
-                    />
-                  </div>
-                  <div className="grow pt-1">
-                    <h5 className="font-bold text-lg text-white group-hover:text-brand-gold transition-colors mb-2">
-                      Tecnología y radio: el futuro del streaming en vivo
-                    </h5>
-                    <p className="text-sm text-slate-400 line-clamp-2 mb-2">
-                      Análisis profundo sobre las nuevas herramientas digitales
-                      para emisoras.
-                    </p>
-                    <span className="text-xs text-slate-500">10 Oct, 2023</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <NewsFeed />
         </div>
 
         {/* Sidebar */}
         <aside className="lg:col-span-4 space-y-8">
           {/* Recently Played */}
-          <section className="glass-panel overflow-hidden">
-            <div className="p-6 border-b border-white/10 flex items-center justify-between">
-              <h3 className="font-bold flex items-center gap-2">
-                <span className="material-symbols-outlined text-brand-gold">
-                  history
-                </span>
-                Recientemente
-              </h3>
-            </div>
-            <div className="divide-y divide-white/5">
-              {RECENT_TRACKS.map((track, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 flex items-center gap-4 hover:bg-white/5 transition-colors cursor-pointer"
-                >
-                  <div className="w-12 h-12 rounded bg-white/5 flex items-center justify-center font-bold text-xs text-slate-500">
-                    {track.time}
-                  </div>
-                  <div className="grow min-w-0">
-                    <p className="text-sm font-bold text-white truncate">
-                      {track.title}
-                    </p>
-                    <p className="text-xs text-slate-500 truncate">
-                      {track.artist}
-                    </p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+          <SongHistory />
 
           {/* Mini Sponsors */}
           <section className="glass-panel p-6">
