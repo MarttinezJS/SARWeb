@@ -1,13 +1,10 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router";
 import { useResponseModalStore } from "../../../hooks";
 import { useEffect, useState } from "react";
 import { User } from "../../../models";
 import { authProvider, httpClient } from "../../../core";
 import { Endpoints } from "../../endpoints";
-// @ts-ignore
 import SimpleBar from "simplebar-react";
-import { Avatar, Button } from "@heroui/react";
-import { routes } from "../../../config/routes";
 import { GenerateMenu } from "../atomics";
 import { FaArrowCircleLeft } from "react-icons/fa";
 
@@ -107,14 +104,14 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
                       : "h-12 w-12"
                   }`}
                 >
-                  <Avatar
+                  {/* <Avatar
                     name={`${user?.firstName?.charAt(
                       0
                     )}${user?.lastName?.charAt(0)}`}
                     isBordered
                     color={activeName == "config" ? "primary" : "default"}
                     className="w-full h-full text-large text-secondary"
-                  />
+                  /> */}
                 </div>
                 <div
                   className={`text-base font-semibold text-secondary mt-3 truncate duration-300 ${
@@ -142,7 +139,7 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
 
             <div className="mt-3 mb-10 p-0">
               <ul className="list-none text-sm font-normal px-3">
-                {routes.map((item, index) => (
+                {/* {routes.map((item, index) => (
                   <GenerateMenu
                     key={index}
                     activeName={activeName}
@@ -152,24 +149,24 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
                     isExpandOnHover={isExpandOnHover}
                     item={item}
                   />
-                ))}
+                ))} */}
               </ul>
             </div>
             <div className="px-3 place-self-end">
-              <Button
-                color="danger"
-                startContent={<FaArrowCircleLeft />}
-                variant="light"
-                className={`duration-300 text-sm truncate ${
-                  isExpand ? "" : isExpandOnHover ? "" : "w-0 h-0 opacity-0"
-                }`}
-                onPress={() => {
-                  logout();
-                  navigate("/");
-                }}
-              >
-                Cerrar sesión
-              </Button>
+              {/* <Button
+              color="danger"
+              startContent={<FaArrowCircleLeft />}
+              variant="light"
+              className={`duration-300 text-sm truncate ${
+                isExpand ? "" : isExpandOnHover ? "" : "w-0 h-0 opacity-0"
+              }`}
+              onPress={() => {
+                logout();
+                navigate("/");
+              }}
+            >
+              Cerrar sesión
+            </Button> */}
             </div>
           </div>
         </SimpleBar>

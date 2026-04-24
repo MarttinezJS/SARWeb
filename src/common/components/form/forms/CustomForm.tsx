@@ -1,4 +1,3 @@
-import type { ButtonProps } from "@heroui/react";
 import type { ReactNode } from "react";
 import {
   FormProvider,
@@ -28,7 +27,7 @@ interface CustomFormProps<REQ extends FieldValues> {
       options?: RegisterOptions<REQ, Path<REQ>> | undefined
     ) => UseFormRegisterReturn<Path<REQ>>
   ) => ReactNode;
-  submitButtonProps?: ButtonProps & CustomButtonProps;
+  submitButtonProps?: CustomButtonProps;
   defaultValues?: REQ;
 }
 
@@ -61,7 +60,6 @@ export const CustomForm = <REQ extends FieldValues>({
         <div className="flex justify-end mt-5">
           <SubmitButton
             label={submitButtonProps?.label}
-            submitButtonProps={submitButtonProps}
             icon={submitButtonProps?.submitIcon}
           />
         </div>

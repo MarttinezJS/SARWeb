@@ -1,9 +1,9 @@
 import { create } from "zustand";
-import { AzuraResp } from "../models";
+import { Live, MetaSong } from "../models";
 
 interface AzuraStoreProps {
-  data: AzuraResp | undefined;
-  setData: (data: AzuraResp) => void;
+  data: { live: Live; now_playing: MetaSong } | undefined;
+  setData: (data: { live: Live; now_playing: MetaSong }) => void;
 }
 
 export const useAzuraStore = create<AzuraStoreProps>((set) => ({

@@ -1,259 +1,42 @@
-import {
-  Navbar,
-  NavbarContent,
-  NavbarMenuToggle,
-  NavbarBrand,
-  NavbarItem,
-  Button,
-  NavbarMenu,
-  NavbarMenuItem,
-  Link,
-  Image,
-  useDisclosure,
-} from "@heroui/react";
-import { useEffect, useState } from "react";
-import { Outlet, useNavigate } from "react-router-dom";
-import { IoMdExit } from "react-icons/io";
-import { authProvider } from "../../../core";
-import { LoginModal } from "../modals";
-
-interface MenuOptions {
-  title: string;
-  key: string;
-}
-
-const menuOptions: MenuOptions[] = [
-  {
-    title: "Inicio",
-    key: "/",
-  },
-  // {
-  //   title: "Eventos",
-  //   key: "/events",
-  // },
-  // {
-  //   title: "Programación",
-  //   key: "/schedule",
-  // },
-  {
-    title: "Usuario",
-    key: "/user",
-  },
-  {
-    title: "Nosotros",
-    key: "/about",
-  },
-  {
-    title: "Política de datos",
-    key: "/policy",
-  },
-];
+import { Outlet } from "react-router";
+import { Navbar } from "./Navbar";
+import { Footer } from "./Footer";
+import { Player } from "./Player";
+import { addToast } from "@heroui/toast";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Points } from "../../../models";
+import { get } from "../../services";
+import ReactAudioPlayer from "react-audio-player";
 
 export const Layout = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [currentPath, setCurrentPath] = useState(location.pathname);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { isAuthenticated, logout } = authProvider();
-  const redirectTo = useNavigate();
+  const player = useRef<ReactAudioPlayer>(null);
+  const [url, setUrl] = useState<string | undefined>();
+  const [volume, setVolume] = useState(0.8);
+  const getPoints = useCallback(async () => {
+    const resp = await get<Points[]>(`/stream/points`);
+    if (resp.error) {
+      addToast({
+        title: resp.message,
+        color: "danger",
+      });
+      return;
+    }
+    return resp.body?.[0];
+  }, []);
   useEffect(() => {
-    const routesNames = location.pathname.split("/");
-    setCurrentPath(`/${routesNames[1]}`);
-  }, [isAuthenticated]);
-  // return (
-  //   <div>
-  //     <LoginModal isOpen={isOpen} onOpenChange={onOpenChange} />
-  //     <Navbar
-  //       onMenuOpenChange={setIsMenuOpen}
-  //       maxWidth="full"
-  //       className="bg-transparent"
-  //     >
-  //       <NavbarContent justify="end">
-  //         <NavbarMenuToggle
-  //           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-  //           className="sm:hidden"
-  //         />
-  //         <NavbarBrand>
-  //           <Image src="/logo.svg" width={50} alt="Logo sigue adelante radio" />
-  //         </NavbarBrand>
-  //       </NavbarContent>
-  //       <NavbarContent className="hidden sm:flex gap-4" justify="start">
-  //         {menuOptions.map((option) => {
-  //           if (option.key == "/user" && !isAuthenticated) {
-  //             return <div key={option.key}></div>;
-  //           }
-  //           return (
-  //             <NavbarItem
-  //               isActive={currentPath == option.key}
-  //               key={Math.random() * 100}
-  //             >
-  //               <Link
-  //                 className="cursor-pointer"
-  //                 color={currentPath != option.key ? "foreground" : undefined}
-  //                 onPress={() => {
-  //                   setCurrentPath(option.key);
-  //                   redirectTo(option.key);
-  //                 }}
-  //               >
-  //                 {option.title}
-  //               </Link>
-  //             </NavbarItem>
-  //           );
-  //         })}
-  //       </NavbarContent>
-  //       <NavbarContent justify="end">
-  //         {isAuthenticated ? (
-  //           <NavbarItem>
-  //             <Button
-  //               color="danger"
-  //               variant="light"
-  //               onPress={() => {
-  //                 logout();
-  //                 redirectTo("/");
-  //               }}
-  //             >
-  //               <p>Cerrar sesión</p>
-  //               <IoMdExit size={25} />
-  //             </Button>
-  //           </NavbarItem>
-  //         ) : (
-  //           <NavbarItem>
-  //             <Button
-  //               className=" text-secondary"
-  //               color="primary"
-  //               variant="flat"
-  //               onPress={() => onOpen()}
-  //             >
-  //               Login
-  //             </Button>
-  //           </NavbarItem>
-  //         )}
-  //       </NavbarContent>
-
-  //       <NavbarMenu>
-  //         <NavbarMenuItem>
-  //           {menuOptions.map((option) =>
-  //             option.key == "/user" && !isAuthenticated ? (
-  //               <div key={option.key}></div>
-  //             ) : (
-  //               <Link
-  //                 key={Math.random() * 10}
-  //                 onPress={() => {
-  //                   redirectTo(option.key);
-  //                   setCurrentPath(option.key);
-  //                 }}
-  //                 color="secondary"
-  //                 className="w-full"
-  //                 size="lg"
-  //               >
-  //                 {option.title}
-  //               </Link>
-  //             )
-  //           )}
-  //         </NavbarMenuItem>
-  //       </NavbarMenu>
-  //     </Navbar>
-  //   </div>
-  // );
+    getPoints().then((resp) => {
+      setUrl(resp?.url);
+    });
+  }, [getPoints]);
   return (
-    <div className="lg:h-screen-with-navbar">
-      <LoginModal isOpen={isOpen} onOpenChange={onOpenChange} />
-      <Navbar
-        onMenuOpenChange={setIsMenuOpen}
-        maxWidth="full"
-        className="bg-transparent"
-      >
-        <NavbarContent>
-          <NavbarMenuToggle
-            aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-            className="sm:hidden"
-          />
-          <NavbarBrand>
-            <Image src="/logo.svg" width={50} alt="Logo sigue adelante radio" />
-            <p className="font-bold text-inherit">Sigue adelante radio</p>
-          </NavbarBrand>
-        </NavbarContent>
-
-        <NavbarContent className="hidden sm:flex gap-4" justify="center">
-          {menuOptions.map((option) => {
-            if (option.key == "/user" && !isAuthenticated) {
-              return <div key={option.key}></div>;
-            }
-            return (
-              <NavbarItem
-                isActive={currentPath == option.key}
-                key={Math.random() * 100}
-              >
-                <Link
-                  className="cursor-pointer"
-                  color={currentPath != option.key ? "foreground" : undefined}
-                  onPress={() => {
-                    setCurrentPath(option.key);
-                    redirectTo(option.key);
-                  }}
-                >
-                  {option.title}
-                </Link>
-              </NavbarItem>
-            );
-          })}
-        </NavbarContent>
-
-        <NavbarContent justify="end">
-          {/* <NavbarItem>
-            <Reproductor />
-          </NavbarItem> */}
-          {isAuthenticated ? (
-            <NavbarItem>
-              <Button
-                color="danger"
-                variant="light"
-                onPress={() => {
-                  logout();
-                  redirectTo("/");
-                }}
-              >
-                <p>Cerrar sesión</p>
-                <IoMdExit size={25} />
-              </Button>
-            </NavbarItem>
-          ) : (
-            <NavbarItem>
-              <Button
-                className=" text-secondary"
-                color="primary"
-                variant="flat"
-                onPress={() => onOpen()}
-              >
-                Login
-              </Button>
-            </NavbarItem>
-          )}
-        </NavbarContent>
-
-        <NavbarMenu>
-          <NavbarMenuItem>
-            {menuOptions.map((option) =>
-              option.key == "/user" && !isAuthenticated ? (
-                <div key={option.key}></div>
-              ) : (
-                <Link
-                  key={Math.random() * 10}
-                  onPress={() => {
-                    redirectTo(option.key);
-                    setCurrentPath(option.key);
-                  }}
-                  color="secondary"
-                  className="w-full"
-                  size="lg"
-                >
-                  {option.title}
-                </Link>
-              )
-            )}
-          </NavbarMenuItem>
-        </NavbarMenu>
-      </Navbar>
-      <Outlet />
+    <div className="flex flex-col min-h-screen  transition-colors duration-500">
+      <Navbar />
+      <main className="px-4 sm:px-6 lg:px-10 py-8">
+        <Outlet />
+      </main>
+      <Footer />
+      <Player ref={player} onChangeVolume={setVolume} volume={volume} />
+      <ReactAudioPlayer ref={player} src={url} volume={volume} />
     </div>
   );
 };

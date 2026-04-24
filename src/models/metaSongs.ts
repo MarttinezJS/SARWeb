@@ -22,3 +22,9 @@ export interface Song {
   isrc: string;
   lyrics: string;
 }
+
+export interface Live {
+  art: string;
+  is_live: boolean;
+  streamer_name: string;
+}

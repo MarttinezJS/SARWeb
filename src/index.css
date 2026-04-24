@@ -1,7 +1,115 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url("https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&family=Tinos:ital,wght@0,400;0,700;1,400;1,700&display=swap")
+layer(base);
+@import "tailwindcss";
+@config "../tailwind.config.ts";
 
-body {
-    background-color: '#ffc43b';
+@theme {
+  --font-*: initial;
+  --font-tinos: Tinos, "serif";
+  --font-funnel: "Funnel Sans", sans-serif;
+
+  --text-title-2xl: 72px;
+  --text-title-2xl--line-height: 90px;
+  --text-title-xl: 60px;
+  --text-title-xl--line-height: 72px;
+  --text-title-lg: 48px;
+  --text-title-lg--line-height: 60px;
+  --text-title-md: 36px;
+  --text-title-md--line-height: 44px;
+  --text-title-sm: 30px;
+  --text-title-sm--line-height: 38px;
+  --text-theme-xl: 20px;
+  --text-theme-xl--line-height: 30px;
+  --text-theme-sm: 14px;
+  --text-theme-sm--line-height: 20px;
+  --text-theme-xs: 12px;
+  --text-theme-xs--line-height: 18px;
+
+  --color-background: #f7e6b4;
+  --color-background-dark: #232c35;
+  --color-white: #fdfae8;
+
+  --color-primary-100: #fff8d7;
+  --color-primary-200: #ffeeb0;
+  --color-primary-300: #ffe289;
+  --color-primary-400: #ffd76c;
+  --color-primary-500: #ffc43b;
+  --color-primary: #ffc43b;
+  --color-primary-600: #dba02b;
+  --color-primary-700: #b77f1d;
+  --color-primary-800: #936112;
+  --color-primary-900: #7a4b0b;
+  --color-primary-foreground: #7a4b0b;
+
+  --color-success-100: #fafdf6;
+  --color-success-200: #eefcdf;
+  --color-success-300: #e7fbd6;
+  --color-success-400: #c2f6a1;
+  --color-success-500: #8feb64;
+  --color-success: #8feb64;
+  --color-success-600: #34721f;
+  --color-success-700: #245a18;
+  --color-success-800: #184611;
+  --color-success-900: #103c0e;
+  --color-success-foreground: #103c0e;
+
+  --color-info-100: #f7fefd;
+  --color-info-200: #e2fdfc;
+  --color-info-300: #dbfbfd;
+  --color-info-400: #aaf1fa;
+  --color-info-500: #73ddf5;
+  --color-info: #73ddf5;
+  --color-info-600: #246176;
+  --color-info-700: #1b485e;
+  --color-info-800: #143349;
+  --color-info-900: #10283e;
+  --color-info-foreground: #10283e;
+
+  --color-warning-100: #fefadc;
+  --color-warning-200: #f9f3b3;
+  --color-warning-300: #f5ed86;
+  --color-warning-400: #f2eb58;
+  --color-warning-500: #eeec2b;
+  --color-warning: #eeec2b;
+  --color-warning-600: #d4c511;
+  --color-warning-700: #a58f08;
+  --color-warning-800: #765e03;
+  --color-warning-900: #473300;
+  --color-warning-foreground: #473300;
+
+  --color-danger-100: #f9f2ee;
+  --color-danger-200: #f4d4c9;
+  --color-danger-300: #eec3ba;
+  --color-danger-400: #dc7267;
+  --color-danger-500: #af1515;
+  --color-danger: #af1515;
+  --color-danger-600: #54060d;
+  --color-danger-700: #43050f;
+  --color-danger-800: #340310;
+  --color-danger-900: #2c0211;
+  --color-danger-foreground: #2c0211;
+}
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  body {
+    @apply font-funnel font-normal bg-background text-primary-foreground;
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+.title {
+  @apply font-tinos;
+}
+.rotating-disk {
+  animation: spin 8s linear infinite;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
