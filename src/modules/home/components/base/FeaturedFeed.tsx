@@ -1,9 +1,7 @@
-interface FeaturedFeedProps {}
-
-export const FeaturedFeed = ({}: FeaturedFeedProps) => {
+export const FeaturedFeed = () => {
   return (
     <div className="relative group cursor-pointer rounded-3xl overflow-hidden aspect-video shadow-2xl">
-      <img
+      {/* <img
         src={featured.image}
         alt={featured.title}
         className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
@@ -24,7 +22,7 @@ export const FeaturedFeed = ({}: FeaturedFeedProps) => {
           <span className="w-1.5 h-1.5 bg-white/20 rounded-full" />
           <span>Por {featured.author}</span>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

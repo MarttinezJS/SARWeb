@@ -24,6 +24,7 @@ export const GenerateMenu = ({
 }: GenerateMenuProps) => {
   const activeLink = window.location.pathname;
   const classesActive = activeName === item.id ? "active" : "";
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [openedMenu, setOpenedMenu] = useState<Record<string, any>>({});
   const listRef = useRef<Record<string, HTMLUListElement | null>>({});
   const handleNavigate = (path: string) => setActiveName(path);
@@ -67,7 +68,7 @@ export const GenerateMenu = ({
     if (activeName === "" && activeLink.includes(item.id)) {
       setActiveName(item.id);
     }
-  }, []);
+  }, [activeLink, activeName, item.id, setActiveName]);
 
   return (
     (item.roles != "ADMIN" || userData?.role == "ADMIN") && (
@@ -141,7 +142,7 @@ export const GenerateMenu = ({
         </Link>
         {"child" in item ? (
           <ul
-            ref={(el) => (listRef.current[item.id] = el)}
+            // ref={ listRef.current[item.id]}
             className={[
               "overflow-hidden duration-300 ease-in-out",
               isExpand ? "" : isExpandOnHover ? "" : "h-0",
@@ -149,14 +150,14 @@ export const GenerateMenu = ({
             style={{ maxHeight: `${openedMenu[item.id]?.height || "0px"}` }}
             key={item.id}
           >
-            {item.child?.map((value: any, idx: number) => (
+            {item.child?.map((value: unknown, idx: number) => (
               <GenerateMenu
                 index={idx}
                 activeName={activeName}
                 setActiveName={setActiveName}
                 isExpand={isExpand}
                 isExpandOnHover={isExpandOnHover}
-                item={value}
+                item={value as Route}
                 recursive={recursive + 1}
               />
             ))}

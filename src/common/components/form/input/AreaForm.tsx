@@ -3,7 +3,6 @@ import {
   Controller,
   FieldValues,
   Path,
-  useFormContext,
   UseFormRegisterReturn,
 } from "react-hook-form";
 
@@ -15,17 +14,13 @@ interface AreaFormProps<T extends FieldValues> {
 }
 
 export const AreaForm = <T extends FieldValues>({
-  label,
   registerReturn,
-  fullWidth,
-  icon,
 }: AreaFormProps<T>) => {
-  const { setValue } = useFormContext();
   return (
     <Controller
       name={registerReturn.name}
       disabled={registerReturn.disabled}
-      render={({ fieldState, ...state }) => {
+      render={() => {
         return (
           <></>
           // <Textarea

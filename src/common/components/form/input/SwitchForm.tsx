@@ -2,7 +2,7 @@ import {
   Controller,
   FieldValues,
   Path,
-  useFormContext,
+  // useFormContext,
   UseFormRegisterReturn,
 } from "react-hook-form";
 
@@ -12,15 +12,14 @@ interface SwitchFormProps<T extends FieldValues> {
 }
 
 export const SwitchForm = <T extends FieldValues>({
-  label,
   registerReturn,
 }: SwitchFormProps<T>) => {
-  const { setValue } = useFormContext();
+  // const { setValue } = useFormContext();
   return (
     <Controller
       name={registerReturn.name}
       disabled={registerReturn.disabled}
-      render={({ field }) => (
+      render={() => (
         <div className="flex items-center mb-2 mt-5 px-2 border-gray-200 border-2 rounded-full">
           {/* <Checkbox
             className=""

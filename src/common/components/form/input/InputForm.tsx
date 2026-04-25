@@ -1,12 +1,10 @@
-import { useState, type ReactNode } from "react";
+import { type ReactNode } from "react";
 import {
   Controller,
-  useFormContext,
   type FieldValues,
   type Path,
   type UseFormRegisterReturn,
 } from "react-hook-form";
-import { BsEye, BsEyeSlash } from "react-icons/bs";
 
 interface InputFormProps<T extends FieldValues> {
   label: string;
@@ -17,20 +15,15 @@ interface InputFormProps<T extends FieldValues> {
 }
 
 export const InputForm = <T extends FieldValues>({
-  label,
-  type = "text",
-  icon,
   registerReturn,
-  fullWidth = true,
-  ...props
 }: InputFormProps<T>) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const { setValue } = useFormContext();
+  // const [isVisible, setIsVisible] = useState(false);
+  // const { setValue } = useFormContext();
   return (
     <Controller
       name={registerReturn.name}
       disabled={registerReturn.disabled}
-      render={({ fieldState, ...state }) => {
+      render={() => {
         return (
           <></>
           // <Input

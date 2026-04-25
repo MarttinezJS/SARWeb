@@ -44,7 +44,7 @@ export const FileUploadZone = ({
           (e) =>
             `${e.file.name}: ${e.errors
               .map((reason) => reason.message)
-              .join("/")}`
+              .join("/")}`,
         ),
       };
 
@@ -56,7 +56,7 @@ export const FileUploadZone = ({
     addDependency(() => {
       setImageSelected(undefined);
     });
-  }, [acceptedFiles]);
+  }, [acceptedFiles, addDependency, onChangeFile]);
 
   return (
     <div
@@ -86,7 +86,9 @@ export const FileUploadZone = ({
 
 const parseAcceptData = (config: Config): string => {
   const mimeTypes = Object.keys(config).map((key) =>
-    key != "others" ? `${key}/${config[key]}` : config.others?.join(", ")
+    key != "others"
+      ? `${key}/${config[key as keyof Config]}`
+      : config.others?.join(", "),
   );
   return mimeTypes.join(", ");
 };
