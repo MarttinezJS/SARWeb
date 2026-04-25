@@ -1,18 +1,12 @@
-interface PaginationWithSizeProps {
-  count: number;
-  size: number;
-  page: number;
-  setPage: (page: number) => void;
-  setSize: (size: number) => void;
-}
+// interface PaginationWithSizeProps {
+//   count: number;
+//   size: number;
+//   page: number;
+//   setPage: (page: number) => void;
+//   setSize: (size: number) => void;
+// }
 
-export const PaginationWithSize = ({
-  count,
-  page,
-  setPage,
-  setSize,
-  size,
-}: PaginationWithSizeProps) => {
+export const PaginationWithSize = () => {
   return (
     <div className="flex w-full p-2 justify-center items-center">
       {/* <Pagination

@@ -1,12 +1,10 @@
-import { Link, useNavigate } from "react-router";
+import { Link } from "react-router";
 import { useResponseModalStore } from "../../../hooks";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { User } from "../../../models";
 import { authProvider, httpClient } from "../../../core";
 import { Endpoints } from "../../endpoints";
 import SimpleBar from "simplebar-react";
-import { GenerateMenu } from "../atomics";
-import { FaArrowCircleLeft } from "react-icons/fa";
 
 interface SidebarProps {
   setExpand: (value: boolean) => void;
@@ -14,13 +12,13 @@ interface SidebarProps {
 
 export const Sidebar = ({ setExpand }: SidebarProps) => {
   const showResponse = useResponseModalStore((s) => s.showModal);
-  const navigate = useNavigate();
-  const [user, setUser] = useState<User>();
+  // const navigate = useNavigate();
+  const [user, setUser] = useState<User | undefined>();
   const [isExpandOnHover, setIsExpandOnHover] = useState(false);
   const [isExpand, setIsExpand] = useState(true);
-  const [activeName, setActiveName] = useState("");
-  const { userData, logout } = authProvider();
-  const getUser = async () => {
+  const [, setActiveName] = useState("");
+  const { userData } = authProvider();
+  const getUser = useCallback(async () => {
     try {
       const resp = await httpClient.get(`${Endpoints.USERS}/${userData?.id}`);
       const body = resp.data.body;
@@ -28,9 +26,11 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
         showResponse(resp.data);
         return;
       }
-      setUser(body);
-    } catch (error) {}
-  };
+      return body;
+    } catch (error) {
+      console.log(error);
+    }
+  }, [showResponse, userData?.id]);
   const handleHoverExpand = (value: boolean) => {
     if (!isExpand) {
       setIsExpandOnHover(value);
@@ -38,10 +38,11 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
   };
 
   useEffect(() => {
-    userData?.id && getUser();
+    if (userData?.id) getUser().then(setUser);
     const routesNames = location.pathname.split("/");
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setActiveName(routesNames[routesNames.length - 1]);
-  }, []);
+  }, [getUser, userData?.id]);
 
   return (
     <nav
@@ -53,8 +54,8 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
           isExpand
             ? "bg-slate-50 w-72"
             : isExpandOnHover
-            ? "bg-slate-50/70 w-72 backdrop-blur-md"
-            : "bg-slate-50 w-20"
+              ? "bg-slate-50/70 w-72 backdrop-blur-md"
+              : "bg-slate-50 w-20"
         }`,
       ].join(" ")}
     >
@@ -100,8 +101,8 @@ export const Sidebar = ({ setExpand }: SidebarProps) => {
                     isExpand
                       ? "h-28 w-28"
                       : isExpandOnHover
-                      ? "h-28 w-28"
-                      : "h-12 w-12"
+                        ? "h-28 w-28"
+                        : "h-12 w-12"
                   }`}
                 >
                   {/* <Avatar

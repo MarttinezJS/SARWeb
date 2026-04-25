@@ -19,13 +19,13 @@ interface CustomButtonProps {
 interface CustomFormProps<REQ extends FieldValues> {
   onSubmit: (
     data: REQ,
-    event?: React.BaseSyntheticEvent
+    event?: React.BaseSyntheticEvent,
   ) => Promise<Response<unknown>> | undefined;
   children: (
     register: (
       name: Path<REQ>,
-      options?: RegisterOptions<REQ, Path<REQ>> | undefined
-    ) => UseFormRegisterReturn<Path<REQ>>
+      options?: RegisterOptions<REQ, Path<REQ>> | undefined,
+    ) => UseFormRegisterReturn<Path<REQ>>,
   ) => ReactNode;
   submitButtonProps?: CustomButtonProps;
   defaultValues?: REQ;
@@ -33,7 +33,7 @@ interface CustomFormProps<REQ extends FieldValues> {
 
 export const CustomForm = <REQ extends FieldValues>({
   onSubmit,
-  submitButtonProps,
+  // submitButtonProps,
   children,
   defaultValues,
 }: CustomFormProps<REQ>) => {
@@ -59,8 +59,8 @@ export const CustomForm = <REQ extends FieldValues>({
         {children(customForm.register)}
         <div className="flex justify-end mt-5">
           <SubmitButton
-            label={submitButtonProps?.label}
-            icon={submitButtonProps?.submitIcon}
+          // label={submitButtonProps?.label}
+          // icon={submitButtonProps?.submitIcon}
           />
         </div>
       </form>

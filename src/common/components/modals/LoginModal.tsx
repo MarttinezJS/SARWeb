@@ -1,22 +1,22 @@
-import { useNavigate } from "react-router";
-import { useResponseModalStore } from "../../../hooks";
-import { CustomForm, InputForm } from "../form";
-import { authProvider } from "../../../core";
+// import { useNavigate } from "react-router";
+// import { useResponseModalStore } from "../../../hooks";
+// import { CustomForm, InputForm } from "../form";
+// import { authProvider } from "../../../core";
 
-interface LoginFields {
-  username: string;
-  password: string;
-}
+// interface LoginFields {
+//   username: string;
+//   password: string;
+// }
 
-interface LoginModalProps {
-  isOpen: boolean;
-  onOpenChange: () => void;
-}
+// interface LoginModalProps {
+//   isOpen: boolean;
+//   onOpenChange: () => void;
+// }
 
-export const LoginModal = ({ isOpen, onOpenChange }: LoginModalProps) => {
-  const showResp = useResponseModalStore((s) => s.showModal);
-  const navigate = useNavigate();
-  const login = authProvider((s) => s.login);
+export const LoginModal = () => {
+  // const showResp = useResponseModalStore((s) => s.showModal);
+  // const navigate = useNavigate();
+  // const login = authProvider((s) => s.login);
   return (
     <></>
     // <Modal

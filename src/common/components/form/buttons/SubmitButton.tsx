@@ -1,18 +1,13 @@
-import { useEffect, type ReactNode } from "react";
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
-import { FaRegSave } from "react-icons/fa";
 
-interface SubmitButtonProps {
-  // submitButtonProps?: ButtonProps;
-  label?: string;
-  icon?: ReactNode;
-}
+// interface SubmitButtonProps {
+//   // submitButtonProps?: ButtonProps;
+//   label?: string;
+//   icon?: ReactNode;
+// }
 
-export const SubmitButton = ({
-  // submitButtonProps,
-  label,
-  icon,
-}: SubmitButtonProps) => {
+export const SubmitButton = () => {
   const {
     formState: { isSubmitting },
   } = useFormContext();

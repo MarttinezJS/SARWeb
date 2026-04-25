@@ -1,9 +1,7 @@
 import { useResponseModalStore } from "../../../hooks";
-import { VscError } from "react-icons/vsc";
-import { FaCheck } from "react-icons/fa6";
 
 export const ResponseModal = () => {
-  const { visible, resp, closeModal } = useResponseModalStore();
+  const { resp } = useResponseModalStore();
   return resp ? (
     <></>
   ) : (
