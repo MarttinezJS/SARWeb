@@ -55,13 +55,9 @@ export const SongData = ({ isPlaying = false }: SongDataProps) => {
       <div className="flex-1 min-w-0">
         {isLoading && <Skeleton className="h-3 w-full rounded-lg" />}
         <h4 className="text-sm font-bold truncate w-full">
-          Lorem ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur
-          qui ea esse nemo inventore fugiat in natus quia recusandae distinctio
-          eum reprehenderit ducimus nesciunt ab, modi magnam animi maxime!
-          Aspernatur.
-          {/* {data?.live.is_live
+          {data?.live.is_live
             ? data.live.streamer_name
-            : data?.now_playing.song.title} */}
+            : data?.now_playing.song.title}
         </h4>
         <div className="flex items-center gap-2">
           {isLoading && <Skeleton className="h-3 w-1/2 rounded-lg mt-2" />}
