@@ -23,7 +23,7 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
     <div
       className={clsx(
         "fixed bottom-6 left-1/2 -translate-x-1/2 w-[95%] max-w-4xl z-50 transition-transform duration-300",
-        collapsed ? "translate-y-24" : "translate-y-0"
+        collapsed ? "translate-y-24" : "translate-y-0",
       )}
     >
       <AnimatePresence>
@@ -54,7 +54,7 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
 
       <div className="bg-white/10 dark:bg-black/60 backdrop-blur-2xl border border-white/10 rounded-full p-2.5 shadow-2xl">
         <div className="flex items-center w-full">
-          <div className="flex items-center gap-3 sm:w-1/3">
+          <div className="flex items-center gap-3 w-full sm:w-1/3 min-w-0">
             <SongData isPlaying={isPlaying} />
           </div>
           <div className="ml-auto sm:ml-0 sm:flex sm:justify-center sm:w-1/3">
