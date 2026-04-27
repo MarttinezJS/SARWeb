@@ -14,7 +14,7 @@ export const SongData = ({ isPlaying = false }: SongDataProps) => {
   const getNowPlaying = useCallback(async () => {
     try {
       const resp = await get<{ live: Live; now_playing: MetaSong }>(
-        `/azura/now-playing`
+        `/azura/now-playing`,
       );
       if (resp.error) {
         addToast({
@@ -37,7 +37,7 @@ export const SongData = ({ isPlaying = false }: SongDataProps) => {
     });
   }, [getNowPlaying]);
   return (
-    <div className="flex items-center gap-4 px-2 min-w-0">
+    <div className="flex items-center gap-4 px-2 w-full">
       <div
         className={`relative w-12 h-12 rounded-full overflow-hidden shadow-lg ${
           isPlaying ? "rotating-disk" : ""
@@ -52,9 +52,9 @@ export const SongData = ({ isPlaying = false }: SongDataProps) => {
           <div className="w-2 h-2 bg-white rounded-full"></div>
         </div>
       </div>
-      <div className="min-w-20">
+      <div className="flex-1 min-w-0">
         {isLoading && <Skeleton className="h-3 w-full rounded-lg" />}
-        <h4 className="text-sm font-bold truncate">
+        <h4 className="text-sm font-bold truncate w-full">
           {data?.live.is_live
             ? data.live.streamer_name
             : data?.now_playing.song.title}
