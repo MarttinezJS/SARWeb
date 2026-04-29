@@ -1,18 +1,19 @@
 import { Button } from "@heroui/button";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { MdAccountCircle } from "react-icons/md";
 
 const menuItems: { label: string; view: string }[] = [
-  { label: "Inicio", view: "home" },
+  { label: "Inicio", view: "/" },
   { label: "Nosotros", view: "about" },
   { label: "Programas", view: "programs" },
   { label: "Eventos", view: "news" },
   { label: "Patrocinadores", view: "sponsors" },
   { label: "Contacto", view: "contact" },
+  { label: "Políticas", view: "policy" },
 ];
 export const Navbar = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
   return (
     <nav className="sticky top-0 z-50 backdrop-blur-lg border-b border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -33,8 +34,8 @@ export const Navbar = () => {
             {menuItems.map((item) => (
               <span
                 key={item.view}
-                onClick={() => console.log(item.view)}
-                className={`nav-link ${
+                onClick={() => navigate(item.view)}
+                className={`nav-link cursor-pointer ${
                   location.pathname === item.view ? "nav-link-active" : ""
                 }`}
               >

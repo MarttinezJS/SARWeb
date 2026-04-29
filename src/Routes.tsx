@@ -20,7 +20,7 @@ export const Routes = () => {
               Component: HomePage,
             },
             {
-              path: "/policy",
+              path: "policy",
               Component: Policy,
             },
           ],
