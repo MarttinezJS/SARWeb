@@ -41,6 +41,8 @@ layer(base);
   --color-primary-900: #7a4b0b;
   --color-primary-foreground: #7a4b0b;
 
+  --color-secondary: #552a14;
+
   --color-success-100: #fafdf6;
   --color-success-200: #eefcdf;
   --color-success-300: #e7fbd6;
