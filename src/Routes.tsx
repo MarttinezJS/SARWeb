@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router";
 import { Layout } from "./common";
-import { HomePage } from "./modules";
+import { HomePage, Policy } from "./modules";
 
 export const Routes = () => {
   //      const { isAuthenticated, verifySession } = useAuthentication();
@@ -18,6 +18,10 @@ export const Routes = () => {
             {
               index: true,
               Component: HomePage,
+            },
+            {
+              path: "/policy",
+              Component: Policy,
             },
           ],
         },

@@ -60,7 +60,7 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
           <div className="ml-auto sm:ml-0 sm:flex sm:justify-center sm:w-1/3">
             <Button
               variant="shadow"
-              color="primary"
+              color="secondary"
               radius="full"
               isLoading={isLoading}
               onPress={async () => {
