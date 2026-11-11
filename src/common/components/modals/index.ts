@@ -1,2 +1,1 @@
-export * from "./ResponseModal";
-export * from "./LoginModal";
+export * from "./ConfirmModal";

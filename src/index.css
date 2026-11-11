@@ -39,9 +39,11 @@ layer(base);
   --color-primary-700: #b77f1d;
   --color-primary-800: #936112;
   --color-primary-900: #7a4b0b;
-  --color-primary-foreground: #7a4b0b;
+  --color-primary-foreground: #552a14;
 
   --color-secondary: #552a14;
+  --color-secondary-foreground: #fdfae8;
+  --color-muted: #6b4423;
 
   --color-success-100: #fafdf6;
   --color-success-200: #eefcdf;
@@ -89,21 +91,52 @@ layer(base);
   --color-danger-700: #43050f;
   --color-danger-800: #340310;
   --color-danger-900: #2c0211;
-  --color-danger-foreground: #2c0211;
+  --color-danger-foreground: #fdfae8;
 }
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
-    @apply font-funnel font-normal bg-background text-primary-foreground;
+    @apply font-funnel font-normal bg-background text-secondary;
     margin: 0;
     -webkit-font-smoothing: antialiased;
   }
+  /* Foco visible para enlaces y controles nativos (HeroUI gestiona el suyo). */
+  a:focus-visible,
+  button:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid var(--color-primary-800);
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 }
 
-.title {
-  @apply font-tinos;
+@layer components {
+  /* Títulos editoriales en Tinos. */
+  .title {
+    @apply font-tinos;
+  }
+  /* Superficie base de tarjetas y paneles. */
+  .surface {
+    @apply bg-white border border-secondary/10 rounded-2xl shadow-sm;
+  }
+  /* Etiqueta pequeña en mayúsculas sobre los títulos de sección. */
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[0.18em] text-primary-800;
+  }
 }
+
 .rotating-disk {
   animation: spin 8s linear infinite;
 }

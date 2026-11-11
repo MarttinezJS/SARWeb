@@ -1,66 +1,92 @@
-import { type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
+import { Input } from "@heroui/input";
 import {
-  Controller,
+  useController,
   type FieldValues,
   type Path,
-  type UseFormRegisterReturn,
+  type RegisterOptions,
 } from "react-hook-form";
+import { BsEye, BsEyeSlash } from "react-icons/bs";
 
-interface InputFormProps<T extends FieldValues> {
+export interface FieldProps<T extends FieldValues> {
+  name: Path<T>;
   label: string;
-  type?: "email" | "text" | "number" | "password";
-  icon?: ReactNode;
-  registerReturn: UseFormRegisterReturn<Path<T>>;
-  fullWidth?: boolean;
+  rules?: RegisterOptions<T, Path<T>>;
+  description?: string;
+  isDisabled?: boolean;
 }
 
+interface InputFormProps<T extends FieldValues> extends FieldProps<T> {
+  type?: "email" | "text" | "password" | "tel" | "url";
+  icon?: ReactNode;
+  placeholder?: string;
+  autoComplete?: string;
+  inputMode?: "text" | "numeric" | "email" | "tel" | "url";
+  maxLength?: number;
+  /** Campo numérico (NIT, teléfono): teclado numérico en móvil; lo valida `rules`. */
+  onlyDigits?: boolean;
+}
+
+/** Campo de texto de HeroUI conectado al formulario (dentro de CustomForm). */
 export const InputForm = <T extends FieldValues>({
-  registerReturn,
+  name,
+  label,
+  rules,
+  description,
+  isDisabled,
+  type = "text",
+  icon,
+  placeholder,
+  autoComplete,
+  inputMode,
+  maxLength,
+  onlyDigits,
 }: InputFormProps<T>) => {
-  // const [isVisible, setIsVisible] = useState(false);
-  // const { setValue } = useFormContext();
+  const [isVisible, setIsVisible] = useState(false);
+  const {
+    field: { ref, value, onChange, onBlur },
+    fieldState,
+  } = useController<T>({ name, rules });
+  const isPassword = type === "password";
+
   return (
-    <Controller
-      name={registerReturn.name}
-      disabled={registerReturn.disabled}
-      render={() => {
-        return (
-          <></>
-          // <Input
-          //   {...props}
-          //   radius="lg"
-          //   startContent={icon}
-          //   variant="bordered"
-          //   size="sm"
-          //   ref={registerReturn.ref}
-          //   fullWidth={fullWidth}
-          //   labelPlacement="outside"
-          //   endContent={
-          //     type == "password" && (
-          //       <button
-          //         className="focus:outline-none"
-          //         type="button"
-          //         onClick={() => setIsVisible(!isVisible)}
-          //         aria-label="Cambiar visibilidad de la contraseña"
-          //       >
-          //         {isVisible ? (
-          //           <BsEye className="text-2xl text-default-400 pointer-events-none" />
-          //         ) : (
-          //           <BsEyeSlash className="text-2xl text-default-400 pointer-events-none" />
-          //         )}
-          //       </button>
-          //     )
-          //   }
-          //   isInvalid={fieldState.invalid}
-          //   errorMessage={fieldState.error?.message}
-          //   onValueChange={(value) => setValue(state.field.name, value as any)}
-          //   type={type == "password" ? (isVisible ? "text" : type) : type}
-          //   label={label}
-          //   color="secondary"
-          //   className="w-full my-2 "
-          // />
-        );
-      }}
+    <Input
+      ref={ref}
+      name={name}
+      value={(value as string | undefined) ?? ""}
+      onValueChange={onChange}
+      onBlur={onBlur}
+      label={label}
+      labelPlacement="outside-top"
+      placeholder={placeholder}
+      description={description}
+      variant="bordered"
+      radius="md"
+      color="secondary"
+      type={isPassword && isVisible ? "text" : type}
+      inputMode={onlyDigits ? "numeric" : inputMode}
+      maxLength={maxLength}
+      autoComplete={autoComplete}
+      isRequired={Boolean(rules?.required)}
+      isDisabled={isDisabled}
+      isInvalid={fieldState.invalid}
+      errorMessage={fieldState.error?.message}
+      validationBehavior="aria"
+      startContent={icon}
+      classNames={{ label: "font-medium text-secondary!", inputWrapper: "bg-white" }}
+      endContent={
+        isPassword && (
+          <button
+            type="button"
+            className="rounded-md p-1 text-xl text-muted"
+            onClick={() => setIsVisible(!isVisible)}
+            aria-label={isVisible ? "Ocultar contraseña" : "Mostrar contraseña"}
+            aria-pressed={isVisible}
+          >
+            {isVisible ? <BsEyeSlash aria-hidden="true" /> : <BsEye aria-hidden="true" />}
+          </button>
+        )
+      }
     />
   );
 };

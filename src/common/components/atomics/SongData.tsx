@@ -1,75 +1,47 @@
-import { addToast } from "@heroui/toast";
-import { useCallback, useEffect, useState } from "react";
-import { Live, MetaSong } from "../../../models";
-import { get } from "../../services";
-import { useAzuraStore } from "../../../hooks";
 import { Skeleton } from "@heroui/skeleton";
+import { useNowPlaying } from "../../../hooks";
+import { ImageWithFallback } from "./ImageWithFallback";
+
 interface SongDataProps {
   isPlaying?: boolean;
 }
 
+/** Carátula, título y artista de lo que suena (dentro del reproductor). */
 export const SongData = ({ isPlaying = false }: SongDataProps) => {
-  const { data, setData } = useAzuraStore();
-  const [isLoading, setIsLoading] = useState(true);
-  const getNowPlaying = useCallback(async () => {
-    try {
-      const resp = await get<{ live: Live; now_playing: MetaSong }>(
-        `/azura/now-playing`,
-      );
-      if (resp.error) {
-        addToast({
-          title: resp.message,
-          color: "danger",
-        });
-        return;
-      }
-      setData(resp.body!);
-    } catch (error: unknown) {
-      addToast({
-        title: "Error",
-        description: (error as { message: string }).message,
-      });
-    }
-  }, [setData]);
-  useEffect(() => {
-    getNowPlaying().then(() => {
-      setIsLoading(false);
-    });
-  }, [getNowPlaying]);
+  const { title, subtitle, art, isLive, isLoading } = useNowPlaying();
   return (
-    <div className="flex items-center gap-4 px-2 w-full">
+    <div className="flex w-full items-center gap-3 px-1">
       <div
-        className={`relative w-12 h-12 rounded-full overflow-hidden shadow-lg ${
+        className={`relative h-12 w-12 shrink-0 overflow-hidden rounded-full shadow-lg ${
           isPlaying ? "rotating-disk" : ""
         }`}
       >
-        <img
-          src={data?.live.is_live ? data.live.art : data?.now_playing?.song.art}
-          alt="img"
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
-          <div className="w-2 h-2 bg-white rounded-full"></div>
+        <ImageWithFallback src={art} alt="" className="h-full w-full object-cover" />
+        <div className="absolute inset-0 flex items-center justify-center bg-black/20">
+          <div className="h-2 w-2 rounded-full bg-white" />
         </div>
       </div>
-      <div className="flex-1 min-w-0">
-        {isLoading && <Skeleton className="h-3 w-full rounded-lg" />}
-        <h4 className="text-sm font-bold truncate w-full">
-          {data?.live.is_live
-            ? data.live.streamer_name
-            : data?.now_playing.song.title}
-        </h4>
-        <div className="flex items-center gap-2">
-          {isLoading && <Skeleton className="h-3 w-1/2 rounded-lg mt-2" />}
-          {data?.live?.is_live && (
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-          )}
-          <p className="text-xs text-brand-gold font-medium">
-            {data?.live?.is_live
-              ? "En Vivo Ahora"
-              : data?.now_playing.song.artist}
-          </p>
-        </div>
+      <div className="min-w-0 flex-1" aria-live="polite">
+        {isLoading ? (
+          <div className="space-y-2">
+            <Skeleton className="h-3 w-4/5 rounded-lg" />
+            <Skeleton className="h-3 w-1/2 rounded-lg" />
+          </div>
+        ) : (
+          <>
+            <p className="w-full truncate text-sm font-bold">
+              {title ?? "Sigue Adelante Radio"}
+            </p>
+            <div className="flex items-center gap-2">
+              {isLive && (
+                <span className="h-2 w-2 shrink-0 animate-pulse rounded-full bg-danger-400" />
+              )}
+              <p className="truncate text-xs font-medium text-primary-300">
+                {subtitle ?? "Radio en línea"}
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

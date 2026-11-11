@@ -1,15 +1,13 @@
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 
 export interface Action<T> {
   icon: ReactNode;
   label: string;
-  action: (item: T) => void;
+  action: (item: T) => void | Promise<void>;
   visibleIf?: (item: T) => boolean;
-  color?:
-    | "secondary"
-    | "default"
-    | "primary"
-    | "success"
-    | "warning"
-    | "danger";
+  /** Acción visible pero deshabilitada (p. ej. sin API todavía). */
+  disabled?: boolean;
+  /** Texto del tooltip cuando está deshabilitada. */
+  disabledReason?: string;
+  color?: "secondary" | "default" | "primary" | "success" | "warning" | "danger";
 }

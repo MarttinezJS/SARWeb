@@ -1,13 +1,12 @@
-import { ReactElement } from "react";
-import { Path } from "react-hook-form";
-
-type RenderFunction<T = unknown> = (
-  item: T,
-  uid?: Path<T> | string
-) => ReactElement;
+import type { ReactNode } from "react";
 
 export interface Column<T> {
-  id: Path<T> | "actions";
+  /** Clave de la columna: una propiedad de la fila o un id propio con `render`. */
+  id: (keyof T & string) | (string & {});
   name: string;
-  render?: RenderFunction<T>;
+  /** Contenido de la celda; por defecto muestra `item[id]` como texto. */
+  render?: (item: T) => ReactNode;
+  /** Oculta la columna en móvil para que la tabla quepa sin desbordar. */
+  hideOnMobile?: boolean;
+  align?: "start" | "center" | "end";
 }

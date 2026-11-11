@@ -25,8 +25,22 @@ export interface Song {
   lyrics: string;
 }
 
+/** Elemento de GET /azura/history. */
+export interface HistoryItem {
+  sh_id: number;
+  /** Fecha ISO en la que sonó. */
+  playedAt: string;
+  duration: number;
+  song: Song;
+}
+
+export interface NowPlaying {
+  live: Live;
+  now_playing: MetaSong;
+}
+
 export interface Live {
-  art: string;
+  art: string | null;
   is_live: boolean;
   streamer_name: string;
 }

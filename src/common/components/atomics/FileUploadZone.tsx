@@ -1,94 +1,134 @@
-import { useDropzone } from "react-dropzone";
-import {
-  useResetFieldExternalStore,
-  useResponseModalStore,
-} from "../../../hooks";
-import { Response } from "../../../models";
-import { useEffect, useState } from "react";
+import { useEffect, useId, useMemo } from "react";
+import { useDropzone, type FileRejection } from "react-dropzone";
+import { clsx } from "clsx";
+import { MdOutlineCloudUpload } from "react-icons/md";
+import { IMAGE_ACCEPT, IMAGE_HINT, MAX_IMAGE_BYTES } from "../../constants";
 
-interface Config {
-  audio?: string | "*";
-  image?: string | "*";
-  video?: string | "*";
-  others?: string[];
-}
 interface FileUploadZoneProps {
-  config?: Config;
-  onChangeFile: (file: File) => void;
+  label: string;
+  /** Archivo elegido (componente controlado). */
+  value: File | null;
+  onChange: (file: File | null) => void;
+  /** Se llama cuando el archivo se rechaza por tipo o tamaño. */
+  onReject?: (message: string) => void;
+  /** Imagen actual (al editar) que se muestra mientras no se elija otra. */
+  defaultImageUrl?: string | null;
   text?: string;
-  defaultImageUrl?: string;
+  errorMessage?: string;
+  isRequired?: boolean;
+  isDisabled?: boolean;
+  /** Cómo encajar la vista previa: logos completos o fotos recortadas. */
+  fit?: "contain" | "cover";
 }
 
-export const FileUploadZone = ({
-  onChangeFile,
-  config,
-  text,
-  defaultImageUrl,
-}: FileUploadZoneProps) => {
-  const { showModal: showResponse } = useResponseModalStore();
-  const addDependency = useResetFieldExternalStore((s) => s.addDependency);
-  const [imageSelected, setImageSelected] = useState<File>();
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
-    multiple: false,
-    onDropAccepted: (e) => {
-      const file = e[0];
-      setImageSelected(file);
-      onChangeFile(file);
-    },
-    onDropRejected: (errors) => {
-      const resp: Response<string[]> = {
-        error: true,
-        status: 0,
-        message: "Error al Subir archivos",
-        body: errors.map(
-          (e) =>
-            `${e.file.name}: ${e.errors
-              .map((reason) => reason.message)
-              .join("/")}`,
-        ),
-      };
+const rejectionMessage = (rejections: FileRejection[]): string => {
+  const code = rejections[0]?.errors[0]?.code;
+  if (code === "file-too-large") return "La imagen supera el máximo de 10 MB.";
+  if (code === "file-invalid-type")
+    return "Formato no permitido. Usa JPG, PNG, WEBP, GIF, AVIF o SVG.";
+  if (code === "too-many-files") return "Sube una sola imagen.";
+  return "No se pudo usar ese archivo.";
+};
 
-      showResponse(resp);
-    },
+const formatSize = (bytes: number): string =>
+  bytes < 1024 * 1024
+    ? `${Math.max(1, Math.round(bytes / 1024))} KB`
+    : `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+
+/** Zona para arrastrar o elegir una imagen, con vista previa y validación. */
+export const FileUploadZone = ({
+  label,
+  value,
+  onChange,
+  onReject,
+  defaultImageUrl,
+  text,
+  errorMessage,
+  isRequired,
+  isDisabled,
+  fit = "cover",
+}: FileUploadZoneProps) => {
+  const id = useId();
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    multiple: false,
+    accept: IMAGE_ACCEPT,
+    maxSize: MAX_IMAGE_BYTES,
+    disabled: isDisabled,
+    onDropAccepted: ([file]) => onChange(file),
+    onDropRejected: (rejections) => onReject?.(rejectionMessage(rejections)),
   });
-  useEffect(() => {
-    onChangeFile(acceptedFiles[0]);
-    addDependency(() => {
-      setImageSelected(undefined);
-    });
-  }, [acceptedFiles, addDependency, onChangeFile]);
+
+  const preview = useMemo(() => (value ? URL.createObjectURL(value) : undefined), [value]);
+  useEffect(() => () => (preview ? URL.revokeObjectURL(preview) : undefined), [preview]);
+
+  const image = preview ?? defaultImageUrl ?? undefined;
 
   return (
-    <div
-      {...getRootProps()}
-      className="outline-dashed outline-gray-300 cursor-pointer rounded-lg text-center p-10 "
-    >
-      <input
-        {...getInputProps({
-          accept: config ? parseAcceptData(config) : undefined,
+    <div className="w-full">
+      <span id={`${id}-label`} className="mb-1.5 block text-sm font-medium text-secondary">
+        {label}
+        {isRequired && (
+          <span aria-hidden="true" className="text-danger">
+            {" "}
+            *
+          </span>
+        )}
+      </span>
+      <div
+        {...getRootProps({
+          "aria-labelledby": `${id}-label`,
+          "aria-describedby": `${id}-hint`,
+          "aria-invalid": errorMessage ? true : undefined,
         })}
-      />
-      {!imageSelected && !defaultImageUrl ? (
-        <p className="text-2xl text-gray-300">
-          {text ?? "Arrastra la imagen o has click para subir."}
+        className={clsx(
+          "flex min-h-40 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed p-4 text-center transition-colors",
+          isDragActive ? "border-primary-700 bg-primary-100" : "border-secondary/30 bg-white",
+          errorMessage && "border-danger",
+          isDisabled && "cursor-not-allowed opacity-60",
+        )}
+      >
+        <input {...getInputProps()} />
+        {image ? (
+          <>
+            <img
+              src={image}
+              alt="Vista previa de la imagen"
+              className={clsx(
+                "max-h-56 w-full rounded-lg",
+                fit === "contain" ? "object-contain" : "object-cover",
+              )}
+            />
+            <p className="text-xs text-muted">
+              {value ? `${value.name} · ${formatSize(value.size)}. ` : "Imagen actual. "}
+              Haz clic o arrastra otra para reemplazarla.
+            </p>
+          </>
+        ) : (
+          <>
+            <MdOutlineCloudUpload aria-hidden="true" className="text-4xl text-primary-800" />
+            <p className="text-sm font-medium text-secondary">
+              {text ?? "Arrastra la imagen o haz clic para elegirla"}
+            </p>
+          </>
+        )}
+      </div>
+      <p id={`${id}-hint`} className="mt-1 text-xs text-muted">
+        {IMAGE_HINT}
+      </p>
+      {errorMessage && (
+        <p role="alert" className="mt-1 text-xs text-danger">
+          {errorMessage}
         </p>
-      ) : (
-        <></>
-        // <Image
-        //   src={
-        //     imageSelected ? URL.createObjectURL(imageSelected) : defaultImageUrl
-        //   }
-        // />
+      )}
+      {value && !isDisabled && (
+        <button
+          type="button"
+          className="mt-1 text-xs font-medium text-primary-900 underline"
+          onClick={() => onChange(null)}
+        >
+          Quitar imagen
+        </button>
       )}
     </div>
   );
-};
-
-const parseAcceptData = (config: Config): string => {
-  const mimeTypes = Object.keys(config).map((key) =>
-    key != "others"
-      ? `${key}/${config[key as keyof Config]}`
-      : config.others?.join(", "),
-  );
-  return mimeTypes.join(", ");
 };

@@ -7,8 +7,8 @@ export interface Response<T> {
 
 export interface Pagination<T> {
   count: number;
-  previous: number;
-  next: number;
+  previous?: number | null;
+  next?: number | null;
   results: T[];
 }
 

@@ -24,7 +24,9 @@ export const App = () => {
       };
       socket.onmessage = (event: MessageEvent<string>) => {
         try {
-          setAzuraResp(JSON.parse(event.data));
+          const payload = JSON.parse(event.data);
+          // Solo se acepta el payload "now playing" completo.
+          if (payload?.now_playing?.song) setAzuraResp(payload);
         } catch {
           // mensaje no válido: se ignora
         }

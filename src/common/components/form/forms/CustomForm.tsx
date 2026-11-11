@@ -2,65 +2,76 @@ import type { ReactNode } from "react";
 import {
   FormProvider,
   useForm,
+  type DefaultValues,
   type FieldValues,
-  type Path,
-  type RegisterOptions,
-  type UseFormRegisterReturn,
+  type UseFormReturn,
 } from "react-hook-form";
 import { SubmitButton } from "../buttons";
-import { Response } from "../../../../models";
-import { useResetFieldExternalStore } from "../../../../hooks";
-
-interface CustomButtonProps {
-  label: string;
-  submitIcon?: ReactNode;
-}
+import type { Response } from "../../../../models";
 
 interface CustomFormProps<REQ extends FieldValues> {
-  onSubmit: (
-    data: REQ,
-    event?: React.BaseSyntheticEvent,
-  ) => Promise<Response<unknown>> | undefined;
-  children: (
-    register: (
-      name: Path<REQ>,
-      options?: RegisterOptions<REQ, Path<REQ>> | undefined,
-    ) => UseFormRegisterReturn<Path<REQ>>,
-  ) => ReactNode;
-  submitButtonProps?: CustomButtonProps;
-  defaultValues?: REQ;
+  /** Devuelve la respuesta de la API: si no hay error, el formulario se limpia. */
+  onSubmit: (data: REQ, form: UseFormReturn<REQ>) => Promise<Response<unknown> | undefined | void>;
+  children: ReactNode | ((form: UseFormReturn<REQ>) => ReactNode);
+  defaultValues?: DefaultValues<REQ>;
+  submitLabel?: string;
+  loadingLabel?: string;
+  submitIcon?: ReactNode;
+  /** Botones extra junto al de enviar (p. ej. "Cancelar"). */
+  actions?: ReactNode;
+  /** Limpiar los campos tras un envío correcto (por defecto sí). */
+  resetOnSuccess?: boolean;
+  submitFullWidth?: boolean;
+  className?: string;
+  "aria-label"?: string;
 }
 
+/**
+ * Formulario base con react-hook-form: valida al salir de cada campo, evita
+ * envíos dobles y expone el contexto a InputForm, AreaForm, SwitchForm, etc.
+ */
 export const CustomForm = <REQ extends FieldValues>({
   onSubmit,
-  // submitButtonProps,
   children,
   defaultValues,
+  submitLabel,
+  loadingLabel,
+  submitIcon,
+  actions,
+  resetOnSuccess = true,
+  submitFullWidth = false,
+  className,
+  "aria-label": ariaLabel,
 }: CustomFormProps<REQ>) => {
-  const resetExternal = useResetFieldExternalStore((s) => s.reset);
-  const customForm = useForm<REQ>({
+  const form = useForm<REQ>({
+    mode: "onTouched",
     reValidateMode: "onChange",
-    mode: "all",
-    values: defaultValues,
+    defaultValues,
   });
 
   return (
-    <FormProvider {...customForm}>
+    <FormProvider {...form}>
       <form
-        onSubmit={customForm.handleSubmit(async (data, e) => {
-          const resp = await onSubmit(data, e);
-          if (resp && resp.error == false) {
-            customForm.reset();
-            resetExternal();
-          }
+        noValidate
+        aria-label={ariaLabel}
+        onSubmit={form.handleSubmit(async (data) => {
+          const resp = await onSubmit(data, form);
+          if (resetOnSuccess && resp && resp.error === false) form.reset();
         })}
-        className="w-full"
+        className={className ?? "w-full"}
       >
-        {children(customForm.register)}
-        <div className="flex justify-end mt-5">
+        {typeof children === "function" ? children(form) : children}
+        <div
+          className={
+            submitFullWidth ? "mt-5 flex flex-col gap-2" : "mt-5 flex flex-wrap justify-end gap-2"
+          }
+        >
+          {actions}
           <SubmitButton
-          // label={submitButtonProps?.label}
-          // icon={submitButtonProps?.submitIcon}
+            label={submitLabel}
+            loadingLabel={loadingLabel}
+            icon={submitIcon}
+            fullWidth={submitFullWidth}
           />
         </div>
       </form>

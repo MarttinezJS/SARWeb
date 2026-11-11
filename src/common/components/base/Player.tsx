@@ -43,6 +43,7 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
               size="sm"
               variant="shadow"
               color="primary"
+              aria-label="Mostrar el reproductor"
               onPress={() => setCollapsed(false)}
             >
               <IoIosArrowUp />
@@ -51,7 +52,11 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
         )}
       </AnimatePresence>
 
-      <div className="bg-white/10 dark:bg-black/60 backdrop-blur-2xl border border-white/10 rounded-full p-2.5 shadow-2xl">
+      <div
+        role="region"
+        aria-label="Reproductor de la radio"
+        className="rounded-full border border-primary/30 bg-secondary/95 p-2.5 text-secondary-foreground shadow-2xl backdrop-blur-2xl"
+      >
         <div className="flex items-center w-full">
           <div className="flex items-center gap-3 w-full sm:w-1/3 min-w-0">
             <SongData isPlaying={isPlaying} />
@@ -59,8 +64,9 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
           <div className="ml-auto sm:ml-0 sm:flex sm:justify-center sm:w-1/3">
             <Button
               variant="shadow"
-              color="secondary"
+              color="primary"
               radius="full"
+              aria-label={isPlaying ? "Pausar la radio" : "Escuchar la radio en vivo"}
               isLoading={isLoading}
               onPress={async () => {
                 // Se lee al pulsar (no al renderizar) para no usar una referencia vacía.
@@ -98,6 +104,7 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
               <Slider
                 aria-label="Volumen"
                 size="sm"
+                color="primary"
                 defaultValue={volume}
                 minValue={0}
                 startContent={<VolumeIcon volume={volume} />}
