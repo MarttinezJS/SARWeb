@@ -6,10 +6,9 @@ import { addToast } from "@heroui/toast";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Points } from "../../../models";
 import { get } from "../../services";
-import ReactAudioPlayer from "react-audio-player";
 
 export const Layout = () => {
-  const player = useRef<ReactAudioPlayer>(null);
+  const player = useRef<HTMLAudioElement>(null);
   const [url, setUrl] = useState<string | undefined>();
   const [volume, setVolume] = useState(0.8);
   const getPoints = useCallback(async () => {
@@ -23,6 +22,10 @@ export const Layout = () => {
     }
     return resp.body?.[0];
   }, []);
+  // <audio> no tiene prop de volumen: se aplica directamente al elemento.
+  useEffect(() => {
+    if (player.current) player.current.volume = volume;
+  }, [volume]);
   useEffect(() => {
     getPoints().then((resp) => {
       setUrl(resp?.url);
@@ -36,7 +39,7 @@ export const Layout = () => {
       </main>
       <Footer />
       <Player ref={player} onChangeVolume={setVolume} volume={volume} />
-      <ReactAudioPlayer ref={player} src={url} volume={volume} />
+      <audio ref={player} src={url} preload="none" />
     </div>
   );
 };

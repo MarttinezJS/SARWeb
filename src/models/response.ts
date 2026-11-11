@@ -12,4 +12,4 @@ export interface Pagination<T> {
   results: T[];
 }
 
-export interface PaginatedResponse<T> extends Response<Pagination<T>> {}
+export type PaginatedResponse<T> = Response<Pagination<T>>;

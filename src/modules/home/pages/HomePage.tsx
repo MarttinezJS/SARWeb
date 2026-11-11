@@ -1,11 +1,6 @@
 import { NewsFeed, SongHistory } from "../components";
 
-export const RECENT_TRACKS = [
-  { time: "10:30", title: "Canción 3", artist: "Artista C" },
-  { time: "10:15", title: "Canción 2", artist: "Artista B" },
-  { time: "10:00", title: "Canción 1", artist: "Artista A" },
-];
-export const SPONSORS = [
+const SPONSORS = [
   { id: "1", name: "Minimal Natural", logo: "A", bgColor: "bg-[#1e3a34]" },
   { id: "2", name: "Company B", logo: "B", bgColor: "bg-[#f3e3c1]" },
   { id: "3", name: "Company C", logo: "C", bgColor: "bg-[#5e7456]" },

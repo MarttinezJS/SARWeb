@@ -23,8 +23,8 @@ interface authProviderProps {
   login(
     username: string,
     password: string
-  ): Promise<{ pass: boolean; resp: Response<any> }>;
-  signup(formData: UserFields): Promise<{ pass: boolean; resp: Response<any> }>;
+  ): Promise<{ pass: boolean; resp: Response<unknown> }>;
+  signup(formData: UserFields): Promise<{ pass: boolean; resp: Response<unknown> }>;
 }
 
 export const authProvider = create<authProviderProps>((set) => ({
@@ -65,10 +65,10 @@ export const authProvider = create<authProviderProps>((set) => ({
       if (!token) {
         return false;
       }
-      const decode = decodeJwt<any>(token);
+      const decode = decodeJwt<JwkResponse>(token);
       set({ userData: { ...decode.data }, isAuthenticated: true });
       return true;
-    } catch (error) {
+    } catch {
       return false;
     }
   },
@@ -90,8 +90,8 @@ export const authProvider = create<authProviderProps>((set) => ({
     }
     const token = body.access_token;
     localStorage.setItem("access_token", token);
-    const userData = decodeJwt<any>(token);
-    set({ userData: { ...userData }, isAuthenticated: true });
+    const { data } = decodeJwt<JwkResponse>(token);
+    set({ userData: { ...data }, isAuthenticated: true });
     return {
       pass: true,
       resp: resp,

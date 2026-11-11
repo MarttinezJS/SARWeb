@@ -10,7 +10,7 @@ interface SongDataProps {
 
 export const SongData = ({ isPlaying = false }: SongDataProps) => {
   const { data, setData } = useAzuraStore();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const getNowPlaying = useCallback(async () => {
     try {
       const resp = await get<{ live: Live; now_playing: MetaSong }>(

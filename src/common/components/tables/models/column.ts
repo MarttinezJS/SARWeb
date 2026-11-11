@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { Path } from "react-hook-form";
 
-type RenderFunction<T = any> = (
+type RenderFunction<T = unknown> = (
   item: T,
   uid?: Path<T> | string
 ) => ReactElement;

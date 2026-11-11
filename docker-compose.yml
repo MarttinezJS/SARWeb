@@ -2,26 +2,17 @@ services:
   frontend-web:
     container_name: sigue-adelante-radio-frontend
     image: sigue-adelante-radio-frontend:1.0.0
-    build: 
+    build:
       context: .
       args:
         VITE_API_URL: $VITE_API_URL
         VITE_WS_URL: $VITE_WS_URL
-        VITE_AZURA_API_KEY: $VITE_AZURA_API_KEY
-        VITE_AZURA_API_URL: $VITE_AZURA_API_URL
-        VITE_STATION_ID: $VITE_STATION_ID
-    restart: 'on-failure'
+    restart: on-failure
+    # Solo en loopback: el Nginx del host (80/443) la publica.
     ports:
-      - 5000:80
+      - "127.0.0.1:5000:80"
     networks:
       - sigue-adelante-radio
-    # environment:
-    #   VITE_API_URL: $VITE_API_URL
-    #   VITE_WS_URL: $VITE_WS_URL
-    #   VITE_AZURA_API_KEY: $VITE_AZURA_API_KEY
-    #   VITE_AZURA_API_URL: $VITE_AZURA_API_URL
-    #   VITE_STATION_ID: $VITE_STATION_ID
-    
 
 networks:
   sigue-adelante-radio:

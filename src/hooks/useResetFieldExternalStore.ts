@@ -2,8 +2,8 @@ import { create } from "zustand";
 
 interface useResetFieldExternalStoreProps {
   reset: () => void;
-  dependencies: Function[];
-  addDependency: (dependency: Function) => void;
+  dependencies: (() => void)[];
+  addDependency: (dependency: () => void) => void;
 }
 
 export const useResetFieldExternalStore =

@@ -13,7 +13,9 @@ export interface MetaSong {
 export interface Song {
   id: string;
   art: string;
-  custom_fields: [];
+  // Lista vacía si la estación no tiene campos personalizados; si los tiene,
+  // AzuraCast devuelve un objeto { nombre_programatico: valor }.
+  custom_fields: Record<string, string | null> | [];
   text: string;
   artist: string;
   title: string;

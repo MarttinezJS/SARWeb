@@ -1,6 +1,7 @@
+// Rutas del gateway (api.sigueadelanteradio.com): sin prefijo de servicio.
 export const enum Endpoints {
-  SIGN_UP = "/auth/sign-up",
-  LOGIN = "/auth/login",
-  USERS = "/auth/users",
+  SIGN_UP = "/sign-up",
+  LOGIN = "/login",
+  USERS = "/users",
   POINTS = "/stream/points",
 }

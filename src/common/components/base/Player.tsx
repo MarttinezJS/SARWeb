@@ -1,20 +1,19 @@
 import { RefObject, useState } from "react";
-import ReactAudioPlayer from "react-audio-player";
 import { SongData, VolumeIcon } from "../atomics";
 import { Button } from "@heroui/button";
 import { IoIosArrowUp, IoIosPause, IoIosPlay } from "react-icons/io";
 import { Slider } from "@heroui/slider";
 import { clsx } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
+import { addToast } from "@heroui/toast";
 
 interface PlayerProps {
-  ref: RefObject<ReactAudioPlayer | null>;
+  ref: RefObject<HTMLAudioElement | null>;
   onChangeVolume: (value: number) => void;
   volume: number;
 }
 
 export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
-  const player = ref.current;
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
@@ -64,15 +63,30 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
               radius="full"
               isLoading={isLoading}
               onPress={async () => {
+                // Se lee al pulsar (no al renderizar) para no usar una referencia vacía.
+                const audio = ref.current;
+                if (!audio) return;
                 setIsLoading(true);
-                if (isPlaying) {
-                  await player?.audioEl.current.pause();
-                } else {
-                  await player?.audioEl.current.play();
+                try {
+                  if (isPlaying) {
+                    audio.pause();
+                  } else {
+                    // Es una transmisión en vivo: recargar para retomar el
+                    // directo y no el búfer viejo de antes de la pausa.
+                    audio.load();
+                    await audio.play();
+                  }
+                  setIsPlaying(!isPlaying);
+                  setCollapsed(!isPlaying);
+                } catch {
+                  addToast({
+                    title: "No se pudo reproducir la radio",
+                    description: "Revisa tu conexión e inténtalo de nuevo.",
+                    color: "danger",
+                  });
+                } finally {
+                  setIsLoading(false);
                 }
-                setIsLoading(false);
-                setIsPlaying(!isPlaying);
-                setCollapsed(!isPlaying);
               }}
               isIconOnly
             >

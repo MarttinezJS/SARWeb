@@ -3,9 +3,9 @@ import type { Response } from "../models";
 
 interface ResponseModalStore {
   visible: boolean;
-  resp: Response<any> | null;
+  resp: Response<unknown> | null;
   closeModal: () => void;
-  showModal: (resp: Response<any>) => void;
+  showModal: (resp: Response<unknown>) => void;
 }
 
 export const useResponseModalStore = create<ResponseModalStore>((set) => ({
