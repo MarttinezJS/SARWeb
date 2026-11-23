@@ -41,6 +41,10 @@ const router = createBrowserRouter([
     ),
     children: [
       { index: true, lazy: async () => ({ Component: (await admin()).DashboardPage }) },
+      {
+        path: "promociones",
+        lazy: async () => ({ Component: (await admin()).AdminPromosPage }),
+      },
       { path: "noticias", lazy: async () => ({ Component: (await admin()).AdminNewsPage }) },
       {
         path: "patrocinadores",

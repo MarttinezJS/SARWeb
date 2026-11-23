@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import {
+  MdOutlineCampaign,
   MdOutlineDashboard,
   MdOutlineEvent,
   MdOutlineGroup,
@@ -18,6 +19,7 @@ export interface AdminLink {
 
 export const ADMIN_LINKS: AdminLink[] = [
   { label: "Panel", to: "/admin", icon: <MdOutlineDashboard /> },
+  { label: "Promociones", to: "/admin/promociones", icon: <MdOutlineCampaign /> },
   { label: "Noticias", to: "/admin/noticias", icon: <MdOutlineNewspaper /> },
   { label: "Patrocinadores", to: "/admin/patrocinadores", icon: <MdOutlineHandshake /> },
   { label: "Devocionales", to: "/admin/devocionales", icon: <MdOutlineMenuBook /> },

@@ -9,6 +9,7 @@ import { NewsCard, NewsCardSkeleton } from "../../news/components/NewsCard";
 import { DevotionalCard } from "../components/DevotionalCard";
 import { FeaturedHero, FeaturedHeroSkeleton } from "../components/FeaturedHero";
 import { NowPlayingCard } from "../components/NowPlayingCard";
+import { PromosCard } from "../components/PromosCard";
 import { SponsorsCard } from "../components/SponsorsCard";
 
 const HERO_SIZE = 5;
@@ -101,6 +102,7 @@ export const HomePage = () => {
 
         <aside className="space-y-6 lg:col-span-4" aria-label="La emisora">
           <NowPlayingCard />
+          <PromosCard />
           <DevotionalCard />
           <SponsorsCard />
         </aside>

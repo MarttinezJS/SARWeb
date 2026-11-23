@@ -17,7 +17,7 @@ export interface FieldProps<T extends FieldValues> {
 }
 
 interface InputFormProps<T extends FieldValues> extends FieldProps<T> {
-  type?: "email" | "text" | "password" | "tel" | "url";
+  type?: "email" | "text" | "password" | "tel" | "url" | "date" | "number";
   icon?: ReactNode;
   placeholder?: string;
   autoComplete?: string;
