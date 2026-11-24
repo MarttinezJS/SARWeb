@@ -5,30 +5,39 @@ import type { NowPlaying, Response } from "../models";
 import { useAzuraStore } from "./useAzuraStore";
 
 // Varias vistas muestran "ahora suena" a la vez (reproductor, inicio, panel):
-// se comparte una sola petición inicial; después actualiza el WebSocket.
+// se comparte una sola petición; después actualiza el WebSocket.
 let pending: Promise<Response<NowPlaying>> | undefined;
+
+/**
+ * Pide "now playing" por la API y lo guarda en el store. También se usa al
+ * reconectar el WebSocket (solo envía cambios, así que lo que sonó mientras
+ * estaba caído se recupera aquí) y desde el botón "Reintentar".
+ */
+export const refreshNowPlaying = (): Promise<void> => {
+  pending ??= get<NowPlaying>(Endpoints.NOW_PLAYING);
+  return pending.then((resp) => {
+    pending = undefined;
+    const { setData, setAzuraError } = useAzuraStore.getState();
+    if (!resp.error && resp.body?.now_playing) setData(resp.body);
+    else setAzuraError(resp.message || "No se pudo consultar la emisora.");
+  });
+};
 
 export const useNowPlaying = () => {
   const data = useAzuraStore((s) => s.data);
-  const setData = useAzuraStore((s) => s.setData);
-  const [error, setError] = useState<string>();
+  const error = useAzuraStore((s) => s.azuraError);
   const [settled, setSettled] = useState(false);
 
   useEffect(() => {
     if (useAzuraStore.getState().data) return;
     let cancelled = false;
-    pending ??= get<NowPlaying>(Endpoints.NOW_PLAYING);
-    pending.then((resp) => {
-      pending = undefined;
-      if (cancelled) return;
-      if (!resp.error && resp.body?.now_playing) setData(resp.body);
-      else setError(resp.message || "No se pudo consultar la emisora.");
-      setSettled(true);
+    refreshNowPlaying().then(() => {
+      if (!cancelled) setSettled(true);
     });
     return () => {
       cancelled = true;
     };
-  }, [setData]);
+  }, []);
 
   const isLive = Boolean(data?.live?.is_live);
   const song = data?.now_playing?.song;
@@ -40,7 +49,7 @@ export const useNowPlaying = () => {
     title: isLive ? data?.live.streamer_name || "Programa en vivo" : song?.title,
     subtitle: isLive ? "En vivo ahora" : song?.artist,
     art: (isLive ? data?.live.art : undefined) || song?.art || undefined,
-    isLoading: !data && !settled,
+    isLoading: !data && !settled && !error,
     error: data ? undefined : error,
   };
 };
