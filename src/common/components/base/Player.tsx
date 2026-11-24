@@ -11,12 +11,19 @@ interface PlayerProps {
   ref: RefObject<HTMLAudioElement | null>;
   onChangeVolume: (value: number) => void;
   volume: number;
+  collapsed: boolean;
+  onCollapsedChange: (collapsed: boolean) => void;
 }
 
-export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
+export const Player = ({
+  ref,
+  onChangeVolume,
+  volume,
+  collapsed,
+  onCollapsedChange: setCollapsed,
+}: PlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <div

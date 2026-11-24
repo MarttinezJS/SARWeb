@@ -1,4 +1,6 @@
 import { Link } from "react-router";
+import { PRAYER_WHATSAPP_URL } from "../../constants";
+import { WhatsAppDot } from "../atomics";
 import { PUBLIC_LINKS } from "./navigation";
 
 export const Footer = () => {
@@ -39,6 +41,17 @@ export const Footer = () => {
             La emisora
           </p>
           <ul className="space-y-2 text-sm">
+            <li>
+              <a
+                href={PRAYER_WHATSAPP_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded hover:text-primary hover:underline"
+              >
+                <WhatsAppDot size="sm" />
+                Envía tu petición
+              </a>
+            </li>
             <li>
               <Link to="/patrocinadores#registro" className="rounded hover:text-primary hover:underline">
                 Quiero ser patrocinador

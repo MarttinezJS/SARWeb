@@ -2,6 +2,7 @@ import { Outlet, useLocation } from "react-router";
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { Player } from "./Player";
+import { PrayerFab } from "./PrayerFab";
 import { addToast } from "@heroui/toast";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Points } from "../../../models";
@@ -12,6 +13,8 @@ export const Layout = () => {
   const player = useRef<HTMLAudioElement>(null);
   const [url, setUrl] = useState<string | undefined>();
   const [volume, setVolume] = useState(0.8);
+  // El botón de peticiones baja cuando el reproductor se esconde.
+  const [playerCollapsed, setPlayerCollapsed] = useState(false);
   const { pathname, hash } = useLocation();
   const getPoints = useCallback(async () => {
     const resp = await get<Points[]>(Endpoints.POINTS);
@@ -54,7 +57,14 @@ export const Layout = () => {
         <Outlet />
       </main>
       <Footer />
-      <Player ref={player} onChangeVolume={setVolume} volume={volume} />
+      <Player
+        ref={player}
+        onChangeVolume={setVolume}
+        volume={volume}
+        collapsed={playerCollapsed}
+        onCollapsedChange={setPlayerCollapsed}
+      />
+      <PrayerFab playerCollapsed={playerCollapsed} />
       <audio ref={player} src={url} preload="none" />
     </div>
   );

@@ -4,3 +4,4 @@ export * from "./VolumeIcon";
 export * from "./ImageWithFallback";
 export * from "./States";
 export * from "./SectionHeader";
+export * from "./WhatsAppDot";

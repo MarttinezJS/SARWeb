@@ -137,6 +137,20 @@ layer(base);
   }
 }
 
+/* Anillo que llama la atención sobre el ícono de WhatsApp (3 veces al cargar). */
+.wa-ring {
+  animation: wa-ring 2.8s ease-out 1.2s 3;
+}
+@keyframes wa-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.55);
+  }
+  70%,
+  100% {
+    box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);
+  }
+}
+
 .rotating-disk {
   animation: spin 8s linear infinite;
 }
