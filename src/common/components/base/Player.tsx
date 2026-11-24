@@ -1,23 +1,29 @@
 import { RefObject, useState } from "react";
-import ReactAudioPlayer from "react-audio-player";
 import { SongData, VolumeIcon } from "../atomics";
 import { Button } from "@heroui/button";
 import { IoIosArrowUp, IoIosPause, IoIosPlay } from "react-icons/io";
 import { Slider } from "@heroui/slider";
 import { clsx } from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
+import { addToast } from "@heroui/toast";
 
 interface PlayerProps {
-  ref: RefObject<ReactAudioPlayer | null>;
+  ref: RefObject<HTMLAudioElement | null>;
   onChangeVolume: (value: number) => void;
   volume: number;
+  collapsed: boolean;
+  onCollapsedChange: (collapsed: boolean) => void;
 }
 
-export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
-  const player = ref.current;
+export const Player = ({
+  ref,
+  onChangeVolume,
+  volume,
+  collapsed,
+  onCollapsedChange: setCollapsed,
+}: PlayerProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
 
   return (
     <div
@@ -44,6 +50,7 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
               size="sm"
               variant="shadow"
               color="primary"
+              aria-label="Mostrar el reproductor"
               onPress={() => setCollapsed(false)}
             >
               <IoIosArrowUp />
@@ -52,7 +59,11 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
         )}
       </AnimatePresence>
 
-      <div className="bg-white/10 dark:bg-black/60 backdrop-blur-2xl border border-white/10 rounded-full p-2.5 shadow-2xl">
+      <div
+        role="region"
+        aria-label="Reproductor de la radio"
+        className="rounded-full border border-primary/30 bg-secondary/95 p-2.5 text-secondary-foreground shadow-2xl backdrop-blur-2xl"
+      >
         <div className="flex items-center w-full">
           <div className="flex items-center gap-3 w-full sm:w-1/3 min-w-0">
             <SongData isPlaying={isPlaying} />
@@ -60,19 +71,35 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
           <div className="ml-auto sm:ml-0 sm:flex sm:justify-center sm:w-1/3">
             <Button
               variant="shadow"
-              color="secondary"
+              color="primary"
               radius="full"
+              aria-label={isPlaying ? "Pausar la radio" : "Escuchar la radio en vivo"}
               isLoading={isLoading}
               onPress={async () => {
+                // Se lee al pulsar (no al renderizar) para no usar una referencia vacía.
+                const audio = ref.current;
+                if (!audio) return;
                 setIsLoading(true);
-                if (isPlaying) {
-                  await player?.audioEl.current.pause();
-                } else {
-                  await player?.audioEl.current.play();
+                try {
+                  if (isPlaying) {
+                    audio.pause();
+                  } else {
+                    // Es una transmisión en vivo: recargar para retomar el
+                    // directo y no el búfer viejo de antes de la pausa.
+                    audio.load();
+                    await audio.play();
+                  }
+                  setIsPlaying(!isPlaying);
+                  setCollapsed(!isPlaying);
+                } catch {
+                  addToast({
+                    title: "No se pudo reproducir la radio",
+                    description: "Revisa tu conexión e inténtalo de nuevo.",
+                    color: "danger",
+                  });
+                } finally {
+                  setIsLoading(false);
                 }
-                setIsLoading(false);
-                setIsPlaying(!isPlaying);
-                setCollapsed(!isPlaying);
               }}
               isIconOnly
             >
@@ -84,6 +111,7 @@ export const Player = ({ ref, onChangeVolume, volume }: PlayerProps) => {
               <Slider
                 aria-label="Volumen"
                 size="sm"
+                color="primary"
                 defaultValue={volume}
                 minValue={0}
                 startContent={<VolumeIcon volume={volume} />}

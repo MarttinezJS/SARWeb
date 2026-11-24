@@ -1,42 +1,62 @@
-// interface PaginationWithSizeProps {
-//   count: number;
-//   size: number;
-//   page: number;
-//   setPage: (page: number) => void;
-//   setSize: (size: number) => void;
-// }
+import { Pagination } from "@heroui/pagination";
+import { Select, SelectItem } from "@heroui/select";
 
-export const PaginationWithSize = () => {
+interface PaginationWithSizeProps {
+  count: number;
+  size: number;
+  page: number;
+  setPage: (page: number) => void;
+  setSize: (size: number) => void;
+  sizes?: number[];
+}
+
+/** Paginador con total de registros y selector de filas por página. */
+export const PaginationWithSize = ({
+  count,
+  size,
+  page,
+  setPage,
+  setSize,
+  sizes = [5, 10, 20, 50],
+}: PaginationWithSizeProps) => {
+  const total = Math.max(1, Math.ceil(count / size));
   return (
-    <div className="flex w-full p-2 justify-center items-center">
-      {/* <Pagination
-        isCompact
-        showShadow
-        showControls
-        total={Math.ceil(count / size)}
-        page={page}
-        onChange={(currentPage) => {
-          setPage(currentPage);
-        }}
-      />
-      <div className="min-w-16 mx-2">
+    <div className="flex w-full flex-wrap items-center justify-between gap-3 pt-3">
+      <p className="text-sm text-muted">
+        {count === 1 ? "1 registro" : `${count} registros`}
+      </p>
+      <div className="flex flex-wrap items-center gap-3">
         <Select
-          selectionMode="single"
-          defaultSelectedKeys={["5"]}
+          aria-label="Filas por página"
+          size="sm"
+          variant="bordered"
+          className="w-24"
+          classNames={{ trigger: "bg-white" }}
           disallowEmptySelection
-          onSelectionChange={(key) => {
-            const currentKey = key.currentKey;
-            currentKey && setSize(Number.parseInt(currentKey));
-            setPage(1);
+          selectedKeys={[String(size)]}
+          onSelectionChange={(keys) => {
+            if (keys.currentKey) setSize(Number.parseInt(keys.currentKey, 10));
           }}
         >
-          {["2", "5", "10", "20", "50"].map((number) => (
-            <SelectItem hideSelectedIcon key={number}>
-              {number}
+          {sizes.map((value) => (
+            <SelectItem key={String(value)} textValue={String(value)}>
+              {value}
             </SelectItem>
           ))}
         </Select>
-      </div> */}
+        {total > 1 && (
+          <Pagination
+            aria-label="Paginación"
+            isCompact
+            showControls
+            size="sm"
+            color="secondary"
+            total={total}
+            page={page}
+            onChange={setPage}
+          />
+        )}
+      </div>
     </div>
   );
 };

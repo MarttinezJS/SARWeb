@@ -13,7 +13,9 @@ export interface MetaSong {
 export interface Song {
   id: string;
   art: string;
-  custom_fields: [];
+  // Lista vacía si la estación no tiene campos personalizados; si los tiene,
+  // AzuraCast devuelve un objeto { nombre_programatico: valor }.
+  custom_fields: Record<string, string | null> | [];
   text: string;
   artist: string;
   title: string;
@@ -23,8 +25,22 @@ export interface Song {
   lyrics: string;
 }
 
+/** Elemento de GET /azura/history. */
+export interface HistoryItem {
+  sh_id: number;
+  /** Fecha ISO en la que sonó. */
+  playedAt: string;
+  duration: number;
+  song: Song;
+}
+
+export interface NowPlaying {
+  live: Live;
+  now_playing: MetaSong;
+}
+
 export interface Live {
-  art: string;
+  art: string | null;
   is_live: boolean;
   streamer_name: string;
 }

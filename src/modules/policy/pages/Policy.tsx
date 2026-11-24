@@ -1,12 +1,13 @@
 import { Card, CardBody } from "@heroui/card";
 export const Policy = () => {
   return (
-    <div className="flex justify-center p-5">
-      <Card className="w-2/3 bg-transparent">
-        <CardBody>
-          <p className="text-2xl mb-5">
+    <div className="flex justify-center">
+      <title>Políticas de privacidad | Sigue Adelante Radio</title>
+      <Card className="w-full max-w-3xl bg-white" shadow="sm">
+        <CardBody className="p-5 text-secondary sm:p-8">
+          <h1 className="title mb-5 text-2xl font-bold sm:text-3xl">
             Políticas de privacidad de "SIGUE ADELANTE RADIO"
-          </p>
+          </h1>
           <p>
             En "SIGUE ADELANTE RADIO", nuestra aplicación de emisora de radio
             online, nos comprometemos a cumplir con las políticas del programa
@@ -14,7 +15,7 @@ export const Policy = () => {
             usuarios una experiencia segura y de alta calidad. A continuación,
             se detallan los aspectos clave de nuestra aplicación:
           </p>
-          <p className="pl-10 my-2">
+          <p className="my-2 pl-4 sm:pl-10">
             <span className="font-bold">Emisión de música en línea:</span>{" "}
             "SIGUE ADELANTE RADIO" es una aplicación que permite a los usuarios
             escuchar música en línea a través de una emisora de radio. Nos
@@ -22,7 +23,7 @@ export const Policy = () => {
             de autor y contamos con los permisos y licencias necesarios para
             transmitir la música a nuestros usuarios.
           </p>
-          <p className="pl-10 my-2">
+          <p className="my-2 pl-4 sm:pl-10">
             <span className="font-bold">Experiencia de usuario segura:</span>
             Valoramos la seguridad de nuestros usuarios y nos esforzamos por
             proporcionar una experiencia segura dentro de nuestra aplicación.

@@ -7,13 +7,16 @@ import "./index.css";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <HeroUIProvider>
+    <HeroUIProvider locale="es-CO">
       <ToastProvider
-        placement="bottom-right"
+        placement="top-right"
+        toastOffset={72}
         toastProps={{
-          radius: "full",
+          radius: "lg",
           timeout: 5000,
           shouldShowTimeoutProgress: true,
+          // Texto en marrón: los tonos por defecto no contrastan con la paleta.
+          classNames: { title: "text-secondary font-semibold", description: "text-muted" },
         }}
       />
       <App />

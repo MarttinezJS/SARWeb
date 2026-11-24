@@ -1,49 +1,53 @@
-import { ReactNode } from "react";
-import {
-  Controller,
-  FieldValues,
-  Path,
-  UseFormRegisterReturn,
-} from "react-hook-form";
+import { Textarea } from "@heroui/input";
+import { useController, type FieldValues } from "react-hook-form";
+import type { FieldProps } from "./InputForm";
 
-interface AreaFormProps<T extends FieldValues> {
-  label: string;
-  icon?: ReactNode;
-  registerReturn: UseFormRegisterReturn<Path<T>>;
-  fullWidth?: boolean;
+interface AreaFormProps<T extends FieldValues> extends FieldProps<T> {
+  placeholder?: string;
+  minRows?: number;
+  maxRows?: number;
+  maxLength?: number;
 }
 
+/** Área de texto de HeroUI conectada al formulario (dentro de CustomForm). */
 export const AreaForm = <T extends FieldValues>({
-  registerReturn,
+  name,
+  label,
+  rules,
+  description,
+  isDisabled,
+  placeholder,
+  minRows = 3,
+  maxRows = 12,
+  maxLength,
 }: AreaFormProps<T>) => {
+  const {
+    field: { ref, value, onChange, onBlur },
+    fieldState,
+  } = useController<T>({ name, rules });
   return (
-    <Controller
-      name={registerReturn.name}
-      disabled={registerReturn.disabled}
-      render={() => {
-        return (
-          <></>
-          // <Textarea
-          //   radius="lg"
-          //   disableAutosize
-          //   startContent={icon}
-          //   isMultiline
-          //   variant="bordered"
-          //   size="sm"
-          //   classNames={{
-          //     input: "resize-y min-h-[400px]",
-          //   }}
-          //   fullWidth={fullWidth}
-          //   labelPlacement="inside"
-          //   isInvalid={fieldState.invalid}
-          //   errorMessage={fieldState.error?.message}
-          //   onValueChange={(value) => setValue(state.field.name, value as any)}
-          //   label={label}
-          //   color="secondary"
-          //   className="w-full my-2 "
-          // />
-        );
-      }}
+    <Textarea
+      ref={ref}
+      name={name}
+      value={(value as string | undefined) ?? ""}
+      onValueChange={onChange}
+      onBlur={onBlur}
+      label={label}
+      labelPlacement="outside-top"
+      placeholder={placeholder}
+      description={description}
+      variant="bordered"
+      radius="md"
+      color="secondary"
+      minRows={minRows}
+      maxRows={maxRows}
+      maxLength={maxLength}
+      isRequired={Boolean(rules?.required)}
+      isDisabled={isDisabled}
+      isInvalid={fieldState.invalid}
+      errorMessage={fieldState.error?.message}
+      validationBehavior="aria"
+      classNames={{ label: "font-medium text-secondary!", inputWrapper: "bg-white" }}
     />
   );
 };

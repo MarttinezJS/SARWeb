@@ -1,8 +1,8 @@
 node_modules
-build
-npm-debug.log
-config
-.vscode
-.gitignore
-.env
-README.md
+dist
+.git
+# Los .env locales NO deben entrar en la imagen: Vite los leería en la build
+# y dejaría las URLs de desarrollo en el JavaScript de producción.
+.env*
+*.log
+.DS_Store

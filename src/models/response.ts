@@ -7,9 +7,9 @@ export interface Response<T> {
 
 export interface Pagination<T> {
   count: number;
-  previous: number;
-  next: number;
+  previous?: number | null;
+  next?: number | null;
   results: T[];
 }
 
-export interface PaginatedResponse<T> extends Response<Pagination<T>> {}
+export type PaginatedResponse<T> = Response<Pagination<T>>;
