@@ -3,3 +3,4 @@ export * from "./Navbar";
 export * from "./Footer";
 export * from "./Player";
 export * from "./PrayerFab";
+export * from "./ConnectionBanner";
